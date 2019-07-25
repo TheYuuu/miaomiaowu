@@ -14,7 +14,6 @@ class LyElement {
    * 绘制
    */
   render (ctx: CanvasRenderingContext2D) {
-
   }
   /**
    * 绘制之前进行样式的处理

@@ -1,14 +1,20 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <router-view/>
+    <div id="canvas"></div>
   </div>
 </template>
 
-<script>
-export default {
-  name: 'App'
-}
+<script lang="ts">
+import Vue from 'vue'
+import Component from 'vue-class-component'
+import * as Lyrender from '../Lyrender'
+@Component({
+  name: 'app',
+  mounted () {
+    Lyrender.init('canvas')
+  }
+})
+export default class App extends Vue {}
 </script>
 
 <style>

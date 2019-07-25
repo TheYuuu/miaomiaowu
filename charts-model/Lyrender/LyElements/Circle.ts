@@ -1,12 +1,13 @@
-import * as Lyrender from '../Lyrender'
+import LyElement from './LyElement'
 
-let xr = Lyrender.init('#app')
-let circle = new Lyrender.Circle({
-  shape: {
-    cx: 40,
-    cy: 40,
-    r: 20
+class Circle extends LyElement {
+  name ='circle'
+
+  constructor (opt: any) {
+    super(opt)
   }
-})
-xr.add(circle)
-// 现在画布上有一个半径为20的圆了
+  render (ctx: CanvasRenderingContext2D) {
+  }
+}
+
+export default Circle
