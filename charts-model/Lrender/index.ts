@@ -1,7 +1,7 @@
-import LyRedner from './LyRender'
+import LRedner from './LRender'
 // 导出具体的元素类
-export { default as Circle } from './LyElements/Circle'
+export { default as Circle } from './LElements/Circle'
 // 只暴露方法而不直接暴露`XRender`类
 export function init (dom: string | HTMLElement) {
-  return new LyRedner(dom)
+  return new LRedner(dom)
 }

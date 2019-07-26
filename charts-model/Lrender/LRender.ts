@@ -1,8 +1,8 @@
-import LyElement from './LyElements/LyElement'
+import LElement from './LElements/LElement'
 import Stage from './Stage'
 import Painter from './Painter'
 
-class LyRender {
+class LRender {
   stage: Stage
   painter: Painter
   constructor (dom: string | HTMLElement) {
@@ -18,4 +18,4 @@ class LyRender {
   }
 }
 
-export default LyRender
+export default LRender

@@ -1,6 +1,6 @@
-import LyElement from './LyElement'
+import LElement from './LElement'
 
-class Circle extends LyElement {
+class Circle extends LElement {
   name ='circle'
 
   constructor (opt: any) {

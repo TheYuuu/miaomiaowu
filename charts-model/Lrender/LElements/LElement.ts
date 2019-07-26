@@ -1,4 +1,4 @@
-class LyElement {
+class LElement {
   name = 'Lyelement'
   options: {}
   constructor (opt: any) {
@@ -29,7 +29,8 @@ class LyElement {
    * 刷新，这个方法由外部调用
    */
   refresh (ctx: CanvasRenderingContext2D) {
+    console.log("刷新")
   }
 }
 
-export default LyElement
+export default LElement
