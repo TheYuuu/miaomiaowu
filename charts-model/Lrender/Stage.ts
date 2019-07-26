@@ -1,14 +1,18 @@
 import LElement from './LElements/LElement'
 
 class Stage {
-  xelements: LElement[] = []
+  lelements: LElement[] = []
 
     constructor () {
       console.log('Stage')
     }
 
+    add (...lelements: LElement[]) {
+      this.lelements.push(...lelements)
+    }
+
     getAll () {
-      return this.xelements
+      return this.lelements
     }
   }
   

@@ -1,5 +1,23 @@
+import { merge } from '../util/index'
+export interface LElementShape {
+}
+
+type Color = string | CanvasGradient | CanvasPattern
+export interface LElementStyle {
+  fill?: Color
+  stroke?: Color
+}
+
+export interface XElementOptions {
+  type?: string
+  shape?: LElementShape
+  style?: LElementStyle
+}
+
 class LElement {
   name = 'Lyelement'
+  shape: LElementShape = {}
+
   options: {}
   constructor (opt: any) {
     this.options = opt

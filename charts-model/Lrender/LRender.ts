@@ -11,10 +11,13 @@ class LRender {
       this.painter = new Painter(dom, stage)
   }
 
-  add () {
-  }
+  add (...lelements: LElement[]) {
+    this.stage.add(...lelements)
+    this.render()
+  } 
 
   render () {
+    this.painter.render()
   }
 }
 
