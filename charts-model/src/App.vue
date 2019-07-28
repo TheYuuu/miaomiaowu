@@ -47,7 +47,19 @@ import * as Lrender from '../Lrender'
       }
     })
 
-    lr.add(circle, circle1, circle2)
+    let rect = new Lrender.Rect({
+      shape: {
+        x: 180,
+        y: 60,
+        width: 20,
+        height: 20
+      },
+      style: {
+        fill: 'green'
+      }
+    })
+
+    lr.add(circle, circle1, circle2, rect)
     lr.delete(circle2)
   }
 })
