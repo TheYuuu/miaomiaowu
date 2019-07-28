@@ -29,6 +29,7 @@ class Painter {
     }
 
     render () {
+      // 渲染前清空图像
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
       let xelements = this.stage.getAll()
       for (let i = 0; i < xelements.length; i += 1) {
