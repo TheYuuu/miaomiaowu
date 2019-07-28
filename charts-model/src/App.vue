@@ -12,7 +12,43 @@ import * as Lrender from '../Lrender'
 @Component({
   name: 'app',
   mounted () {
-    Lrender.init('canvas')
+    var lr = Lrender.init('canvas')
+
+    let circle = new Lrender.Circle({
+      shape: {
+        cx: 60,
+        cy: 60,
+        r: 20
+      },
+      style: {
+        fill: '#00f'
+      }
+    })
+
+    let circle1 = new Lrender.Circle({
+      shape: {
+        cx: 120,
+        cy: 60,
+        r: 20
+      },
+      style: {
+        fill: 'red'
+      }
+    })
+
+    let circle2 = new Lrender.Circle({
+      shape: {
+        cx: 180,
+        cy: 60,
+        r: 20
+      },
+      style: {
+        fill: 'yellow'
+      }
+    })
+
+    lr.add(circle, circle1, circle2)
+    lr.delete(circle2)
   }
 })
 export default class App extends Vue {}

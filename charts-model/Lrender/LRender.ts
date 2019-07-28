@@ -14,7 +14,12 @@ class LRender {
   add (...lelements: LElement[]) {
     this.stage.add(...lelements)
     this.render()
-  } 
+  }
+
+  delete (xel: LElement) {
+    this.stage.delete(xel)
+    this.render()
+  }
 
   render () {
     this.painter.render()

@@ -11,6 +11,13 @@ class Stage {
       this.lelements.push(...lelements)
     }
 
+    delete (xel: LElement) {
+      let index = this.lelements.indexOf(xel)
+      if (index > -1) {
+        this.lelements.splice(index, 1)
+      }
+    }
+
     getAll () {
       return this.lelements
     }

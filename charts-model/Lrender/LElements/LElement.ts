@@ -15,11 +15,11 @@ export interface XElementOptions {
 }
 
 class LElement {
-  name = 'Lyelement'
+  name = 'LEelement'
   shape: LElementShape = {}
-
-  options: {}
-  constructor (opt: any) {
+  style: LElementStyle = {}
+  options: XElementOptions
+  constructor (opt: XElementOptions) {
     this.options = opt
   }
   /**
@@ -27,6 +27,12 @@ class LElement {
    */
   updateOptions () {
     let opt = this.options
+    if (opt.shape) {
+      merge(this.shape, opt.shape)
+    }
+    if (opt.style) {
+      merge(this.style, opt.style)
+    }
   }
   /**
    * 绘制
@@ -37,17 +43,28 @@ class LElement {
    * 绘制之前进行样式的处理
    */
   beforeRender (ctx: CanvasRenderingContext2D) {
+    this.updateOptions()
+    let style = this.style
+    ctx.save()
+    ctx.fillStyle = style.fill || ''
+    ctx.strokeStyle = style.stroke || ''
+    ctx.beginPath()
   }
   /**
    * 绘制之后进行还原
    */
   afterRender (ctx: CanvasRenderingContext2D) {
+    ctx.stroke()
+    ctx.fill()
+    ctx.restore()
   }
   /**
    * 刷新，这个方法由外部调用
    */
   refresh (ctx: CanvasRenderingContext2D) {
-    console.log("刷新")
+    this.beforeRender(ctx)
+    this.render(ctx)
+    this.afterRender(ctx)
   }
 }
 
