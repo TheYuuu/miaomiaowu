@@ -60,7 +60,7 @@ import * as Lrender from '../Lrender'
     })
 
     lr.add(circle, circle1, circle2, rect)
-    lr.delete(circle2)
+    lr.delete(circle2);
   }
 })
 export default class App extends Vue {}
