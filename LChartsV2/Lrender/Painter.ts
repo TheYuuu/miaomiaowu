@@ -1,5 +1,5 @@
 import Stage from './Stage'
-import { isString } from './util'
+import { isString, debounce } from './util'
 
 function createCanvas (dom: string | HTMLCanvasElement | HTMLElement) {
     if (isString(dom)) {
@@ -16,7 +16,7 @@ function createCanvas (dom: string | HTMLCanvasElement | HTMLElement) {
     (<HTMLElement>dom).appendChild(canvas)
   
     return canvas
-  }
+}
 
 class Painter {
     canvas: HTMLCanvasElement
@@ -31,10 +31,12 @@ class Painter {
     render () {
       // 渲染前清空图像
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-      let xelements = this.stage.getAll()
-      for (let i = 0; i < xelements.length; i += 1) {
-        xelements[i].refresh(this.ctx)
-      }
+      debounce(() => {
+        let xelements = this.stage.getAll()
+        for (let i = 0; i < xelements.length; i += 1) {
+          xelements[i].refresh(this.ctx)
+        }
+      }, 16)();
     }
   }
   

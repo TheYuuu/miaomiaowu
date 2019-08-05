@@ -1,4 +1,7 @@
 import { merge } from '../util/index'
+import LRender from '../LRender'
+import attr from './attr'
+
 export interface LElementShape {
 }
 
@@ -6,25 +9,35 @@ type Color = string | CanvasGradient | CanvasPattern
 export interface LElementStyle {
   fill?: Color
   stroke?: Color
+  opacity?: number
+  lineWidth?: number
 }
 
 export interface XElementOptions {
   type?: string
   shape?: LElementShape
   style?: LElementStyle
+  level?: number
+}
+
+function bindStyle (ctx: CanvasRenderingContext2D, style: LElementStyle) {
+  ctx.fillStyle = style.fill || 'transparent'
+  ctx.strokeStyle = style.stroke || 'black'
+  ctx.globalAlpha = style.opacity || 1
+  ctx.lineWidth = style.lineWidth || 1
 }
 
 class LElement {
   name = 'LEelement'
   shape: LElementShape = {}
   style: LElementStyle = {}
+  level: number = 0
   options: XElementOptions
+  lr: any
   constructor (opt: XElementOptions) {
     this.options = opt
   }
-  /**
-   * 这一步不在构造函数内进行是因为放在构造函数内的话，会被子类的默认属性声明重写
-   */
+
   updateOptions () {
     let opt = this.options
     if (opt.shape) {
@@ -33,38 +46,42 @@ class LElement {
     if (opt.style) {
       merge(this.style, opt.style)
     }
+    if (opt.level) {
+      this.level = opt.level
+    }
   }
-  /**
-   * 绘制
-   */
+
   render (ctx: CanvasRenderingContext2D) {
   }
-  /**
-   * 绘制之前进行样式的处理
-   */
+ 
   beforeRender (ctx: CanvasRenderingContext2D) {
     this.updateOptions()
     let style = this.style
     ctx.save()
-    ctx.fillStyle = style.fill || ''
-    ctx.strokeStyle = style.stroke || ''
+    bindStyle(ctx, style)
     ctx.beginPath()
   }
-  /**
-   * 绘制之后进行还原
-   */
+ 
   afterRender (ctx: CanvasRenderingContext2D) {
     ctx.stroke()
     ctx.fill()
     ctx.restore()
   }
-  /**
-   * 刷新，这个方法由外部调用
-   */
+
   refresh (ctx: CanvasRenderingContext2D) {
     this.beforeRender(ctx)
     this.render(ctx)
     this.afterRender(ctx)
+  }
+
+  setLr (lr: LRender) {
+    this.lr = lr
+  }
+
+  attr (key: String | Object, value?: any) {
+    attr.apply(this, arguments);
+    this.updateOptions()
+    this.lr.render()
   }
 }
 

@@ -12,6 +12,10 @@ class LRender {
   }
 
   add (...lelements: LElement[]) {
+    lelements.forEach(xel => {
+      xel.setLr(this)
+    })
+
     this.stage.add(...lelements)
     this.render()
   }

@@ -49,18 +49,24 @@ import * as Lrender from '../Lrender'
 
     let rect = new Lrender.Rect({
       shape: {
-        x: 180,
+        x: 120,
         y: 60,
         width: 20,
         height: 20
       },
       style: {
         fill: 'green'
-      }
+      },
+      level: 1
     })
 
     lr.add(circle, circle1, circle2, rect)
     lr.delete(circle2)
+
+    rect.attr('style', function () {
+      return {'stroke': 'yellow', 'lineWidth': '10'}
+    })
+    rect.attr({ shape: { width: 60 } })
   }
 })
 export default class App extends Vue {}

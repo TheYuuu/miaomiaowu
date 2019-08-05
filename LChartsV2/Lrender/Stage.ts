@@ -19,7 +19,15 @@ class Stage {
     }
 
     getAll () {
+      this.updateLElements()
+      
       return this.lelements
+    }
+
+    updateLElements () {
+      this.lelements.sort((a, b) => {
+        return a.level - b.level
+      })
     }
   }
   
