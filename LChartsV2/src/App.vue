@@ -66,7 +66,13 @@ import * as Lrender from '../Lrender'
     rect.attr('style', function () {
       return {'stroke': 'yellow', 'lineWidth': '10'}
     })
-    rect.attr({ shape: { width: 60 } })
+    rect.attr({ shape: { cr: 60 } })
+    rect.attr('fill', function () {
+      return 'blue'
+    })
+
+    rect.hide()
+    rect.show()
   }
 })
 export default class App extends Vue {}

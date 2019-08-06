@@ -21,7 +21,7 @@ class Stage {
     getAll () {
       this.updateLElements()
       
-      return this.lelements
+      return this.lelements.filter(el => !el.ignored)
     }
 
     updateLElements () {

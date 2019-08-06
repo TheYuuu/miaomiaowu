@@ -1,4 +1,4 @@
-import { merge } from '../util/index'
+import { merge, mixins } from '../util/index'
 import LRender from '../LRender'
 import attr from './attr'
 
@@ -27,6 +27,7 @@ function bindStyle (ctx: CanvasRenderingContext2D, style: LElementStyle) {
   ctx.lineWidth = style.lineWidth || 1
 }
 
+@mixins(attr)
 class LElement {
   name = 'LEelement'
   shape: LElementShape = {}
@@ -34,6 +35,7 @@ class LElement {
   level: number = 0
   options: XElementOptions
   lr: any
+  ignored: boolean = false
   constructor (opt: XElementOptions) {
     this.options = opt
   }
@@ -79,10 +81,19 @@ class LElement {
   }
 
   attr (key: String | Object, value?: any) {
-    attr.apply(this, arguments);
-    this.updateOptions()
+    // 混入attr
+  }
+
+  show () {
+    this.ignored = false
+    this.lr.render()
+  }
+
+  hide () {
+    this.ignored = true
     this.lr.render()
   }
 }
+
 
 export default LElement

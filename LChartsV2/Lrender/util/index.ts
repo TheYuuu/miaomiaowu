@@ -20,6 +20,12 @@ export function merge (obj: any, newObj: any) {
     }
 }
 
+export function mixins(...list) {
+    return function (target) {
+        Object.assign(target.prototype, ...list);
+    };
+}
+
 export function debounce (fn: Function, delay = 300) {
     let timer: number | null = null
     return function (...args) {
