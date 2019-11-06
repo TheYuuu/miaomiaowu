@@ -8,10 +8,12 @@
 import Vue from 'vue'
 import Component from 'vue-class-component'
 import * as Lrender from '../Lrender'
+import obj from './a'
 
 @Component({
   name: 'app',
   mounted () {
+    console.log(obj)
     var lr = Lrender.init('canvas')
 
     let circle = new Lrender.Circle({
