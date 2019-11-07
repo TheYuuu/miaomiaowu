@@ -15,10 +15,11 @@
             var promise = this;
             value = null;
             promise._resolves = [];
+            promise._rejects = [];
             promise._status = 'PENDING';
 
-            this.then = function (onFulfilled) {
-                return new Promise(function (resolve) {
+            this.then = function (onFulfilled, onRejected) {
+                return new myPromise(function (resolve, reject) {
                     function handle(value) {
                         var ret = typeof onFulfilled === 'function' && onFulfilled(value) || value;
                         if (ret && typeof ret['then'] == 'function') {
@@ -29,10 +30,18 @@
                             resolve(ret);
                         }
                     }
+
+                    function errback(reason) {
+                        reason = typeof onRejected === 'function' && onRejected(reason) || reason;
+                        reject(reason);
+                    }
                     if (promise._status === 'PENDING') {
                         promise._resolves.push(handle);
+                        promise._rejects.push(errback);
                     } else if (promise._status === 'FULFILLED') {
                         handle(value);
+                    } else if (promise._status === 'REJECTED') {
+                        errback(promise._reason);
                     }
                 })
             };
@@ -46,7 +55,16 @@
                 }, 0);
             }
 
-            fn && fn(resolve);
+            function reject(value) {
+                setTimeout(function () {
+                    promise._status = "REJECTED";
+                    promise._rejects.forEach(function (callback) {
+                        promise._reason = callback(value);
+                    })
+                }, 0);
+            }
+
+            fn && fn(resolve, reject);
         }
 
         let p1 = function (data) {
@@ -76,6 +94,7 @@
             })
         };
 
+
         function AsyncFuns(value) {
 
             let pipe = async function (...args) {
@@ -90,18 +109,19 @@
             }
         }
 
-
-        let re = AsyncFuns('luoyu').pipe(
-            p1,
-            p2,
-            data=>data+"+fun1+",
-            p3,
-            data=>data+"+fun2"
-        )
-
-        re.then(data=>{
-            console.log(data) // luoyu+p1+p2+fun1+p3+fun2
-        })
+        try {
+            AsyncFuns('luoyu').pipe(
+                p1,
+                p2,
+                data => data + "+fun1+",
+                p3,
+                data => data + "+fun2"
+            ).then(data => {
+                console.log(data) // luoyu+p1+p2+fun1+p3+fun2
+            })
+        } catch (err) {
+            handleErr(err);
+        }
     </script>
 </body>
 
