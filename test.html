@@ -2,127 +2,43 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
 </head>
-
+<style>
+.container {
+  width: 500px;
+  height:20000px;
+  border: 1px solid;
+}
+.container2 {
+  width: 500px;
+  height:1000px;
+  border: 2px solid yellow;
+  position: absolute;
+  top: 100px;
+}
+.sticky {
+  width: 50px;
+  height:50px;
+  border: 1px solid red;
+  top: 0px;
+  position:sticky
+}
+</style>
 <body>
-    <script>
-        let myPromise = function (fn) {
-            var callback;
-            var promise = this;
-            value = null;
-            promise._resolves = [];
-            promise._rejects = [];
-            promise._status = 'PENDING';
+  <div class="container">
+    <div class="container2">
+      <div class="sticky"></div>
+    </div>
+  </div>
+  <script>
+    Function.prototype.myCall = function() {
 
-            this.then = function (onFulfilled, onRejected) {
-                return new myPromise(function (resolve, reject) {
-                    function handle(value) {
-                        var ret = typeof onFulfilled === 'function' && onFulfilled(value) || value;
-                        if (ret && typeof ret['then'] == 'function') {
-                            ret.then(function (value) {
-                                resolve(value);
-                            });
-                        } else {
-                            resolve(ret);
-                        }
-                    }
-
-                    function errback(reason) {
-                        reason = typeof onRejected === 'function' && onRejected(reason) || reason;
-                        reject(reason);
-                    }
-                    if (promise._status === 'PENDING') {
-                        promise._resolves.push(handle);
-                        promise._rejects.push(errback);
-                    } else if (promise._status === 'FULFILLED') {
-                        handle(value);
-                    } else if (promise._status === 'REJECTED') {
-                        errback(promise._reason);
-                    }
-                })
-            };
-
-            function resolve(value) {
-                setTimeout(function () {
-                    promise._status = "FULFILLED";
-                    promise._resolves.forEach(function (callback) {
-                        value = callback(value);
-                    });
-                }, 0);
-            }
-
-            function reject(value) {
-                setTimeout(function () {
-                    promise._status = "REJECTED";
-                    promise._rejects.forEach(function (callback) {
-                        promise._reason = callback(value);
-                    })
-                }, 0);
-            }
-
-            fn && fn(resolve, reject);
-        }
-
-        let p1 = function (data) {
-            return new myPromise((resolve, reject) => {
-                setTimeout(() => {
-                    console.log('p1 on')
-                    resolve(data + '+p1+');
-                }, 1000)
-            })
-        };
-
-        let p2 = function (data) {
-            return new myPromise((resolve, reject) => {
-                setTimeout(() => {
-                    console.log('p2 on')
-                    resolve(data + 'p2');
-                }, 2000)
-            })
-        };
-
-        let p3 = function (data) {
-            return new myPromise((resolve, reject) => {
-                setTimeout(() => {
-                    console.log('p3 on')
-                    resolve(data + 'p3');
-                }, 1000)
-            })
-        };
-
-
-        function AsyncFuns(value) {
-
-            let pipe = async function (...args) {
-                for (let i = 0; i < args.length; i++) {
-                    value = await args[i](value);
-                }
-                return value;
-            }
-
-            return {
-                pipe
-            }
-        }
-
-        try {
-            AsyncFuns('luoyu').pipe(
-                p1,
-                p2,
-                data => data + "+fun1+",
-                p3,
-                data => data + "+fun2"
-            ).then(data => {
-                console.log(data) // luoyu+p1+p2+fun1+p3+fun2
-            })
-        } catch (err) {
-            handleErr(err);
-        }
-    </script>
+    }
+  </script>
 </body>
 
 </html>
