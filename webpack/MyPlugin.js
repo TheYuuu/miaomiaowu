@@ -86,8 +86,10 @@ class MyPlugin{
       });
 
       // 生成资源到 output 目录之前
-      compiler.hooks.emit.tap('MyPlugin', (compilation) => {
-        console.log('emit');
+      compiler.hooks.emit.tap('MyLoader', (compilation) => {
+        console.log('-=-==-=-=-=-=-=emit-=-=-=-=-=-=');
+        
+        console.log(compilation.assets);
       });
 
       // 生成资源到 output 目录之后。
