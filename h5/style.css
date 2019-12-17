@@ -130,7 +130,7 @@
   stroke-width: .5px;
 }
 .block{
-  fill:#c7c5c2
+  fill: #F1F1F1;
 }
 .block.active{
   fill:#3c6b52;
