@@ -12,9 +12,14 @@ async function run() {
   const citys = await readFile('city.json');
 
   let handleSvg = new HandleSvg();
+  let animationControl = new AnimationControl();
   handleSvg.drawChina(china);
+  animationControl.addChinaMap();
+
   handleSvg.drawCitys(citys);
-  handleSvg.drawWorld(map);
+  animationControl.addCityDots();
+
+  // handleSvg.drawWorld(map);
 }
 
 run()

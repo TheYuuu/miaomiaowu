@@ -44,7 +44,8 @@
   width: 80%;
 }
 
-.header-text1, .header-text2 {
+.header-text1,
+.header-text2 {
   width: 100%;
   height: 22%;
   text-align: center;
@@ -60,6 +61,7 @@
 .container {
   position: relative;
   height: calc(100vh - 200px - 100px - 20px - 60px);
+  min-height: 400px;
   width: 100%;
   padding: 20px;
   display: flex;
@@ -67,7 +69,8 @@
   align-items: center;
 }
 
-.wanted-inf, .video-inf {
+.wanted-inf,
+.video-inf {
   width: 100%;
   height: 50px;
   line-height: 50px;
@@ -87,7 +90,7 @@
 .comics-play {
   position: absolute;
   display: none;
-  z-index: 20;
+  z-index: 40;
   width: 100%;
   left: 100%;
 }
@@ -107,41 +110,64 @@
   right: 10px;
   top: 10px;
 }
+
 .stroke {
   fill: none;
-  stroke: #000;
-  stroke-width: 3px;
+  stroke: #F1F1F1;
+  stroke-width: 1px;
 }
+
 .fill {
   fill: #fff;
 }
+
 .graticule {
   fill: none;
   stroke: #777;
   stroke-width: .5px;
   stroke-opacity: .5;
 }
-.land {
-  fill: #222;
-}
-.boundary {
-  fill: none;
-  stroke: #fff;
-  stroke-width: .5px;
-}
-.block{
+
+.block {
   fill: #F1F1F1;
 }
-.block.active{
-  fill:#3c6b52;
-}
-.warper{
+
+.city_num {
+  z-index: 20;
+  background: #FA543C;
+  color: white;
+  padding: 5px;
   position: absolute;
-  z-index: 100;
-  width:100%;
-  height: 100%;
-  background: white;
-  opacity:1;
-  transition: opacity 2s;
-  pointer-events: none;
+  top: 55%;
+  left: 17%;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.city_num p {
+  font-size: 10px;
+}
+
+#city_num {
+  font-size: 30px;
+}
+
+.num_line {
+  display: inline-block;
+  height: 8px;
+  width: 8px;
+  vertical-align: top;
+  border-top: 1px solid;
+  border-right: 1px solid;
+}
+
+.city_num_text_1, .city_num_text_2, #city_num {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.tudou-img {
+  z-index: 30;
+  visibility: hidden;
+  opacity: 0;
 }
