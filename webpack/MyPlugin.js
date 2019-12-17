@@ -86,10 +86,40 @@ class MyPlugin{
       });
 
       // 生成资源到 output 目录之前
-      compiler.hooks.emit.tap('MyLoader', (compilation) => {
-        console.log('-=-==-=-=-=-=-=emit-=-=-=-=-=-=');
-        
-        console.log(compilation.assets);
+      compiler.hooks.emit.tap('MyPlugin', (compilation) => {
+        console.log('emit');
+        var filelist = "In this build:\n\n";
+
+        // 遍历所有编译过的资源文件，
+        // 对于每个文件名称，都添加一行内容。
+        for (var filename in compilation.assets) {
+            filelist += "- " + filename + "\n";
+            filelist += "=======================================";
+        }
+
+        // 将这个列表作为一个新的文件资源，插入到 webpack 构建中：
+        compilation.assets["filelist.md"] = {
+            source: function() {
+                return filelist;
+            },
+            size: function() {
+                return filelist.length;
+            }
+        };
+
+      // const keyArr = Object.keys(compilation.assets);
+      // const l = keyArr.length;
+      // let len = Math.floor(l / 2);
+      // const delArr = [];
+      // while (len > 0) {
+      //   const random = Math.floor(Math.random() * l);
+      //   const key = keyArr[random];
+      //   if (!delArr.includes(key)) {
+      //     delArr.push(key);
+      //     len--;
+      //     delete compilation.assets[key];
+      //   }
+      // }
       });
 
       // 生成资源到 output 目录之后。
