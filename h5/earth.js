@@ -1,137 +1,149 @@
 class HandleSvg {
-  constructor() {
+  constructor(world, citys, callbacks) {
+    this.world = world;
+    this.citys = citys;
+    this.callbacks = callbacks;
     this.width = $('#earth_svg').width() - 20;
     this.height = $('#earth_svg').height() - 20;
 
     this.svg = d3.select("#earth_svg")
     this.earththsvg = this.svg.append('g')
-      .attr('transform', 'translate(10, 10)')
+
+    this.asiaPos = {
+      scale: 2.306837809675917,
+      translate: [-207.71495739351053, -100.44680000892913]
+    }
+
+    this.chinaPos = {
+      scale: 5.78786421050677,
+      translate: [-771.0539735976545, -671.0558260894893]
+    }
   }
 
-  drawChina(china) {
+  drawWorld() {
     let width = this.width;
     let height = this.height;
     let earththsvg = this.earththsvg;
+    let world = this.world;
 
-    let projection = d3.geoMercator()
-      .translate([width / 2, height / 2])
-      // .center([width / 2, height / 2])
-      .fitSize([width, height], china);
-    this.projection = projection;
+    let projection = d3.geoNaturalEarth1()
+      .translate([width / 2 + 10, height / 2])
+      .fitSize([width, height], world);
 
     let path = d3.geoPath(projection);
 
     earththsvg.selectAll(".block")
-      .data(china.features)
+      .data(world.features)
       .enter().append("path")
       .attr("d", path)
       .attr("class", 'block')
       .style('display', 'none')
       .style('opacity', 0)
-  }
 
-  drawWorld(world) {
-    let width = this.width;
-    let height = this.height;
-    let svg = this.svg;
-    let earththsvg = this.earththsvg;
+    let ro = -100;
+    projection.rotate([ro, 0]);
 
-    let projection = d3.geoNaturalEarth1()
-      .translate([width / 2, height / 2])
-      // .center([width / 2, height / 2])
-      .fitSize([width, height], world);
     this.projection = projection;
+    path = d3.geoPath(projection);
+    earththsvg.selectAll("path.block").attr("d", path)
 
-    let path = d3.geoPath(projection);
-
-    // earththsvg.append("defs").append("path")
-    // .datum({type: "Sphere"})
-    // .attr("id", "sphere")
-    // .attr("d", path)
-
-    // earththsvg.append("use")
-    // .attr("class", "stroke")
-    // .attr("xlink:href", "#sphere");
-
-    var pathUpdata = svg.selectAll(".block")
-      .data(world.features);
-
-    var pathEnter = pathUpdata.enter();
-
-    var pathExit = pathUpdata.exit();
-
-    pathUpdata.transition()
-      .duration(500)
-      .attr("d", path)
-
-    pathEnter.append("path")
-      .attr("class", 'block')
-      .transition()
-      .duration(500)
-      .attr("d", path)
-
-    pathExit.transition()
-      .duration(200)
-      .attr("fill", "white")
-      .remove();
+    this.zoom = d3.zoom().on("zoom", function () {
+      earththsvg.style("stroke-width", 1.5 / d3.event.transform.k + "px");
+      earththsvg.attr("transform", d3.event.transform); // updated for d3 v4
+    });
   }
 
-  drawCitys(city) {
+  zoomToChina() {
+    let that = this;
+    return function () {
+      let svg = that.svg;
+      let zoom = that.zoom;
+      let chinaPos = that.chinaPos;
+      svg.transition()
+        .duration(800)
+        .call(zoom.transform, d3.zoomIdentity.translate(chinaPos.translate[0], chinaPos.translate[1]).scale(chinaPos.scale))
+    }
+  }
+
+  zoomToAsia() {
+    let that = this;
+    return function () {
+      let svg = that.svg;
+      let zoom = that.zoom;
+      let asiaPos = that.asiaPos;
+      svg.transition()
+        .duration(800)
+        .call(zoom.transform, d3.zoomIdentity.translate(asiaPos.translate[0], asiaPos.translate[1]).scale(asiaPos.scale))
+        .on('end', that.zoomToWorld())
+    }
+  }
+
+  zoomToWorld() {
+    let that = this;
+    return function () {
+      let svg = that.svg;
+      let zoom = that.zoom;
+      svg.transition()
+        .duration(800)
+        .call(zoom.transform, d3.zoomIdentity.translate(10, 0).scale(1))
+        .on('end', function() {
+          that.callbacks[0]();
+        })
+    }
+  }
+
+  drawCitys() {
     let svg = this.svg;
-    let height = this.height;
-    let width = this.width;
+    let citys = this.citys;
     let projection = this.projection;
 
     let node_svg = svg.append('g');
     node_svg.selectAll('.city_node')
-      .data(city.citys)
+      .data(citys.citys)
       .enter()
       .append('circle')
       .attr('class', 'city_dots')
-      .attr("r", 3)
+      .attr("r", 3 / 5.78786421050677)
       .attr("cx", function (d) {
         return projection([d.pos[1], d.pos[0]])[0]
       })
       .attr("cy", function (d) {
-        return projection([d.pos[1], d.pos[0]])[1] - 20;
+        return projection([d.pos[1], d.pos[0]])[1];
       })
       .attr("fill", '#FA543C')
       .attr("stroke", '#F7BFB8')
-      .attr("stroke-width", 3)
+      .attr("stroke-width", 3 / 5.78786421050677)
       .attr("opacity", 0)
       .style('display', 'none')
 
-    let Xstep = width / 100;
-    let Ystep = height / 100;
+    let chinaPos = {
+      scale: 5.78786421050677,
+      translate: [-771.0539735976545, -671.0558260894893]
+    }
+    node_svg.attr("transform", d3.zoomIdentity.translate(chinaPos.translate[0], chinaPos.translate[1]).scale(chinaPos.scale));
+  }
 
-    // node_svg.append('rect')
-    //   .attr('x', Xstep * 16)
-    //   .attr('y', Ystep * 55)
-    //   .attr('width', Xstep * 25)
-    //   .attr('height', Ystep * 15)
-    //   .attr('fill', '#FA543C')
-      // .style('display', 'none')
-      // .attr("opacity", 0)
+  removeCityDots() {
+    let that = this;
+    let projection = this.projection;
+    return function () {
+      d3.selectAll('.city_num')
+        .style("top", '55%')
+        .transition()
+        .duration(500)
+        .style("top", '50%')
+        .style("opacity", 0)
+        .remove()
 
-    // node_svg.append('text')
-    //   .attr('x', Xstep * 18)
-    //   .attr('y', Ystep * 60)
-    //   .text('已服务全国')
-    //   .attr('font-size', '12px')
-    //   .attr('fill', 'white')
-
-    // node_svg.append('text')
-    //   .attr('x', Xstep * 18)
-    //   .attr('y', Ystep * 67)
-    //   .text('42')
-    //   .attr('font-size', '30px')
-    //   .attr('fill', 'white')
-
-    // node_svg.append('text')
-    //   .attr('x', Xstep * 28)
-    //   .attr('y', Ystep * 67)
-    //   .text('个城市')
-    //   .attr('font-size', '12px')
-    //   .attr('fill', 'white')
+      d3.selectAll('.city_dots')
+        .transition()
+        .duration(800)
+        .attr("cy", function (d) {
+          return projection([d.pos[1], d.pos[0]])[1] - 20;
+        })
+        .style("opacity", 0)
+        .remove()
+        .on('end', that.zoomToAsia())
+    }
   }
 }

@@ -7,19 +7,17 @@ const readFile = function (fileName) {
 };
 
 async function run() {
-  const china = await readFile('china.json');
-  const map = await readFile('map.json');
+  const world = await readFile('world-110m.geojson');
   const citys = await readFile('city.json');
 
-  let handleSvg = new HandleSvg();
   let animationControl = new AnimationControl();
-  handleSvg.drawChina(china);
-  animationControl.addChinaMap();
-
-  handleSvg.drawCitys(citys);
-  animationControl.addCityDots();
-
-  // handleSvg.drawWorld(map);
+  let handleSvg = new HandleSvg(world, citys, [
+    animationControl.showTuDou()
+  ]);
+  handleSvg.drawWorld();
+  animationControl.showMap(handleSvg.zoomToChina());
+  handleSvg.drawCitys();
+  animationControl.addCityDots(handleSvg.removeCityDots());
 }
 
 run()

@@ -20,18 +20,22 @@ class AnimationControl {
     });
   }
 
-  addChinaMap() {
-    this.tl.add(TweenMax.staggerTo('.block', 1, {
+  showMap(fn) {
+    this.tl.add(TweenMax.staggerTo('.block', 0.5, {
       display: 'block',
       opacity: 1,
       rotation: 360
-    }, 0.05));
+    }, 0.02))
+    .addCallback(function () {
+      fn();
+    });
   }
 
-  addCityDots() {
+  addCityDots(fn) {
     this.tl.add(TweenMax.staggerFromTo('.city_dots', 1, {
         cy: -20
       }, {
+        delay: 0.8,
         display: 'block',
         opacity: 1,
         cy: 0
@@ -40,14 +44,14 @@ class AnimationControl {
         TweenMax.to('.city_dots', 2, {
           repeat: -1,
           attr: {
-            r: 6
+            r: 6 / 5.7878642105067
           },
           yoyo: true,
           yoyoEase: true,
         })
       });
 
-    this.tl.add(TweenMax.fromTo('.city_num', 1, {
+    this.tl.add(TweenMax.fromTo('.city_num', 0.3, {
       x: -20
     }, {
       delay: 0.2,
@@ -88,22 +92,34 @@ class AnimationControl {
       onUpdate: function () {
         $('#city_num').html(num.num.toFixed(0));
       }
-    }));
+    })).addCallback(function () {
+      fn();
+    });
+  }
 
-    let tudou = $('.tudou-img');
-    this.tl.to(tudou, 0.1, {
-      delay: 0.2,
-      visibility: 'visible',
-      opacity: 1,
-    }).to(tudou, 1, {
-      delay: 0.2,
-      y: 10,
-      repeat: -1,
-      yoyo: true,
-      yoyoEase: true,
-      startAt: {
-        y: -20
-      }
-    })
+  removeCityDots() {
+    
+  }
+
+  showTuDou() {
+    let that = this;
+    return function() {
+      let tudou = $('.tudou-img');
+      that.tl.to([tudou, '.tudou_text1', '.tudou_text2'], 0.1, {
+        delay: 0.2,
+        visibility: 'visible',
+        opacity: 1,
+      })
+      .to([tudou, '.tudou_text1', '.tudou_text2'], 1, {
+        delay: 0.2,
+        y: 10,
+        repeat: -1,
+        yoyo: true,
+        yoyoEase: true,
+        startAt: {
+          y: -20
+        }
+      })
+    }
   }
 }

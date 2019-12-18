@@ -103,6 +103,7 @@
   position: absolute;
   width: 100%;
   height: 100%;
+  padding: 20px;
 }
 
 #projection-menu {
@@ -130,6 +131,7 @@
 
 .block {
   fill: #F1F1F1;
+  stroke: #d0cff5;
 }
 
 .city_num {
@@ -142,6 +144,7 @@
   left: 17%;
   visibility: hidden;
   opacity: 0;
+  font-weight: bold;
 }
 
 .city_num p {
@@ -168,6 +171,31 @@
 
 .tudou-img {
   z-index: 30;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.tudou_text1 { 
+  position: absolute;
+  z-index: 40;
+  left: 0%;
+  top: 32%;
+  transform:rotate(-60deg);
+}
+
+.tudou_text2 {
+  position: absolute;
+  z-index: 40;
+  right: 3%;
+  top: 32%;
+  transform: rotate(60deg);
+}
+
+.tudou_text1, .tudou_text2 {
+  color: #000000f0;
+  background: #FFC202;
+  padding: 2px;
+  border-radius: 10px;
   visibility: hidden;
   opacity: 0;
 }
