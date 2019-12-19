@@ -17,7 +17,7 @@ async function run() {
   handleSvg.drawWorld();
   animationControl.showMap(handleSvg.zoomToChina());
   handleSvg.drawCitys();
-  animationControl.addCityDots(handleSvg.removeCityDots()); 
+  animationControl.addCityDots(handleSvg.removeCityDots());
 }
 
 run()
