@@ -1,33 +1,123 @@
 <!DOCTYPE html>
+<html>
+
 <head>
   <meta charset="utf-8">
-  <script src="//d3js.org/d3.v4.js"></script>
-  <style>
-    body { margin:0;position:fixed;top:0;right:0;bottom:0;left:0; }
-    svg { width:100%; height: 100% }
-  </style>
+  <title>Vue 测试实例 - 菜鸟教程(runoob.com)</title>
+  <script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
 </head>
 
 <body>
-  <script>
-    var width = 960;
-    var height = 500;
-    
-    var svg = d3.select("body").append("svg")
-    
-    var projection = d3.geoMercator()
-      .scale(width / 2 / Math.PI)
-      //.scale(100)
-      .translate([width / 2, height / 2])
+  <style>
+    .slide-enter-active,
+    .slide-leave-active {
+      transition: all 0.5s linear;
+    }
 
-    var path = d3.geoPath()
-      .projection(projection);
-    
-    var url = "http://enjalot.github.io/wwsd/data/world/world-110m.geojson";
-    d3.json('./china.json', function(err, geojson) {
-      svg.append("path")
-        .attr("d", path(geojson))
+    .slide-enter {
+      transform: translateY(20px) scale(1);
+      opacity: 1;
+    }
+
+    .slide-leave-to {
+      transform: translateY(-20px) scale(0.8);
+      opacity: 0;
+    }
+
+    .box {
+      width: 100%;
+      height: 40px;
+      overflow: hidden;
+      position: relative;
+      text-align: center;
+      border: 1px solid;
+    }
+
+    .text {
+      width: 100%;
+      position: absolute;
+      top: 0;
+    }
+  </style>
+
+  <div id="app">
+    <div class="box">
+      <transition v-on:after-leave="afterLeave" name="slide">
+        <p :key="showItem.id" class="text">{{ showItem.text }}</p>
+      </transition>
+    </div>
+  </div>
+
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        messageList: [{
+            text: '今天晴转多云小雨',
+            id: 1
+          },
+          {
+            text: '我今天我中了500w',
+            id: 2
+          },
+          {
+            text: '今天不加班',
+            id: 3
+          },
+          {
+            text: '马上回家过年了 开心',
+            id: 4
+          },
+        ],
+        index: 0,
+        stackList: []
+      },
+      computed: {
+        showItem() {
+          return this.messageList[this.index];
+        }
+      },
+      methods: {
+        afterLeave(el) {
+          console.log(123, el);
+        },
+        MoveOn() {
+          let timer = setTimeout(() => {
+            if (this.index + 1 === this.messageList.length) {
+              this.index = 0;
+            } else {
+              this.index += 1;
+            }
+            this.MoveOn();
+          }, 2000);
+        },
+        getMessage() {
+          setTimeout(() => {
+            this.stackList = this.stackList.concat([{
+                text: '今天晴转多云小雨2',
+                id: 5
+              },
+              {
+                text: '我今天我中了500w2',
+                id: 6
+              },
+              {
+                text: '今天不加班2',
+                id: 7
+              },
+              {
+                text: '马上回家过年了 开心2',
+                id: 8
+              },
+            ]);
+          }, 1000)
+        }
+      },
+      mounted() {
+        this.MoveOn();
+      }
     })
-    
   </script>
 </body>
+
+</html>

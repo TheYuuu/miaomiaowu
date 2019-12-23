@@ -207,8 +207,8 @@
 }
 
 .tudou_text1, .tudou_text2 {
-  color: #000000f0;
-  background: #FFC202;
+  color: white;
+  background: #FA543C;
   padding: 2px;
   border-radius: 10px;
   visibility: hidden;
