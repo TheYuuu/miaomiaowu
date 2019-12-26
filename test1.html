@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    var a = ['a', 'b', 'c', 'd', '1', '2'];
+    var b = ['b', 'e', 'd'];
+
+    merge(a, b);
+
+    function merge(arr1, arr2) {
+      let re = [];
+      let index1 = 0;
+      let index2 = 0;
+      let map = Array.from(new Set(a.concat(b)));
+      console.log(map)
+      while (index1 <= arr1.length && index2 <= arr2.length) {
+        if (arr1[index1] != arr2[index2]) {
+          re.push(arr1[index1++]);
+          re.push(arr2[index2++]);
+        } else {
+          re.push(arr1[index1++]);
+          index2 += 1;
+        }
+      }
+
+      console.log(re);
+    }
+
+    const getIntersect = function (a, b) {
+      if (a.constructor === Array && b.constructor === Array) {
+        let set1 = new Set(a);
+        let set2 = new Set(b);
+        return Array.from(new Set([...set1].filter(x => set2.has(x))));
+      }
+      return null;
+    }
+    const getDifference = function (a, b) {
+      if (a.constructor === Array && b.constructor === Array) {
+        let set1 = new Set(a);
+        let set2 = new Set(b);
+        return Array.from(new Set([...set1].filter(x => !set2.has(x))));
+      }
+      return null;
+    }
+
+
+    console.log(getIntersect(a, b));
+    console.log(getDifference(b, a));
+  </script>
+</body>
+
+</html>

@@ -9,7 +9,7 @@
 .header {
   width: 100%;
   text-align: center;
-  padding-top: 80px;
+  padding-top: 60px;
 }
 
 .header-text {
@@ -27,17 +27,6 @@
   background-color: #e63e3e;
   border-radius: 0 0 50vw 50vw;
   align-items: center;
-}
-
-.logo-b {
-  width: 40%;
-  height: 35px;
-  background: #12263d;
-  text-align: center;
-  border-radius: 30px;
-  display: inline-block;
-  color: white;
-  line-height: 35px;
 }
 
 .logo-img {
@@ -79,24 +68,53 @@
 }
 
 .wanted-inf-text {
+  display: inline-block;
   background: #12263d;
   color: white;
   width: 65%;
   border-radius: 30px;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: auto;
   height: 40px;
   line-height: 40px;
+  margin-bottom: 10px;
+}
+
+.wanted-inf-text1 {
+  display: inline-block;
+  background: #12263d;
+  color: white;
+  width: 40%;
+  border-radius: 30px;
+  height: 35px;
+  line-height: 35px;
+  margin-bottom: 10px;
+}
+
+.wanted-inf-text2 {
+  display: inline-block;
+  background: #12263d;
+  color: white;
+  width: 30px;
+  border-radius: 30px;
+  height: 40px;
+  line-height: 40px;
+  margin-bottom: 10px;
+}
+
+.logo-b {
+  width: 40%;
+  height: 35px;
+  background: #12263d;
+  text-align: center;
+  border-radius: 30px;
+  display: inline-block;
+  color: white;
+  line-height: 35px;
 }
 
 .inf-b {
   height: 20px;
   width: 100%;
-  color: #12263d;
+  color: #FF3B0A;
   text-align: center;
   font-size: 0.6rem;
   line-height: 20px;
@@ -151,7 +169,7 @@
 
 .city_num {
   z-index: 20;
-  background: #FA543C;
+  background: #FF3B0A;
   color: white;
   padding: 5px;
   position: absolute;
@@ -208,9 +226,13 @@
 
 .tudou_text1, .tudou_text2 {
   color: white;
-  background: #FA543C;
+  background: #FF3B0A;
   padding: 2px;
   border-radius: 10px;
   visibility: hidden;
   opacity: 0;
 }
+/* 
+body {
+  background-image: url('./static/670691314_huge.jpg');
+} */
