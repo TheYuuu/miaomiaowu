@@ -72,10 +72,20 @@
 
   doc.addEventListener('DOMContentLoaded', recalc, false);
   
-
+  let page2On = false;
   $(document).ready(function () {
-    var mySwiper = new Swiper ('.swiper-container', {
-      direction: 'vertical'
+    new Swiper ('.swiper-container', {
+      direction: 'vertical',
+      on: {
+        slideChangeTransitionEnd: function(){
+          if(this.activeIndex ===1) {
+            if (!page2On) {
+              page2On = true;
+              run();
+            }
+          }
+        },
+      }
     })        
   })
 })(document, window);
