@@ -276,7 +276,7 @@ class AnimationControl {
 
 const readFile = function (fileName) {
   return new Promise(function (resolve, reject) {
-    d3.json('./static/' + fileName).then(data => {
+    d3.json('./lib/' + fileName).then(data => {
       resolve(data);
     })
   });
