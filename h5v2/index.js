@@ -98,11 +98,13 @@
           },
         }
       });
-      TweenMax.to('.todou_container', 1, {
+      TweenMax.to('.todou_container', 0.5, {
         y: -500,
         onComplete:function(){
           $('.todou_container').remove();
-          swiper.slideTo(1, 500);
+          setTimeout(()=>{
+            swiper.slideTo(1, 500);
+          }, 200);
         }
       })
     }
