@@ -76,12 +76,17 @@
   }
 }
 
+.item {
+  opacity: 0;
+}
+
 .item1 {
   width: 15%;
   position: absolute;
 }
 
 .item1-active {
+  opacity: 1;
   animation: animX 5s cubic-bezier(0.36, 0, 0.64, 1) -2s infinite alternate,
     animY 5s cubic-bezier(0.36, 0, 0.64, 1) 0s infinite alternate,
     scale 10s cubic-bezier(0.36, 0, 0.64, 1) 0s infinite alternate;
@@ -93,6 +98,7 @@
 }
 
 .item2-active {
+  opacity: 1;
   animation: animX 5s cubic-bezier(0.36, 0, 0.64, 1) -4s infinite alternate,
   animY 5s cubic-bezier(0.36, 0, 0.64, 1) -2s infinite alternate,
   scale 10s cubic-bezier(0.36, 0, 0.64, 1) -2s infinite alternate;
@@ -104,6 +110,7 @@
 }
 
 .item3-active {
+  opacity: 1;
   animation: animX 5s cubic-bezier(0.36, 0, 0.64, 1) -6s infinite alternate,
   animY 5s cubic-bezier(0.36, 0, 0.64, 1) -4s infinite alternate,
   scale 10s cubic-bezier(0.36, 0, 0.64, 1) -4s infinite alternate;
@@ -115,6 +122,7 @@
 }
 
 .item4-active {
+  opacity: 1;
   animation: animX 5s cubic-bezier(0.36, 0, 0.64, 1) -8s infinite alternate,
   animY 5s cubic-bezier(0.36, 0, 0.64, 1) -6s infinite alternate,
   scale 10s cubic-bezier(0.36, 0, 0.64, 1) -6s infinite alternate;
@@ -126,6 +134,7 @@
 }
 
 .item5-active {
+  opacity: 1;
   animation: animX 5s cubic-bezier(0.36, 0, 0.64, 1) -10s infinite alternate,
   animY 5s cubic-bezier(0.36, 0, 0.64, 1) -8s infinite alternate,
   scale 10s cubic-bezier(0.36, 0, 0.64, 1) -8s infinite alternate;
