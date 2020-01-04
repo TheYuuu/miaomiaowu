@@ -47,7 +47,7 @@ html {
 }
 
 .format-page #mainBox {
-  overflow: hidden
+  /* overflow: hidden */
 }
 
 .format-page .swiper-container {
