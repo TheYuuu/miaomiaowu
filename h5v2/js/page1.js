@@ -22,12 +22,10 @@ function background_block() {
     'width': '6rem',
     'top': '10%'
   }), TweenMax.fromTo('.bu_title', 1, {
-    'top': '110%',
-    'color': '#F2341A',
+    'top': '110%'
   }, {
     opacity: 1,
-    'top': '99%',
-    'color': '#F2341A',
+    'top': '99%'
   }))
   return tl;
 }
