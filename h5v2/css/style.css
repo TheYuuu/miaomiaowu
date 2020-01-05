@@ -59,6 +59,7 @@ html {
 }
 
 .swiper-slide {
+  max-width: 375px;
   font-size: 12px;
   position: relative;
   overflow: hidden;
