@@ -49,7 +49,8 @@
   position: absolute;
   width: 100%;
   height: 100%;
-  padding: 20px;
+  border: 10px solid white;
+  background: wheat;
 }
 
 
@@ -73,4 +74,12 @@
 .block {
   fill: #F1F1F1;
   stroke: #d0cff5;
+}
+
+.page2_title {
+  color: white;
+}
+
+.page2_text {
+  color: white;
 }

@@ -37,6 +37,7 @@ class HandleSvg {
       .enter().append("path")
       .attr("d", path)
       .attr("class", 'block')
+      .attr("transform", 'translate(10, 0)')
       .style('display', 'none')
       .style('opacity', 0)
 
@@ -85,7 +86,7 @@ class HandleSvg {
       let zoom = that.zoom;
       svg.transition()
         .duration(800)
-        .call(zoom.transform, d3.zoomIdentity.translate(10, 0).scale(1))
+        .call(zoom.transform, d3.zoomIdentity.translate(0, 0).scale(1))
         .on('end', function() {
           that.callbacks[0]();
         })
@@ -110,6 +111,7 @@ class HandleSvg {
       .attr("cy", function (d) {
         return projection([d.pos[1], d.pos[0]])[1];
       })
+      .attr("transform", 'translate(10, 0)')
       .attr("fill", '#FA543C')
       .attr("stroke", '#F7BFB8')
       .attr("stroke-width", 3 / 5.78786421050677)
