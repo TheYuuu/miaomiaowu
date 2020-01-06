@@ -284,7 +284,13 @@ const readFile = function (fileName) {
   });
 };
 
-async function run() {
+async function page2_run() {
+  TweenMax.staggerFrom(['.page_title', '.page_text'], 1.1, {
+    y: -50,
+    opacity: 0,
+    ease: Elastic.easeOut
+  }, 0.5)
+
   const world = await readFile('world-110m.geojson');
   const citys = await readFile('city.json');
 

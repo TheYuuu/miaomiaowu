@@ -74,6 +74,7 @@
 
   let page1On = false;
   let page2On = false;
+  let page3On = false;
   $(window).scroll(function () {
     var scrollTop = $(this).scrollTop();
     var scrollHeight = $('.todou_container').height();
@@ -86,13 +87,19 @@
             if (this.activeIndex === 1) {
               if (!page1On) {
                 page1On = true;
-                page1_On();
+                page1_run();
               }
             }
             if (this.activeIndex === 2) {
               if (!page2On) {
                 page2On = true;
-                run();
+                page2_run();
+              }
+            }
+            if (this.activeIndex === 3) {
+              if (!page3On) {
+                page3On = true;
+                page3_run();
               }
             }
           },

@@ -13,3 +13,21 @@
 .wanted_inf h3 {
   margin-bottom: 3px;
 }
+
+.working_people {
+  position: absolute;
+  left: 0;
+  width: 100vw;
+  height: 100vw;
+  z-index: 1;
+  bottom: -30px;
+}
+
+.beijing {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vw;
+  z-index: 1;
+}

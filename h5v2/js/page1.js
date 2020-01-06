@@ -1,4 +1,4 @@
-function page1_On() {
+function page1_run() {
   let tl = new TimelineMax({
     repeat: 0,
     repeatDelay: 0

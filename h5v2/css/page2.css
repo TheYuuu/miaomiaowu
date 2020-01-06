@@ -72,8 +72,8 @@
 }
 
 .block {
-  fill: #0a060a6e;
-  stroke: #aa12298a;
+  fill: #05051094;
+  stroke: #901a2c8a;
 }
 
 .page_title {
@@ -83,4 +83,5 @@
 .page_text {
   color: white;
   margin-top: 10px;
+  margin-bottom: 10px;
 }
