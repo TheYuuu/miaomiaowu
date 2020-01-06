@@ -49,8 +49,8 @@
   position: absolute;
   width: 100%;
   height: 100%;
-  border: 10px solid white;
-  background: wheat;
+  /* border: 10px solid white;
+  background: wheat; */
 }
 
 
@@ -72,14 +72,15 @@
 }
 
 .block {
-  fill: #F1F1F1;
-  stroke: #d0cff5;
+  fill: #0a060a6e;
+  stroke: #aa12298a;
 }
 
-.page2_title {
+.page_title {
   color: white;
 }
 
-.page2_text {
+.page_text {
   color: white;
+  margin-top: 10px;
 }

@@ -5,3 +5,11 @@
   left: 50%;
   transform: translate(-50%,-50%);
 }
+
+.wanted_inf {
+  text-align: center;
+}
+
+.wanted_inf h3 {
+  margin-bottom: 3px;
+}
