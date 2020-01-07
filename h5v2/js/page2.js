@@ -16,7 +16,7 @@ class HandleSvg {
 
     this.chinaPos = {
       scale: 5.78786421050677,
-      translate: [-771.0539735976545, -671.0558260894893]
+      translate: [-800.0539735976545, -550.0558260894893]
     }
   }
 
@@ -120,7 +120,7 @@ class HandleSvg {
 
     let chinaPos = {
       scale: 5.78786421050677,
-      translate: [-771.0539735976545, -671.0558260894893]
+      translate: [-800.0539735976545, -550.0558260894893]
     }
     node_svg.attr("transform", d3.zoomIdentity.translate(chinaPos.translate[0], chinaPos.translate[1]).scale(chinaPos.scale));
   }

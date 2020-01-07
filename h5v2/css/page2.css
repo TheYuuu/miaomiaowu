@@ -1,9 +1,9 @@
 
 .container {
   position: relative;
-  height: 50%;
-  min-height: 400px;
-  width: 100%;
+  height: calc(100vw - 40px);
+  /* min-height: 400px; */
+  width: calc(100vw - 40px);
   padding: 20px;
   display: flex;
   justify-content: center;
