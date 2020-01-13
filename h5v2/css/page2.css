@@ -1,4 +1,3 @@
-
 .container {
   position: relative;
   height: calc(100vw - 40px);
@@ -40,7 +39,9 @@
   border-right: 1px solid;
 }
 
-.city_num_text_1, .city_num_text_2, #city_num {
+.city_num_text_1,
+.city_num_text_2,
+#city_num {
   visibility: hidden;
   opacity: 0;
 }
@@ -84,4 +85,34 @@
   color: white;
   margin-top: 10px;
   margin-bottom: 10px;
+}
+
+@media (max-height: 700px) {
+  .page_text {
+    color: white;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+}
+
+@media (max-height: 568px) {
+  .page_text {
+    color: white;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    font-size: 0.4rem;
+  }
+
+  .slogan {
+    font-size: 0.65rem;
+  }
+
+  .wanted_inf h3 {
+    margin-bottom: 5px;
+    font-size: 0.3rem;
+  }
+
+  .video-part {
+    margin-top: 0.5rem;
+  }
 }

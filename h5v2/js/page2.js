@@ -9,14 +9,17 @@ class HandleSvg {
     this.svg = d3.select("#earth_svg")
     this.earththsvg = this.svg.append('g')
 
+    const width =  document.querySelector('.container').offsetWidth;
+    const height =  document.querySelector('.container').offsetHeight;
+
     this.asiaPos = {
       scale: 2.306837809675917,
-      translate: [-207.71495739351053, -100.44680000892913]
+      translate: [-207.71495739351053 / 335 * width, -100.44680000892913 / 335 * height]
     }
 
     this.chinaPos = {
       scale: 5.78786421050677,
-      translate: [-800.0539735976545, -550.0558260894893]
+      translate: [-800.0539735976545 / 335 * width, -550.0558260894893 / 335 * height]
     }
   }
 
@@ -50,7 +53,7 @@ class HandleSvg {
 
     this.zoom = d3.zoom().on("zoom", function () {
       earththsvg.style("stroke-width", 1.5 / d3.event.transform.k + "px");
-      earththsvg.attr("transform", d3.event.transform); // updated for d3 v4
+      earththsvg.attr("transform", d3.event.transform);
     });
   }
 
@@ -97,6 +100,7 @@ class HandleSvg {
     let svg = this.svg;
     let citys = this.citys;
     let projection = this.projection;
+    let chinaPos = this.chinaPos;
 
     let node_svg = svg.append('g');
     node_svg.selectAll('.city_node')
@@ -118,10 +122,6 @@ class HandleSvg {
       .attr("opacity", 0)
       .style('display', 'none')
 
-    let chinaPos = {
-      scale: 5.78786421050677,
-      translate: [-800.0539735976545, -550.0558260894893]
-    }
     node_svg.attr("transform", d3.zoomIdentity.translate(chinaPos.translate[0], chinaPos.translate[1]).scale(chinaPos.scale));
   }
 
