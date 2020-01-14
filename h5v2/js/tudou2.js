@@ -90,6 +90,25 @@ function init() {
   let sleep3Top = 1875 / 3321 * height;
   let sleep3Left = 226 / 375 * width;
 
+  let guguchufangTop = 2395 / 3321 * height;
+  let guguchufangLeft = 285 / 375 * width;
+  let gugutextTop = 2344 / 3321 * height;
+  let gugutextLeft = 237 / 375 * width;
+
+  let haochiccTop = 2491 / 3321 * height;
+  let haochiccLeft = 0 / 375 * width;
+  let cctextTop = 2437 / 3321 * height;
+  let cctextLeft = 5 / 375 * width;
+
+  let last1Top = 2970 / 3321 * height;
+  let last1Left = 30 / 375 * width;
+  let last2Top = 2896 / 3321 * height;
+  let last2Left = 75 / 375 * width;
+  let last3Top = 2878 / 3321 * height;
+  let last3Left = 157 / 375 * width;
+  let last4Top = 2950 / 3321 * height;
+  let last4Left = 264 / 375 * width;
+
   $('.qiche').css("top", qicheTop - 50);
   $('.qiche').css("left", qicheLeft + 50);
 
@@ -111,6 +130,25 @@ function init() {
   $('.sleepz2').css("left", sleep2Left);  
   $('.sleepz3').css("top", sleep3Top);
   $('.sleepz3').css("left", sleep3Left);
+
+  $('.guguchufang').css("top", guguchufangTop);
+  $('.guguchufang').css("left", guguchufangLeft);
+  $('.gugutext').css("top", gugutextTop);
+  $('.gugutext').css("left", gugutextLeft);
+
+  $('.haochicc').css("top", haochiccTop);
+  $('.haochicc').css("left", haochiccLeft);
+  $('.cctext').css("top", cctextTop);
+  $('.cctext').css("left", cctextLeft);
+
+  $('.last1').css("top", last1Top);
+  $('.last1').css("left", last1Left);
+  $('.last2').css("top", last2Top);
+  $('.last2').css("left", last2Left);
+  $('.last3').css("top", last3Top);
+  $('.last3').css("left", last3Left);
+  $('.last4').css("top", last4Top);
+  $('.last4').css("left", last4Left);
 
   return {
     qiche: {

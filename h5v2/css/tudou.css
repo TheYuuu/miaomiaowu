@@ -171,16 +171,138 @@
 }
 
 .sleepz1 {
+  opacity: 0;
   position: absolute;
   width: 5%;
+  animation: sleepz1 3s 0s infinite alternate;
 }
 
 .sleepz2 {
+  opacity: 0;
   position: absolute;
   width: 7%;
+  animation: sleepz2 3s 0s infinite alternate;
 }
 
 .sleepz3 {
+  opacity: 0;
   position: absolute;
   width: 9%;
+  animation: sleepz3 3s 0s infinite alternate;
+}
+
+@keyframes sleepz1 {
+  0% {
+    opacity: 0;
+  }
+  25% {
+    opacity: 1;
+  }
+  50% {
+  }
+  75% {
+  }
+  100% {
+  }
+}
+@keyframes sleepz2 {
+  0% {
+    opacity: 0;
+  }
+  25% {
+  }
+  50% {
+    opacity: 1;
+  }
+  75% {
+  }
+  100% {
+  }
+}
+@keyframes sleepz3 {
+  0% {
+    opacity: 0;
+  }
+  25% {
+  }
+  50% {
+  }
+  75% {
+    opacity: 1;
+  }
+  100% {
+  }
+}
+
+.guguchufang {
+  width: 24%;
+  position: absolute;
+}
+
+.gugutext {
+  width: 24%;
+  position: absolute;
+}
+
+.haochicc {
+  width: 24%;
+  position: absolute;
+}
+
+.cctext {
+  width: 20%;
+  position: absolute;
+}
+
+.last1 {
+  width: 20%;
+  position: absolute;
+}
+
+.last2 {
+  width: 20%;
+  position: absolute;
+}
+
+.last3 {
+  width: 40%;
+  position: absolute;
+}
+
+.last4 {
+  width: 20%;
+  position: absolute;
+}
+
+.dadou {
+  width: 25%;
+  position: absolute;
+}
+
+.hand {
+  width: 45%;
+  position: absolute;
+}
+
+.tudouhand {
+  width: 7%;
+  position: absolute;
+}
+
+.tudouhand-active {
+  transform-origin: bottom center;
+  animation: shake 2s infinite;
+}
+
+@keyframes shake {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  50% {
+    transform: rotate(30deg);
+  }
+  100% {
+    transform: rotate(0);
+  }
 }
