@@ -1,15 +1,24 @@
-var params = init();
+let img3 = $('.tuou_back3')[0];
+img3.onload = () => {
+  tudou3On()
+}
+img3.src="./static/tudou3/土豆自白3.png";
 
-var controller = new ScrollMagic.Controller();
-var scene1 = new ScrollMagic.Scene({
-  triggerElement: '.tuou_back3',
-  offset: params.tudouhand.tudouhandTop,
-  duration: 300
-}).setClassToggle(".tudouhand", 'tudouhand-active')
+function tudou3On() {
+  var params = init3();
 
-controller.addScene(scene1);
+  var controller = new ScrollMagic.Controller();
+  var scene1 = new ScrollMagic.Scene({
+    triggerElement: '.tuou_back3',
+    offset: params.tudouhand.tudouhandTop,
+    duration: 300
+  }).setClassToggle(".tudouhand", 'tudouhand-active')
+  
+  controller.addScene(scene1);
+}
 
-function init() {
+
+function init3() {
   let width = document.querySelector('.tuou_back3').clientWidth;
   let height = document.querySelector('.tuou_back3').clientHeight;
 

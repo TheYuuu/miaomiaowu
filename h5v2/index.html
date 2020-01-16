@@ -24,58 +24,11 @@
 <script src="./lib/animation.gsap.js"></script>
 
 <body class="s-ios format-page">
-  <div class="todou_container">
-    <div style="position: relative;">
-      <img src="./static/土豆自白.png" alt="" class="tuou_back tuou_back1">
-      <div class="no-pointer">
-        <img src="./static/rain.png" alt="" class="rain">
-        <img src="./static/yeye.png" alt="" class="yeye">
-        <img src="./static/shougou.png" alt="" class="shougou">
-        <img src="./static/haha.png" alt="" class="haha">
-        <img src="./static/youxiu.png" alt="" class="youxiu">
-        <img src="./static/item1.png" alt="" class="item1 item">
-        <img src="./static/item2.png" alt="" class="item2 item">
-        <img src="./static/item3.png" alt="" class="item3 item">
-        <img src="./static/item4.png" alt="" class="item4 item">
-        <img src="./static/item5.png" alt="" class="item5 item">
-      </div>
-    </div>
-    <div style="position: relative;">
-      <img src="./static/tudou2/土豆自白2.png" alt="" class="tuou_back tuou_back2">
-      <div class="no-pointer">
-        <img src="./static/tudou2/qiche.png" alt="" class="qiche">
-        <img src="./static/tudou2/qiche_text.png" alt="" class="qiche_text">
-        <img src="./static/tudou2/xiaodou.png" alt="" class="xiaodou">
-        <img src="./static/tudou2/daxian.png" alt="" class="daxian">
-        <img src="./static/tudou2/dayuan.png" alt="" class="dayuan">
-        <img src="./static/tudou2/sleepz.png" alt="" class="sleepz1">
-        <img src="./static/tudou2/sleepz.png" alt="" class="sleepz2">
-        <img src="./static/tudou2/sleepz.png" alt="" class="sleepz3">
-        <img src="./static/tudou2/guguchufang.png" alt="" class="guguchufang">
-        <img src="./static/tudou2/gugutext.png" alt="" class="gugutext">
-        <img src="./static/tudou2/haochicc.png" alt="" class="haochicc">
-        <img src="./static/tudou2/cctext.png" alt="" class="cctext">
-        <img src="./static/tudou2/last1.png" alt="" class="last1">
-        <img src="./static/tudou2/last2.png" alt="" class="last2">
-        <img src="./static/tudou2/last3.png" alt="" class="last3">
-        <img src="./static/tudou2/last4.png" alt="" class="last4">
-      </div>
-    </div>
-    <div style="position: relative;">
-      <img src="./static/tudou3/土豆自白3.png" alt="" class="tuou_back tuou_back3">
-      <div class="no-pointer">
-        <img src="./static/tudou3/dadou.png" alt="" class="dadou">
-        <img src="./static/tudou3/hand.png" alt="" class="hand">
-        <img src="./static/tudou3/tudouhand.png" alt="" class="tudouhand tudouhand-active">
-      </div>
-    </div>
-  </div>
   <div id="mainBox">
     <div class="swiper-container">
       <div class="swiper-wrapper">
-        <div class="swiper-slide" id="wrap_1">
-
-        </div>
+        <!-- <div class="swiper-slide" id="wrap_1">
+        </div> -->
         <div class="swiper-slide swiper-slide1">
           <div class="background_block"></div>
           <svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#"
@@ -250,42 +203,83 @@
               </g>
             </g>
           </svg>
-          <div class="title-list">
-            <!-- <img src="./static/tudou.png" alt="" class="tudou"> -->
+          <div class="page1_container">
             <div class="title-list-item">
-              <!-- <span class="title-list-num">一</span>
-              关于我们 -->
               快驴进货隶属于美团点评，美团点评是全球领先的互联网+生活服务平台，为用户和优质商户提供一个连接线上线下的电子商务网络
             </div>
             <div class="title-list-item">
-              <!-- <span class="title-list-num">二</span>
-              招聘信息 -->
               美团点评网为快驴提供业务发展支持，试之拥有前沿的大数据背景，菜品的挖掘更加科学
             </div>
             <div class="title-list-item">
-              <!-- <span class="title-list-num">三</span>
-              视频介绍 -->
               同时有效利用平台内部的活动资源，帮助快驴合同商家更流畅的对店铺进行线上运营
+            </div>
+            <div class="container">
+              <div class="city_num">
+                <p class="city_num_text_1">已服务全国 <span class="num_line"></span></p>
+                <p><span id="city_num">0</span><span class="city_num_text_2">个城市</span></p>
+              </div>
+              <svg id="earth_svg"></svg>
             </div>
           </div>
           <p class="bu_title">快驴进货.全新的一站式采购平台</p>
         </div>
         <div class="swiper-slide swiper-slide2">
+          <div class="todou_container swiper-no-swiping">
+            <div style="position: relative;">
+              <img alt="" class="tuou_back tuou_back1">
+              <div class="no-pointer">
+                <img src="./static/tudou1/rain.png" alt="" class="rain">
+                <img src="./static/tudou1/yeye.png" alt="" class="yeye">
+                <img src="./static/tudou1/shougou.png" alt="" class="shougou">
+                <img src="./static/tudou1/haha.png" alt="" class="haha">
+                <img src="./static/tudou1/youxiu.png" alt="" class="youxiu">
+                <img src="./static/tudou1/item1.png" alt="" class="item1 item">
+                <img src="./static/tudou1/item2.png" alt="" class="item2 item">
+                <img src="./static/tudou1/item3.png" alt="" class="item3 item">
+                <img src="./static/tudou1/item4.png" alt="" class="item4 item">
+                <img src="./static/tudou1/item5.png" alt="" class="item5 item">
+              </div>
+            </div>
+            <div style="position: relative;">
+              <img alt="" class="tuou_back tuou_back2">
+              <div class="no-pointer">
+                <img src="./static/tudou2/qiche.png" alt="" class="qiche">
+                <img src="./static/tudou2/qiche_text.png" alt="" class="qiche_text">
+                <img src="./static/tudou2/xiaodou.png" alt="" class="xiaodou">
+                <img src="./static/tudou2/daxian.png" alt="" class="daxian">
+                <img src="./static/tudou2/dayuan.png" alt="" class="dayuan">
+                <img src="./static/tudou2/sleepz.png" alt="" class="sleepz1">
+                <img src="./static/tudou2/sleepz.png" alt="" class="sleepz2">
+                <img src="./static/tudou2/sleepz.png" alt="" class="sleepz3">
+                <img src="./static/tudou2/guguchufang.png" alt="" class="guguchufang">
+                <img src="./static/tudou2/gugutext.png" alt="" class="gugutext">
+                <img src="./static/tudou2/haochicc.png" alt="" class="haochicc">
+                <img src="./static/tudou2/cctext.png" alt="" class="cctext">
+                <img src="./static/tudou2/last1.png" alt="" class="last1">
+                <img src="./static/tudou2/last2.png" alt="" class="last2">
+                <img src="./static/tudou2/last3.png" alt="" class="last3">
+                <img src="./static/tudou2/last4.png" alt="" class="last4">
+              </div>
+            </div>
+            <div style="position: relative;">
+              <img alt="" class="tuou_back tuou_back3">
+              <div class="no-pointer">
+                <img src="./static/tudou3/dadou.png" alt="" class="dadou">
+                <img src="./static/tudou3/hand.png" alt="" class="hand">
+                <img src="./static/tudou3/tudouhand.png" alt="" class="tudouhand tudouhand-active">
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="swiper-slide swiper-slide2">
           <h1 class="page_title">美团点评 · 快驴事业部</h1>
           <h3 class="page_text">
             快驴进货成立于2016年致力于为全国中小餐饮门店构建一条高效透明的供应链，打通上下游，减少餐厅食材购买流通环节，真正帮老板省钱，省时，省力，省心，为广大商家提供物美价廉的食物原材料一站式采购服务平台。</h3>
-          <div class="container">
-            <div class="city_num">
-              <p class="city_num_text_1">已服务全国 <span class="num_line"></span></p>
-              <p><span id="city_num">0</span><span class="city_num_text_2">个城市</span></p>
-            </div>
-            <svg id="earth_svg"></svg>
-          </div>
           <h3 class="page_text">快驴进货是美团在“帮大家吃得更好，生活更好”的使命驱动下，深入餐饮产业链上游，推出的一站式餐饮供应链平台</h3>
           <h3 class="page_text">快驴进货致力于通过缩短流通环节，降低流通成本，构建专业、短链、高效的餐饮供应链</h3>
           <h3 class="page_text">协助餐饮商户以更低成本，更高效率的方式来获取安全可靠的食材供应，让餐饮采购更简单</h3>
           <p class="bu_title">快驴进货.全新的一站式采购平台</p>
-        </div>
+        </div> -->
         <div class="swiper-slide swiper-slide3">
           <h1 class="page_title">招聘岗位</h1>
           <div class="page_text wanted_inf">

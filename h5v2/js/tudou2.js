@@ -1,70 +1,80 @@
-var params = init();
+let img2 = $('.tuou_back2')[0];
+img2.onload = () => {
+  tudou2On()
+}
+img2.src="./static/tudou2/土豆自白2.png";
 
-var controller = new ScrollMagic.Controller();
-var scene1 = new ScrollMagic.Scene({
-  triggerElement: '.tuou_back2', 
-  offset: params.qiche.qicheTop - 50, 
-  duration: 100 
-}).setTween(".qiche", {
-  opacity: 1,
-  'left': params.qiche.qicheLeft + 'px',
-  'top': params.qiche.qicheTop + 'px'
-})
+function tudou2On() {
 
-var scene2 = new ScrollMagic.Scene({
-  triggerElement: '.tuou_back2', //触发元素
-  offset: params.qiche_text.qichetextTop, 
-  duration: 100 
-}).setTween(".qiche_text", {
-  opacity: 1,
-})
+  var params = init2();
 
-var scene3 = new ScrollMagic.Scene({
-  triggerElement: '.tuou_back2', 
-  offset: params.xiaodou.xiaodouTop, 
-  duration: 300 
-}).setTween(".xiaodou", {
-  opacity: 0.8,
-  width: '20%',
-  'left': (params.xiaodou.xiaodouLeft + 20 ) + 'px',
-  'top': (params.xiaodou.xiaodouTop - 20 ) + 'px'
-})
+  var controller = new ScrollMagic.Controller();
+  var scene1 = new ScrollMagic.Scene({
+    triggerElement: '.tuou_back2', 
+    offset: params.qiche.qicheTop - 50, 
+    duration: 100 
+  }).setTween(".qiche", {
+    opacity: 1,
+    'left': params.qiche.qicheLeft + 'px',
+    'top': params.qiche.qicheTop + 'px'
+  })
+  
+  var scene2 = new ScrollMagic.Scene({
+    triggerElement: '.tuou_back2', //触发元素
+    offset: params.qiche_text.qichetextTop, 
+    duration: 100 
+  }).setTween(".qiche_text", {
+    opacity: 1,
+  })
+  
+  var scene3 = new ScrollMagic.Scene({
+    triggerElement: '.tuou_back2', 
+    offset: params.xiaodou.xiaodouTop, 
+    duration: 300 
+  }).setTween(".xiaodou", {
+    opacity: 0.8,
+    width: '20%',
+    'left': (params.xiaodou.xiaodouLeft + 20 ) + 'px',
+    'top': (params.xiaodou.xiaodouTop - 20 ) + 'px'
+  })
+  
+  var scene4 = new ScrollMagic.Scene({
+    triggerElement: '.tuou_back2', 
+    offset: params.daxian.daxianTop - 100, 
+    duration: 200 
+  }).setTween(".daxian", {
+    opacity: 1,
+    'left': params.daxian.daxianLeft + 'px'
+  })
+  
+  var scene4 = new ScrollMagic.Scene({
+    triggerElement: '.tuou_back2', 
+    offset: params.daxian.daxianTop - 100, 
+    duration: 200 
+  }).setTween(".daxian", {
+    opacity: 1,
+    'left': params.daxian.daxianLeft + 'px'
+  })
+  
+  var scene5 = new ScrollMagic.Scene({
+    triggerElement: '.tuou_back2', 
+    offset: params.dayuan.dayuanTop - 100, 
+    duration: 200 
+  }).setTween(".dayuan", {
+    opacity: 1,
+    'left': params.dayuan.dayuanLeft + 'px'
+  })
+  
+  
+  controller.addScene(scene1);
+  controller.addScene(scene2);
+  controller.addScene(scene3);
+  controller.addScene(scene4);
+  controller.addScene(scene5);
+}
 
-var scene4 = new ScrollMagic.Scene({
-  triggerElement: '.tuou_back2', 
-  offset: params.daxian.daxianTop - 100, 
-  duration: 200 
-}).setTween(".daxian", {
-  opacity: 1,
-  'left': params.daxian.daxianLeft + 'px'
-})
 
-var scene4 = new ScrollMagic.Scene({
-  triggerElement: '.tuou_back2', 
-  offset: params.daxian.daxianTop - 100, 
-  duration: 200 
-}).setTween(".daxian", {
-  opacity: 1,
-  'left': params.daxian.daxianLeft + 'px'
-})
-
-var scene5 = new ScrollMagic.Scene({
-  triggerElement: '.tuou_back2', 
-  offset: params.dayuan.dayuanTop - 100, 
-  duration: 200 
-}).setTween(".dayuan", {
-  opacity: 1,
-  'left': params.dayuan.dayuanLeft + 'px'
-})
-
-
-controller.addScene(scene1);
-controller.addScene(scene2);
-controller.addScene(scene3);
-controller.addScene(scene4);
-controller.addScene(scene5);
-
-function init() {
+function init2() {
   let width = document.querySelector('.tuou_back2').clientWidth;
   let height = document.querySelector('.tuou_back2').clientHeight;
   let qicheTop = 199 / 3321 * height;

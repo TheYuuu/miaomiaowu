@@ -1,5 +1,4 @@
 (function (doc, win) {
-
   var baseRatio = 16 / 9 + 0.001;
   // 多页情况下，尽量不要太低
   var minRatio = 1.4;
@@ -75,45 +74,70 @@
   let page1On = false;
   let page2On = false;
   let page3On = false;
-  $(window).scroll(function () {
-    var scrollTop = $(this).scrollTop();
-    var scrollHeight = $('.todou_container').height();
-    var windowHeight = $(this).height();
-    if (scrollTop + windowHeight >= scrollHeight + 200) {
-      let swiper = new Swiper('.swiper-container', {
-        direction: 'vertical',
-        on: {
-          slideChangeTransitionEnd: function () {
-            if (this.activeIndex === 1) {
-              if (!page1On) {
-                page1On = true;
-                page1_run();
-              }
-            }
-            if (this.activeIndex === 2) {
-              if (!page2On) {
-                page2On = true;
-                page2_run();
-              }
-            }
-            if (this.activeIndex === 3) {
-              if (!page3On) {
-                page3On = true;
-                page3_run();
-              }
-            }
-          },
+  
+  if (!page1On) {
+    page1On = true;
+    page1_run();
+  }
+
+  if (!page2On) {
+    page2On = true;
+    page2_run();
+  }
+
+  let swiper = new Swiper('.swiper-container', {
+    direction: 'vertical',
+    on: {
+      slideChangeTransitionEnd: function () {
+        if (this.activeIndex === 2) {
+          if (!page3On) {
+            page3On = true;
+            page3_run();
+          }
         }
-      });
-      TweenMax.to('.todou_container', 0.5, {
-        y: -500,
-        onComplete:function(){
-          $('.todou_container').remove();
-          setTimeout(()=>{
-            swiper.slideTo(1, 500);
-          }, 200);
-        }
-      })
+      }
     }
   });
+
+  // $(window).scroll(function () {
+  //   var scrollTop = $(this).scrollTop();
+  //   var scrollHeight = $('.todou_container').height();
+  //   var windowHeight = $(this).height();
+  //   if (scrollTop + windowHeight >= scrollHeight + 200) {
+  //     let swiper = new Swiper('.swiper-container', {
+  //       direction: 'vertical',
+  //       on: {
+  //         slideChangeTransitionEnd: function () {
+  //           if (this.activeIndex === 1) {
+  //             if (!page1On) {
+  //               page1On = true;
+  //               page1_run();
+  //             }
+  //           }
+  //           if (this.activeIndex === 2) {
+  //             if (!page2On) {
+  //               page2On = true;
+  //               page2_run();
+  //             }
+  //           }
+  //           if (this.activeIndex === 3) {
+  //             if (!page3On) {
+  //               page3On = true;
+  //               page3_run();
+  //             }
+  //           }
+  //         },
+  //       }
+  //     });
+  //     TweenMax.to('.todou_container', 0.5, {
+  //       y: -500,
+  //       onComplete:function(){
+  //         $('.todou_container').remove();
+  //         setTimeout(()=>{
+  //           swiper.slideTo(1, 500);
+  //         }, 200);
+  //       }
+  //     })
+  //   }
+  // });
 })(document, window);

@@ -1,95 +1,102 @@
-var params = init();
+let img = $('.tuou_back1')[0];
+img.onload = () => {
+  tudou1On()
+}
+img.src="./static/tudou1/土豆自白.png";
 
-$('.tudou').click(function () {
-  TweenMax.to('.tudou', 1, {
-    opacity: 1
+function tudou1On() {
+  var params = init1();
+  $('.tudou').click(function () {
+    TweenMax.to('.tudou', 1, {
+      opacity: 1
+    })
+    TweenMax.fromTo('.todou_container', 1, {
+      'z-index': 20,
+    }, {
+      ease: Power1.easeInOut,
+      opacity: 1
+    })
   })
-  TweenMax.fromTo('.todou_container', 1, {
-    'z-index': 20,
-  }, {
-    ease: Power1.easeInOut,
-    opacity: 1
+  
+  var controller = new ScrollMagic.Controller();
+  var scene1 = new ScrollMagic.Scene({
+    triggerElement: '.tuou_back1', //触发元素
+    offset: params.rain.rainTop, //从开始点滚动多少px触发（施法前摇）
+    duration: 300 //效果持续的距离（法术持续时间/距离）
+  }).setTween(".rain", {
+    opacity: 1,
+    'left': params.rain.rainLeft + 'px'
   })
-})
+  
+  var scene2 = new ScrollMagic.Scene({
+    triggerElement: '.tuou_back1',
+    offset: params.yeye.yeyeTop,
+    duration: 300
+  }).setClassToggle(".yeye", 'yeye-active')
+  
+  var scene3 = new ScrollMagic.Scene({
+    triggerElement: '.tuou_back1',
+    offset: params.shougou.shougouTop - 100,
+    duration: 300
+  }).setTween(".shougou", {
+    opacity: 1,
+    'left': params.shougou.shougouLeft + 'px'
+  })
+  
+  var scene4 = new ScrollMagic.Scene({
+    triggerElement: '.tuou_back1',
+    offset: params.haha.hahaTop,
+    duration: 300
+  }).setClassToggle(".haha", 'yeye-active')
+  
+  var scene5 = new ScrollMagic.Scene({
+    triggerElement: '.tuou_back1',
+    offset: params.youxiu.youxiuTop - 100,
+    duration: 200
+  }).setTween(".youxiu", {
+    opacity: 1,
+    'top': params.youxiu.youxiuTop + 'px'
+  })
+  
+  var scene6 = new ScrollMagic.Scene({
+    triggerElement: '.tuou_back1',
+    offset: params.youxiu.youxiuTop - 100,
+    duration: 500
+  }).setClassToggle(".item1", 'item1-active')
+  var scene7 = new ScrollMagic.Scene({
+    triggerElement: '.tuou_back1',
+    offset: params.youxiu.youxiuTop - 100,
+    duration: 500
+  }).setClassToggle(".item2", 'item2-active')
+  var scene8 = new ScrollMagic.Scene({
+    triggerElement: '.tuou_back1',
+    offset: params.youxiu.youxiuTop - 100,
+    duration: 500
+  }).setClassToggle(".item3", 'item3-active')
+  var scene9 = new ScrollMagic.Scene({
+    triggerElement: '.tuou_back1',
+    offset: params.youxiu.youxiuTop - 100,
+    duration: 500
+  }).setClassToggle(".item4", 'item4-active')
+  var scene10 = new ScrollMagic.Scene({
+    triggerElement: '.tuou_back1',
+    offset: params.youxiu.youxiuTop - 100,
+    duration: 500
+  }).setClassToggle(".item5", 'item5-active')
+  
+  controller.addScene(scene1);
+  controller.addScene(scene2);
+  controller.addScene(scene3);
+  controller.addScene(scene4);
+  controller.addScene(scene5);
+  controller.addScene(scene6);
+  controller.addScene(scene7);
+  controller.addScene(scene8);
+  controller.addScene(scene9);
+  controller.addScene(scene10);
+}
 
-var controller = new ScrollMagic.Controller();
-var scene1 = new ScrollMagic.Scene({
-  triggerElement: '.tuou_back1', //触发元素
-  offset: params.rain.rainTop, //从开始点滚动多少px触发（施法前摇）
-  duration: 300 //效果持续的距离（法术持续时间/距离）
-}).setTween(".rain", {
-  opacity: 1,
-  'left': params.rain.rainLeft + 'px'
-})
-
-var scene2 = new ScrollMagic.Scene({
-  triggerElement: '.tuou_back1',
-  offset: params.yeye.yeyeTop,
-  duration: 300
-}).setClassToggle(".yeye", 'yeye-active')
-
-var scene3 = new ScrollMagic.Scene({
-  triggerElement: '.tuou_back1',
-  offset: params.shougou.shougouTop - 100,
-  duration: 300
-}).setTween(".shougou", {
-  opacity: 1,
-  'left': params.shougou.shougouLeft + 'px'
-})
-
-var scene4 = new ScrollMagic.Scene({
-  triggerElement: '.tuou_back1',
-  offset: params.haha.hahaTop,
-  duration: 300
-}).setClassToggle(".haha", 'yeye-active')
-
-var scene5 = new ScrollMagic.Scene({
-  triggerElement: '.tuou_back1',
-  offset: params.youxiu.youxiuTop - 100,
-  duration: 200
-}).setTween(".youxiu", {
-  opacity: 1,
-  'top': params.youxiu.youxiuTop + 'px'
-})
-
-var scene6 = new ScrollMagic.Scene({
-  triggerElement: '.tuou_back1',
-  offset: params.youxiu.youxiuTop - 100,
-  duration: 500
-}).setClassToggle(".item1", 'item1-active')
-var scene7 = new ScrollMagic.Scene({
-  triggerElement: '.tuou_back1',
-  offset: params.youxiu.youxiuTop - 100,
-  duration: 500
-}).setClassToggle(".item2", 'item2-active')
-var scene8 = new ScrollMagic.Scene({
-  triggerElement: '.tuou_back1',
-  offset: params.youxiu.youxiuTop - 100,
-  duration: 500
-}).setClassToggle(".item3", 'item3-active')
-var scene9 = new ScrollMagic.Scene({
-  triggerElement: '.tuou_back1',
-  offset: params.youxiu.youxiuTop - 100,
-  duration: 500
-}).setClassToggle(".item4", 'item4-active')
-var scene10 = new ScrollMagic.Scene({
-  triggerElement: '.tuou_back1',
-  offset: params.youxiu.youxiuTop - 100,
-  duration: 500
-}).setClassToggle(".item5", 'item5-active')
-
-controller.addScene(scene1);
-controller.addScene(scene2);
-controller.addScene(scene3);
-controller.addScene(scene4);
-controller.addScene(scene5);
-controller.addScene(scene6);
-controller.addScene(scene7);
-controller.addScene(scene8);
-controller.addScene(scene9);
-controller.addScene(scene10);
-
-function init() {
+function init1() {
   let width = document.querySelector('.tuou_back1').clientWidth;
   let height = document.querySelector('.tuou_back1').clientHeight;
   let rainTop = 1502 / 3108 * height;
