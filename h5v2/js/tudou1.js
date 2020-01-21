@@ -1,10 +1,6 @@
-let img = $('.tuou_back1')[0];
-img.onload = () => {
-  tudou1On()
-}
-img.src="./static/tudou1/土豆自白.png";
-
 function tudou1On() {
+  $('.tuou_back1')[0].src="./static/tudou1/土豆自白.png";
+  
   var params = init1();
   $('.tudou').click(function () {
     TweenMax.to('.tudou', 1, {
@@ -202,4 +198,8 @@ function newAnimY(top1, top2) {
   style.type = 'text/css';
   style.innerHTML = runkeyframes;
   $('head')[0].append(style);
+}
+
+export {
+  tudou1On
 }

@@ -1,14 +1,3 @@
-function page1_run() {
-  let tl = new TimelineMax({
-    repeat: 0,
-    repeatDelay: 0
-  });
-  
-  tl.add(background_block())
-    .add(brand())
-    .add(page1Content())
-}
-
 function background_block() {
   var tl = new TimelineLite();
   // 背景缩上去
@@ -79,4 +68,19 @@ function page1Content() {
     //   repeat: 1
     // })
   return tl;
+}
+
+function page1_run() {
+  let tl = new TimelineMax({
+    repeat: 0,
+    repeatDelay: 0
+  });
+  
+  tl.add(background_block())
+    .add(brand())
+    .add(page1Content())
+}
+
+export {
+  page1_run
 }

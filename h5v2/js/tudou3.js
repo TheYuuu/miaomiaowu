@@ -1,12 +1,6 @@
-let img3 = $('.tuou_back3')[0];
-img3.onload = () => {
-  tudou3On()
-}
-img3.src="./static/tudou3/土豆自白3.png";
-
 function tudou3On() {
+  $('.tuou_back3')[0].src="./static/tudou3/土豆自白3.png";
   var params = init3();
-
   var controller = new ScrollMagic.Controller();
   var scene1 = new ScrollMagic.Scene({
     triggerElement: '.tuou_back3',
@@ -46,4 +40,8 @@ function init3() {
       tudouhandLeft
     }
   }
+}
+
+export {
+  tudou3On
 }

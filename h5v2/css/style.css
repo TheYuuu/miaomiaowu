@@ -69,17 +69,17 @@ html {
 }
 
 .swiper-slide1 {
-  background-image: url('../static/574603024_medium.jpg');
+  /* background-image: url('../static/574603024_medium.jpg'); */
   background-size: 100% 100%;
 }
 
 .swiper-slide2 {
-  background-image: url('../static/670691314_huge1.jpg');
+  /* background-image: url('../static/670691314_huge1.jpg'); */
   background-size: 100% 100%;
   overflow: auto;
 }
 
 .swiper-slide3 {
-  background-image: url('../static/670691314_huge2.jpg');
+  /* background-image: url('../static/670691314_huge2.jpg'); */
   background-size: 100% 100%;
 }

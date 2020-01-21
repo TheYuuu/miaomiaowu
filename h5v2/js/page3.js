@@ -5,3 +5,7 @@ function page3_run() {
     ease: Elastic.easeOut
   }, 0.5)
 }
+
+export {
+  page3_run
+}

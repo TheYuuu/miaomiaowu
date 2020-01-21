@@ -1,11 +1,5 @@
-let img2 = $('.tuou_back2')[0];
-img2.onload = () => {
-  tudou2On()
-}
-img2.src="./static/tudou2/土豆自白2.png";
-
 function tudou2On() {
-
+  $('.tuou_back2')[0].src="./static/tudou2/土豆自白2.png";
   var params = init2();
 
   var controller = new ScrollMagic.Controller();
@@ -182,4 +176,8 @@ function init2() {
       dayuanLeft
     }
   }
+}
+
+export {
+  tudou2On
 }

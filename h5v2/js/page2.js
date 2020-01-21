@@ -1,3 +1,5 @@
+import "babel-polyfill";
+
 class HandleSvg {
   constructor(world, citys, callbacks) {
     this.world = world;
@@ -302,4 +304,8 @@ async function page2_run() {
   animationControl.showMap(handleSvg.zoomToChina());
   handleSvg.drawCitys();
   animationControl.addCityDots(handleSvg.removeCityDots());
+}
+
+export {
+  page2_run
 }
