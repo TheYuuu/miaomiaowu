@@ -12,12 +12,13 @@ import { tudou1On } from './js/tudou1'
 import { tudou2On } from './js/tudou2'
 import { tudou3On } from './js/tudou3'
 
+
 (function (doc, win) {
   var baseRatio = 16 / 9 + 0.001;
-  // 多页情况下，尽量不要太低
+
   var minRatio = 1.4;
   var maxRatio = 2.2;
-  // page scroll
+
   var format = 'page';
   var clientInfo = window.clientInfo = {};
   var maxClientWidth = 640;
@@ -30,7 +31,7 @@ import { tudou3On } from './js/tudou3'
       if (clientWidth > maxClientWidth) clientWidth = maxClientWidth;
       if (!clientWidth) return;
       var ratio = clientHeight / clientWidth;
-      // 修复横屏，会屏幕太胖的情况
+
       if (format === 'page') {
         if (ratio < minRatio) {
           clientWidth = clientWidth * ratio / minRatio
