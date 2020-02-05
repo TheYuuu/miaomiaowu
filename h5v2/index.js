@@ -13,6 +13,125 @@ import { tudou2On } from './js/tudou2'
 import { tudou3On } from './js/tudou3'
 
 
+let page1On = false;
+let page2On = false;
+let page3On = false;
+
+let imgList = [
+  './static/574603024_medium.jpg',
+  './static/670691314_huge1.jpg',
+  './static/670691314_huge2.jpg',
+  './static/tudou1/rain.png',
+  './static/tudou1/yeye.png',
+  './static/tudou1/shougou.png',
+  './static/tudou1/haha.png',
+  './static/tudou1/youxiu.png',
+  './static/tudou1/item1.png',
+  './static/tudou1/item2.png',
+  './static/tudou1/item3.png',
+  './static/tudou1/item4.png',
+  './static/tudou1/item5.png',
+  './static/tudou2/qiche.png',
+  './static/tudou2/qiche_text.png',
+  './static/tudou2/xiaodou.png',
+  './static/tudou2/daxian.png',
+  './static/tudou2/dayuan.png',
+  './static/tudou2/sleepz.png',
+  './static/tudou2/guguchufang.png',
+  './static/tudou2/gugutext.png',
+  './static/tudou2/haochicc.png',
+  './static/tudou2/cctext.png',
+  './static/tudou2/last1.png',
+  './static/tudou2/last2.png',
+  './static/tudou2/last3.png',
+  './static/tudou2/last4.png',
+  './static/tudou3/dadou.png',
+  './static/tudou3/hand.png',
+  './static/tudou3/tudouhand.png',
+  './static/tudou1/土豆自白.png',
+  './static/tudou2/土豆自白2.png',
+  './static/tudou3/土豆自白3.png',
+  './static/t.png'
+];
+
+let mtlogo = ['#path130', '#path134'];
+let kllogo = ['#path138', '#path142', '#path146', '#path148', '#path152', '#path156', '#path160', '#path164', '#path168'];
+
+let mtlogoT = TweenMax.fromTo(mtlogo, 0.5, {
+  y: 10
+}, {
+  y: -10,
+  yoyo: true,
+  repeat: -1,
+  yoyoEase: true,
+})
+
+let kllogoT = TweenMax.fromTo(kllogo, 0.5, {
+  y: -10
+}, {
+  y: 10,
+  yoyo: true,
+  repeat: -1,
+  yoyoEase: true,
+})
+
+Promise.all(imgList.map(item => {
+  return new Promise((resolve) => {
+    let img = new Image();
+    img.src = item;
+    img.onload = function () {
+      resolve('done')
+    }
+  })
+})).then(_ => {
+  mtlogoT.kill();
+  kllogoT.kill()
+  TweenMax.to(kllogo, 0.2, {
+    y: 0
+  })
+  TweenMax.to(mtlogo, 0.2, {
+    y: 0
+  })
+
+  $('.swiper-slide1').css("background-image","url(./static/574603024_medium.jpg)")
+  $('.swiper-slide2').css("background-image","url(./static/670691314_huge1.jpg)");
+  $('.swiper-slide3').css("background-image","url(./static/670691314_huge2.jpg)");
+
+  tudou1On();
+  tudou2On();
+  tudou3On();
+
+  
+  if (!page1On) {
+    page1On = true;
+    setTimeout(()=>{
+      page1_run();
+    }, 500)
+  }
+
+  if (!page2On) {
+    page2On = true;
+    setTimeout(()=>{
+      page2_run();
+    }, 1500)
+  }
+
+  let swiper = new Swiper('.swiper-container', {
+    direction: 'vertical',
+    on: {
+      slideChangeTransitionEnd: function () {
+        if (this.activeIndex === 2) {
+          if (!page3On) {
+            page3On = true;
+            page3_run();
+          }
+        }
+      }
+    }
+  });
+});
+
+
 (function (doc, win) {
   var baseRatio = 16 / 9 + 0.001;
 
@@ -86,123 +205,6 @@ import { tudou3On } from './js/tudou3'
   }
 
   doc.addEventListener('DOMContentLoaded', recalc, false);
-  
-  let page1On = false;
-  let page2On = false;
-  let page3On = false;
-
-  let imgList = [
-    './static/574603024_medium.jpg',
-    './static/670691314_huge1.jpg',
-    './static/670691314_huge2.jpg',
-    './static/tudou1/rain.png',
-    './static/tudou1/yeye.png',
-    './static/tudou1/shougou.png',
-    './static/tudou1/haha.png',
-    './static/tudou1/youxiu.png',
-    './static/tudou1/item1.png',
-    './static/tudou1/item2.png',
-    './static/tudou1/item3.png',
-    './static/tudou1/item4.png',
-    './static/tudou1/item5.png',
-    './static/tudou2/qiche.png',
-    './static/tudou2/qiche_text.png',
-    './static/tudou2/xiaodou.png',
-    './static/tudou2/daxian.png',
-    './static/tudou2/dayuan.png',
-    './static/tudou2/sleepz.png',
-    './static/tudou2/guguchufang.png',
-    './static/tudou2/gugutext.png',
-    './static/tudou2/haochicc.png',
-    './static/tudou2/cctext.png',
-    './static/tudou2/last1.png',
-    './static/tudou2/last2.png',
-    './static/tudou2/last3.png',
-    './static/tudou2/last4.png',
-    './static/tudou3/dadou.png',
-    './static/tudou3/hand.png',
-    './static/tudou3/tudouhand.png',
-    './static/tudou1/土豆自白.png',
-    './static/tudou2/土豆自白2.png',
-    './static/tudou3/土豆自白3.png',
-  ];
-
-  let mtlogo = ['#path130', '#path134'];
-  let kllogo = ['#path138', '#path142', '#path146', '#path148', '#path152', '#path156', '#path160', '#path164', '#path168'];
-
-  let mtlogoT = TweenMax.fromTo(mtlogo, 0.5, {
-    y: 10
-  }, {
-    y: -10,
-    yoyo: true,
-    repeat: -1,
-    yoyoEase: true,
-  })
-
-  let kllogoT = TweenMax.fromTo(kllogo, 0.5, {
-    y: -10
-  }, {
-    y: 10,
-    yoyo: true,
-    repeat: -1,
-    yoyoEase: true,
-  })
-  
-  Promise.all(imgList.map(item=>{
-    return new Promise((resolve) => {
-      let img = new Image();
-      img.src = item;
-      img.onload = function () {
-        resolve('done')
-      }
-    })
-  })).then(_ => {
-    mtlogoT.kill();
-    kllogoT.kill()
-    TweenMax.to(kllogo, 0.2, {
-      y: 0
-    })
-    TweenMax.to(mtlogo, 0.2, {
-      y: 0
-    })
-
-    $('.swiper-slide1').css("background-image","url(./static/574603024_medium.jpg)")
-    $('.swiper-slide2').css("background-image","url(./static/670691314_huge1.jpg)");
-    $('.swiper-slide3').css("background-image","url(./static/670691314_huge2.jpg)");
-
-    tudou1On();
-    tudou2On();
-    tudou3On();
-
-    
-    if (!page1On) {
-      page1On = true;
-      setTimeout(()=>{
-        page1_run();
-      }, 500)
-    }
-  
-    if (!page2On) {
-      page2On = true;
-      setTimeout(()=>{
-        page2_run();
-      }, 1500)
-    }
-
-    let swiper = new Swiper('.swiper-container', {
-      direction: 'vertical',
-      on: {
-        slideChangeTransitionEnd: function () {
-          if (this.activeIndex === 2) {
-            if (!page3On) {
-              page3On = true;
-              page3_run();
-            }
-          }
-        }
-      }
-    });
-  })
 
   // $(window).scroll(function () {
   //   var scrollTop = $(this).scrollTop();

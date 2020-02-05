@@ -77,3 +77,8 @@
 .page1_container {
   margin-top: 50%;
 }
+
+.tudou_p {
+  width: 90vw;
+  z-index: 20;
+}
