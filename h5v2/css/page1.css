@@ -81,4 +81,5 @@
 .tudou_p {
   width: 90vw;
   z-index: 20;
+  opacity: 0;
 }
