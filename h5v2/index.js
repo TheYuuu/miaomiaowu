@@ -1,16 +1,16 @@
-import { page1_run } from './js/page1'
-import { page2_run } from './js/page2'
-import { page3_run } from './js/page3'
+import { page1_run } from './src/js/page1'
+import { page2_run } from './src/js/page2'
+import { page3_run } from './src/js/page3'
 
-import './css/page1.css'
-import './css/page2.css'
-import './css/page3.css'
-import './css/style.css'
-import './css/tudou.css'
+import './src/css/page1.css'
+import './src/css/page2.css'
+import './src/css/page3.css'
+import './src/css/style.css'
+import './src/css/tudou.css'
 
-import { tudou1On } from './js/tudou1'
-import { tudou2On } from './js/tudou2'
-import { tudou3On } from './js/tudou3'
+import { tudou1On } from './src/js/tudou1'
+import { tudou2On } from './src/js/tudou2'
+import { tudou3On } from './src/js/tudou3'
 
 
 let page1On = false;

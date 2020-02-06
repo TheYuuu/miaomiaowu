@@ -1,6 +1,11 @@
 const path = require('path');
 const webpack = require('webpack');
-var babelpolyfill = require("babel-polyfill");
+const babelpolyfill = require("babel-polyfill");
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+// const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
 
 /*
  * SplitChunksPlugin is enabled by default and replaced
@@ -15,7 +20,6 @@ var babelpolyfill = require("babel-polyfill");
  *
  */
 
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 /*
  * We've enabled HtmlWebpackPlugin for you! This generates a html
@@ -41,14 +45,24 @@ module.exports = {
 	plugins: [
 		new webpack.ProgressPlugin(),
 		new HtmlWebpackPlugin({
-		title: 'My App',
-		template: './index.html'
-		})
+			title: 'My App',
+			template: './index.html',
+			minify: {
+				removeComments: true,
+				collapseWhitespace: true,
+				minifyCSS: true,
+				minifyJS: true
+			}
+		}),
+		new MiniCssExtractPlugin({
+            filename: "css/[name].css",
+            chunkFilename: "[id].css"
+        }),
+      	// new OptimizeCssAssetsPlugin()
 	],
 
 	module: {
-		rules: [
-			{
+		rules: [{
 				test: /\.m?js$/,
 				exclude: /(node_modules|bower_components|lib)/,
 				use: {
@@ -59,17 +73,27 @@ module.exports = {
 				}
 			},
 			{
-        test: /\.css$/i,
-        use: ['style-loader', 'css-loader'],
+				test: /\.css$/,
+				use: [
+					MiniCssExtractPlugin.loader,
+					"css-loader"
+				]
 			},
 			{
 				test: /\.(png|jpg|gif|svg|ttf)$/,
 				use: ['file-loader']
-		}
+			}
 		]
 	},
 
 	optimization: {
+		minimizer: [
+			new UglifyJsPlugin({
+				uglifyOptions: ({
+					compress: false
+				})
+			})
+		],
 		splitChunks: {
 			cacheGroups: {
 				vendors: {

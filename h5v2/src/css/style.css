@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'Patriciana';
-  src: url('../static/zhanku.ttf');
+  src: url('../assets/zhanku.subset.ttf');
 }
 
 html {
