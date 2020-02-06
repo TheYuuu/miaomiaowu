@@ -1,5 +1,5 @@
 function tudou1On() {
-  $('.tuou_back1')[0].src="./static/tudou1/土豆自白.png";
+  // $('.tuou_back1')[0].src="./static/tudou1/土豆自白.jpg";
   
   var params = init1();
   $('.tudou').click(function () {
@@ -95,6 +95,7 @@ function tudou1On() {
 function init1() {
   let width = document.querySelector('.tuou_back1').clientWidth;
   let height = document.querySelector('.tuou_back1').clientHeight;
+
   let rainTop = 1502 / 3108 * height;
   let rainLeft = 101 / 375 * width;
 

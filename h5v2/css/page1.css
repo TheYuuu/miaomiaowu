@@ -2,14 +2,6 @@
   overflow-y: auto;
 }
 
-.bu_logo {
-  width: 3rem;
-  position: absolute;
-  top: 40%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
 .bu_logo_div {
   position: absolute;
   top: 40%;

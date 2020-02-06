@@ -3,7 +3,7 @@
   "description": "My webpack project",
   "scripts": {
     "build": "webpack",
-    "start": "webpack-dev-server"
+    "start": "webpack-dev-server --host 0.0.0.0 --port 8080" 
   },
   "devDependencies": {
     "@babel/core": "^7.8.3",

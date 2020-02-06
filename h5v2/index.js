@@ -48,32 +48,11 @@ let imgList = [
   './static/tudou3/dadou.png',
   './static/tudou3/hand.png',
   './static/tudou3/tudouhand.png',
-  './static/tudou1/土豆自白.png',
-  './static/tudou2/土豆自白2.png',
-  './static/tudou3/土豆自白3.png',
+  './static/tudou1/土豆自白.jpg',
+  './static/tudou2/土豆自白2.jpg',
+  './static/tudou3/土豆自白3.jpg',
   './static/t.png'
 ];
-
-let mtlogo = ['#path130', '#path134'];
-let kllogo = ['#path138', '#path142', '#path146', '#path148', '#path152', '#path156', '#path160', '#path164', '#path168'];
-
-let mtlogoT = TweenMax.fromTo(mtlogo, 0.5, {
-  y: 10
-}, {
-  y: -10,
-  yoyo: true,
-  repeat: -1,
-  yoyoEase: true,
-})
-
-let kllogoT = TweenMax.fromTo(kllogo, 0.5, {
-  y: -10
-}, {
-  y: 10,
-  yoyo: true,
-  repeat: -1,
-  yoyoEase: true,
-})
 
 Promise.all(imgList.map(item => {
   return new Promise((resolve) => {
@@ -84,8 +63,8 @@ Promise.all(imgList.map(item => {
     }
   })
 })).then(_ => {
-  mtlogoT.kill();
-  kllogoT.kill()
+  window.mtlogoT.kill();
+  window.kllogoT.kill()
   TweenMax.to(kllogo, 0.2, {
     y: 0
   })

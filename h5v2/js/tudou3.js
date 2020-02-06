@@ -1,5 +1,5 @@
 function tudou3On() {
-  $('.tuou_back3')[0].src="./static/tudou3/土豆自白3.png";
+  // $('.tuou_back3')[0].src="./static/tudou3/土豆自白3.jpg";
   var params = init3();
   var controller = new ScrollMagic.Controller();
   var scene1 = new ScrollMagic.Scene({
