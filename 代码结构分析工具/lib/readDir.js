@@ -1,6 +1,8 @@
 var fs = require('fs');
 var path = require('path');
 var { getDependencies } = require('./getDependencies');
+// const depcruise = require('dependency-cruiser').cruise;
+
 var nodes = [];
 var edges = [];
 
@@ -16,6 +18,7 @@ function getDir(filePath, Vnode) {
     var isDir = stats.isDirectory(); //是文件夹
     if (isFile && filename !== ".DS_Store") {
       Vnode.file.push({
+        fileTpye: 'file',
         filedir: filedir,
         parent: Vnode,
         name: filename,
@@ -25,6 +28,7 @@ function getDir(filePath, Vnode) {
     }
     if (isDir) {
       let TNode = {
+        fileTpye: 'dir',
         filedir: filedir,
         parent: Vnode,
         name: filename,

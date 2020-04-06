@@ -2,6 +2,7 @@
   "name": "",
   "version": "",
   "dependencies": {
+    "dependency-cruiser": "^8.2.0",
     "directory-tree": "^2.2.4"
   }
 }
