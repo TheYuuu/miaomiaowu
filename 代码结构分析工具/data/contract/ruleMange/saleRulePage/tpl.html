@@ -1,0 +1,495 @@
+<!-- <div class="rule-mange-con-page">
+  <div class="page-title">
+    条约规则管理
+  </div>
+    <uix-container>
+      <uix-main class="page-content">
+        <uix-form size="small" label-position="left" label-width="auto" ref="ruleForm" :model="params">
+          <div class="form-wrapper m-b-lg">
+            <uix-form-item label="规则类型">
+              <uix-col :sm="13">
+                <uix-input :disabled="true" v-model="params.contractRuleType"></uix-input>
+              </uix-col>
+            </uix-form-item>
+
+            <uix-form-item label="规则编号">
+              <uix-col :sm="13">
+                <uix-input size="small" :disabled="true" placeholder="保存后自动生成" v-model="params.Id"></uix-input>
+              </uix-col>
+            </uix-form-item>
+              
+            <uix-form-item label="规则名称" required prop="name"
+              :rules="[
+                { required: true, message: '规则名称不能为空'},
+              ]"
+            >
+              <uix-col :sm="13">
+                <uix-input size="small" v-model="params.name" maxlength="20" show-word-limit></uix-input>
+              </uix-col>
+            </uix-form-item>
+              
+            <uix-form-item label="规则描述" required prop="description"
+              :rules="[
+                { required: true, message: '规则描述不能为空'},
+              ]"
+            >
+              <uix-col :sm="13">
+                <uix-input size="small" type="textarea"  v-model="params.description" maxlength="200" show-word-limit></uix-input>
+              </uix-col>
+            </uix-form-item>
+
+            <uix-form-item label="活动时间" required>
+              <uix-col :sm="6">
+                <uix-form-item prop="effectiveTime"
+                  :rules="[
+                    { required: true, message: '活动开始时间不能为空'},
+                  ]"
+                >
+                  <uix-date-picker type="date" placeholder="选择日期" align="center" v-model="params.effectiveTime" style="width: 100%;"></uix-date-picker>
+                </uix-form-item>
+              </uix-col>
+              <uix-col class="line text-center" :sm="1">至</uix-col>
+              <uix-col :span="6">
+                <uix-form-item prop="expirationTime"
+                  :rules="[
+                    { required: true, message: '活动结束时间不能为空'},
+                  ]"
+                >
+                  <uix-date-picker placeholder="选择日期" align="center" v-model="params.expirationTime" style="width: 100%;"></uix-date-picker>
+                </uix-form-item>
+              </uix-col>
+            </uix-form-item>
+          </div>
+
+          <transition name="uix-fade-in-linear">
+            <div class="form-wrapper m-b-lg" v-if="ruleArr[0].ruleName.value">
+              <uix-form-item label="账期条约规则" required>
+                <uix-button size="mini" @click="addList(params.accountPeriodRuleVoList)">
+                  新增明细
+                </uix-button>
+              </uix-form-item>
+              <uix-form :model="params" ref="accountPeriodRuleForm">
+                <uix-table
+                  class="ruel-table"
+                  :data="params.accountPeriodRuleVoList"
+                  style="width: 100%;margin-bottom: 15px;padding: 0 30px;"
+                  size="mini"
+                >
+                  <transition name="uix-fade-in-linear">
+                    <uix-table-column label="一级类目" min-width="200" header-align="center" align="center"
+                      v-if="ruleArr[0].dimension[0].value"
+                    >
+                      <template slot-scope="scope">
+                        <uix-form-item :prop="'accountPeriodRuleVoList.' + scope.$index + '.cat1'"
+                          :rules="[
+                            { required: true, message: '一级类目不能为空'},
+                          ]"
+                        >
+                          <uix-select
+                            v-model="scope.row.cat1"
+                            size="mini"
+                            style="width:100%"
+                            filterable
+                            remote
+                            reserve-keyword
+                            :remote-method="cat1QuerySearch"
+                            @change="clearOptions"
+                            @visible-change="clearOptions"
+                            :loading="options.loading"
+                          >
+                            <uix-option
+                              v-for="item in options.cat1List"
+                              :key="item.cat1Id"
+                              :label="item.cat1Name"
+                              :value="`${item.cat1Id},${item.cat1Name}`"
+                            >
+                            </uix-option>
+                          </uix-select>
+                        </uix-form-item>
+                      </template>
+                    </uix-table-column>
+                  </transition>
+
+                  <transition name="uix-fade-in-linear">
+                    <uix-table-column label="二级类目" min-width="200" header-align="center" align="center"
+                      v-if="ruleArr[0].dimension[1].value"
+                    >
+                    <template slot-scope="scope">
+                      <uix-form-item :prop="'accountPeriodRuleVoList.' + scope.$index + '.cat2'"
+                        :rules="[
+                          { required: true, message: '二级类目不能为空'},
+                        ]"
+                      >
+                        <uix-select
+                          v-model="scope.row.cat2"
+                          size="mini"
+                          style="width:100%"
+                          filterable
+                          remote
+                          reserve-keyword
+                          :remote-method="cat2QuerySearch"
+                          @change="clearOptions"
+                          @visible-change="clearOptions"
+                          :loading="options.loading"
+                        >
+                          <uix-option
+                            v-for="item in options.cat2List"
+                            :key="item.cat2Id"
+                            :label="item.cat2Name"
+                            :value="`${item.cat2Id},${item.cat2Name}`"
+                          >
+                          </uix-option>
+                        </uix-select>
+                      </uix-form-item>
+                    </template>
+                    </uix-table-column>
+                  </transition>
+
+                  <transition name="uix-fade-in-linear">
+                    <uix-table-column label="品牌" min-width="200" header-align="center" align="center"
+                      v-if="ruleArr[0].dimension[2].value"
+                    >
+                      <template slot-scope="scope">
+                        <uix-form-item :prop="'accountPeriodRuleVoList.' + scope.$index + '.brand'"
+                          :rules="[
+                            { required: true, message: '品牌不能为空'},
+                          ]"
+                        >
+                          <uix-select
+                            v-model="scope.row.brand"
+                            size="mini"
+                            style="width:100%"
+                            filterable
+                            remote
+                            reserve-keyword
+                            :remote-method="brandQuerySearch"
+                            @change="clearOptions"
+                            @visible-change="clearOptions"
+                            :loading="options.loading"
+                          >
+                            <uix-option
+                              v-for="item in options.brandList"
+                              :key="item.brandId"
+                              :label="item.brandName"
+                              :value="`${item.brandId},${item.brandName}`"
+                            >
+                            </uix-option>
+                          </uix-select>
+                        </uix-form-item>
+
+                      </template>
+                    </uix-table-column>
+                  </transition>
+
+                  <uix-table-column label="结算类型" min-width="200" header-align="center" align="center">
+                    <template slot-scope="scope">
+                      <uix-form-item :prop="'accountPeriodRuleVoList.' + scope.$index + '.settlementType'"
+                        :rules="[
+                          { required: true, message: '结算类型不能为空'},
+                        ]"
+                      >
+                        <uix-select
+                          v-model="scope.row.settlementType"
+                          size="mini"
+                          style="width:100%"
+                        >
+                          <uix-option
+                            v-for="item in saleRulePageEnum.settlementTypeList"
+                            :key="item.value"
+                            :label="item.label"
+                            :value="item.value"
+                          >
+                          </uix-option>
+                        </uix-select>
+                      </uix-form-item>
+                    </template>
+                  </uix-table-column>
+
+                  <uix-table-column label="账期规则" min-width="290" header-align="center" align="center">
+                    <template slot-scope="scope">
+                      <uix-form-item :prop="'accountPeriodRuleVoList.' + scope.$index + '.settlementType'"
+                        :rules="[
+                          { required: true, message: '结算类型不能为空'},
+                        ]"
+                      >
+                      发票审核后(T)+
+                      <uix-input-number
+                        size="mini"
+                        v-model="scope.row.settlementTerm"
+                        style="width:100px"
+                        controls-position="right"
+                        :min="0" :max="999"
+                        :precision="0"
+                      ></uix-input-number>
+                      工作日支付 或
+                      </uix-form-item>
+                    </template>
+                  </uix-table-column>
+
+                  <uix-table-column label="承票天数规则" min-width="190" header-align="center" align="center">
+                    <template slot-scope="scope">
+                      <uix-form-item :prop="'accountPeriodRuleVoList.' + scope.$index + '.settlementType'"
+                        :rules="[
+                          { required: true, message: '结算类型不能为空'},
+                        ]"
+                      >
+                        大于等于
+                        <uix-input-number
+                          size="mini"  
+                          v-model="scope.row.draftTerm" 
+                          style="width:100px" 
+                          controls-position="right"
+                          :min="0" :max="999"
+                          :precision="0"></uix-input-number>
+                        天
+                      </uix-form-item>
+                    </template>
+                  </uix-table-column>
+
+                  <uix-table-column width="80" fixed="right" label="操作" header-align="center" align="center">
+                    <template slot-scope="scope">
+                      <uix-form-item>
+                        <uix-button size="mini" @click="deleteList(params.accountPeriodRuleVoList, scope.$index)"
+                          :disabled="params.accountPeriodRuleVoList.length===1"
+                        >
+                          <em class="uix-icon-delete"></em>
+                        </uix-button>
+                      </uix-form-item>
+                    </template>
+                  </uix-table-column>
+                </uix-table>
+              </uix-form>
+            </div>
+          </transition>
+
+          <transition name="uix-fade-in-linear">
+            <div class="form-wrapper m-b-lg" v-if="ruleArr[1].ruleName.value">
+              <uix-form-item label="商业折扣返利条约规则" required>
+                <uix-button size="mini" @click="addList(params.commercialDiscountRebateRuleVoList)">
+                  新增明细
+                </uix-button>
+              </uix-form-item>
+              <uix-form :model="params" ref="commercialDiscountRebateRuleForm">
+                <uix-table
+                  class="ruel-table"
+                  :data="params.commercialDiscountRebateRuleVoList"
+                  style="width: 100%;margin-bottom: 15px;padding:0px 30px"
+                  size="mini"
+                >
+                  <uix-table-column label="一级类目" min-width="200" header-align="center" align="center"
+                    v-if="ruleArr[1].dimension[0].value"
+                  >
+                    <template slot-scope="scope">
+                      <uix-form-item :prop="'commercialDiscountRebateRuleVoList.' + scope.$index + '.cat1'"
+                        :rules="[
+                          { required: true, message: '一级类目不能为空'},
+                        ]"
+                      >
+                        <uix-select
+                          v-model="scope.row.cat1"
+                          size="mini"
+                          style="width:100%"
+                          filterable
+                          remote
+                          reserve-keyword
+                          :remote-method="cat1QuerySearch"
+                          @change="clearOptions"
+                          @visible-change="clearOptions"
+                          :loading="options.loading"
+                        >
+                          <uix-option
+                            v-for="item in options.cat1List"
+                            :key="item.cat1Id"
+                            :label="item.cat1Name"
+                            :value="`${item.cat1Id},${item.cat1Name}`"
+                          >
+                          </uix-option>
+                        </uix-select>
+                        </uix-form-item>
+                    </template>
+                  </uix-table-column>
+
+                  <uix-table-column label="二级类目" min-width="200" header-align="center" align="center"
+                    v-if="ruleArr[1].dimension[1].value"
+                  >
+                    <template slot-scope="scope">
+                      <uix-form-item :prop="'commercialDiscountRebateRuleVoList.' + scope.$index + '.cat2'"
+                        :rules="[
+                          { required: true, message: '二级类目不能为空'},
+                        ]"
+                      >
+                        <uix-select
+                          v-model="scope.row.cat2"
+                          size="mini"
+                          style="width:100%"
+                          filterable
+                          remote
+                          reserve-keyword
+                          :remote-method="cat2QuerySearch"
+                          @change="clearOptions"
+                          @visible-change="clearOptions"
+                          :loading="options.loading"
+                        >
+                        <uix-option
+                          v-for="item in options.cat2List"
+                          :key="item.cat2Id"
+                          :label="item.cat2Name"
+                          :value="`${item.cat2Id},${item.cat2Name}`"
+                        >
+                        </uix-option>
+                      </uix-select>
+                      </uix-form-item>
+                    </template>
+                  </uix-table-column>
+
+                  <uix-table-column label="品牌" min-width="200" header-align="center" align="center"
+                    v-if="ruleArr[1].dimension[2].value"
+                  >
+                    <template slot-scope="scope">
+                        <uix-form-item :prop="'commercialDiscountRebateRuleVoList.' + scope.$index + '.brand'"
+                          :rules="[
+                            { required: true, message: '品牌不能为空'},
+                          ]"
+                        >
+                          <uix-select
+                            v-model="scope.row.brand"
+                            size="mini"
+                            style="width:100%"
+                            filterable
+                            remote
+                            reserve-keyword
+                            :remote-method="brandQuerySearch"
+                            @change="clearOptions"
+                            @visible-change="clearOptions"
+                            :loading="options.loading"
+                          >
+                            <uix-option
+                              v-for="item in options.brandList"
+                              :key="item.brandId"
+                              :label="item.brandName"
+                              :value="`${item.brandId},${item.brandName}`"
+                            >
+                            </uix-option>
+                          </uix-select>
+                        </uix-form-item>
+                    </template>
+                  </uix-table-column>
+
+                  <uix-table-column label="返利比例规则" min-width="180" header-align="center" align="center">
+                    <template slot-scope="scope">
+                      <uix-form-item :prop="'commercialDiscountRebateRuleVoList.' + scope.$index + '.draftTerm'"
+                        :rules="[
+                          { required: true, message: '返利比例规则不能为空'},
+                        ]"
+                      >
+                        <uix-input-number 
+                          size="mini"  
+                          v-model="scope.row.draftTerm" 
+                          style="width:80px"
+                          :min="0" :max="100"
+                          :controls="false"
+                          :precision="2"
+                          >
+                        </uix-input-number>%
+                      </uix-form-item>
+                    </template>
+                  </uix-table-column>
+
+                  <uix-table-column width="80" fixed="right" label="操作" header-align="center" align="center">
+                    <template slot-scope="scope">
+                      <uix-form-item>
+                        <uix-button size="mini" @click="deleteList(params.commercialDiscountRebateRuleVoList, scope.$index)"
+                          :disabled="params.commercialDiscountRebateRuleVoList.length===1"
+                        >
+                          <em class="uix-icon-delete"></em>
+                        </uix-button>
+                      </uix-form-item>
+                    </template>
+                  </uix-table-column>
+                </uix-table>
+              </uix-form>  
+
+            </div>
+          </transition>
+
+          <transition name="uix-fade-in-linear">
+            <div class="form-wrapper m-b-lg" v-if="ruleArr[2].ruleName.value">
+              <uix-form-item label="保证金条约规则" required>
+                <uix-col :sm="13">
+                  <uix-radio>同一供应商只需一份保证金合同（包括待生效、生效中、已到期和 已终止）</uix-radio>
+                </uix-col>
+              </uix-form-item>
+            </div> 
+          </transition>
+
+          <transition name="uix-fade-in-linear">
+            <div class="form-wrapper m-b-lg" v-if="ruleArr[3].ruleName.value">
+              <uix-form-item label="规则白名单" required>
+                <uix-col :sm="13">
+                  <uix-upload
+                    style="display: inline-block;margin-right: 10px;"
+                    accept=".xls,.xlsx"
+                    size="mini"
+                    class="upload-demo"
+                    action="/klcss/purchase/rule/whitelist/w/uploadWhiteList"
+                    ref="whiteListUploader"
+                    :on-success="uploadWhiteList"
+                    :on-error="uploadFileError"
+                  >
+                    <uix-button size="mini" type="primary">导入供应商</uix-button>
+                  </uix-upload>
+                  <uix-button size="mini" @click="showWhiteList">查看白名单</uix-button>
+                  <uix-button size="mini" @click="downloadTemplate">下载模板</uix-button>
+                </uix-col>
+              </uix-form-item>
+              <uix-form-item>
+                <uix-col :sm="24">
+                  <span class="grey-text">注：白名单中的供应商不遵守以上规则，重复导入将直接覆盖！</span>
+                </uix-col>
+              </uix-form-item>
+            </div>
+          </transition>
+
+          <uix-form-item> 
+            <uix-col :sm="12">
+                <uix-button size="small" class="w" @click="submit">发布</uix-button>
+                <uix-button size="small" class="w" @click="back">取消</uix-button>
+            </uix-col>
+          </uix-form-item>
+          <hr>
+          <div class="form-wrapper m-b-lg">
+            <uix-row :gutter="20" class="m-b">
+              <uix-col :sm="4">
+                <div class="label text-left">
+                  规则定义
+                </div>
+              </uix-col>
+            </uix-row>
+            <uix-table
+              :data="ruleArr"
+              style="width: 100%;padding: 0 30px;"
+              border
+              size="mini"
+            >
+              <uix-table-column label="条约规则" width="300">
+                <template slot-scope="scope">
+                  <uix-checkbox v-model="scope.row.ruleName.value" text-color="#000000">{{scope.row.ruleName.text}}</uix-checkbox>
+                </template>
+              </uix-table-column>
+              <uix-table-column label="规则维度">
+                <template slot-scope="scope">
+                  <uix-checkbox 
+                    v-for="item in scope.row.dimension" 
+                    :key="scope.row.ruleName.text + item.text"
+                    v-model="item.value"
+                    :disabled="!scope.row.ruleName.value" 
+                  >{{item.text}}</uix-checkbox>
+                </template>
+              </uix-table-column>
+            </uix-table>
+          </div>
+        </uix-form>
+      </uix-main>
+    </uix-container>
+  <sale-rule-page-dialogs ref="saleRulePageDialogs"></sale-rule-page-dialogs>
+</div> -->

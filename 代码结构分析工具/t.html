@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    var data = `import  "./tes222";
+                import { Test } from "./test";
+                import { Person as Individual } from "./test";
+                import ruleMange from './ruleMange';
+                import ourSubjectInf from './ourSubjectInf';
+                import saleContract from './saleContract';
+                import * as directives from './directives';
+                @import 'purchasePlan2.css';`
+
+    // function getDep(data) {
+    //   let re = data.match(
+    //     /(?<key>import)\s+(?:(?<alias>[\w,{}\s\*]+)\s+from)?\s*(?:(["'])?(?<ref>[@\w\s\\\/.-]+)\3?)\s*;/g);
+    //   if (!re.length) {
+    //     return;
+    //   }
+    //   console.log(re);
+    // }
+
+    // getDep(data);
+
+    // let results = '';
+    // let impReg = /import\s(.*?)[from]*[\s|.]*?['|"](.*?)['|"]/g;
+    // console.log(data.match(impReg));
+    // while((results = impReg.exec(data)) !== null) {
+    //   console.log(results);
+    // }
+    var test = {
+      children: [],
+      file: [{
+        id: 1,
+        name: 'test',
+        dependencies: [{
+          vals: 'indexFun',
+          from: '../index.ts'
+        }]
+      }],
+      name: 'testDir'
+    }
+
+
+    var node = {
+      children: [test],
+      file: [{
+        id: 0,
+        name: 'index.ts',
+        dependencies: [{
+          vals: 'indexFun',
+          from: './testDir/index.ts'
+        }, {
+          vals: 'indexFun2',
+          from: './testDir/index.ts'
+        }]
+      }],
+      name: 'root'
+    }
+
+    node.file[0].parent = node;
+    test.file[0].parent = test;
+    test.parent = node;
+
+    var nodes = [];
+    var edges = [];
+
+    function find() {
+
+    }
+
+    function findNode(str, node) {
+      let t = node;
+      let impReg = /(\.\.\/)/g;
+      console.log(str);
+      let re = str.match(impReg);
+
+
+      if (re) {
+        while (re) {
+          t = t.parent;
+        }
+      } else {
+        let impReg = /[\.\/|\/|]+([^\/]*)/g;
+        while ((re = impReg.exec(str)) !== null) {
+          t = node.parent.children.filter(v => v.name === re[1]);
+          console.log(re[1], t);
+        }
+      }
+    }
+
+    function handleVals(str) {
+
+    }
+
+    function analysisRoot(root) {
+      for (let i = 0; i < root.file.length; i++) {
+        nodes.push({
+          name: root.file[i].name,
+          id: root.file[i].id
+        });
+
+        let dependencies = root.file[i].dependencies;
+        for (let j = 0; j < dependencies.length; j++) {
+          edges.push({
+            source: root.file[i].id,
+            target: findNode(dependencies[j].from, root.file[i]),
+            values: handleVals(dependencies[j].vals)
+          });
+        }
+      }
+    }
+
+    analysisRoot(node);
+  </script>
+</body>
+
+</html>
