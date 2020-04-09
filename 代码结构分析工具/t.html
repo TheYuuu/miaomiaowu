@@ -1,203 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
 </head>
-
 <body>
   <script>
-    var data = `import  "./tes222";
-                import { Test } from "./test";
-                import { Person as Individual } from "./test";
-                import ruleMange from './ruleMange';
-                import ourSubjectInf from './ourSubjectInf';
-                import saleContract from './saleContract';
-                import * as directives from './directives';
-                @import 'purchasePlan2.css';`
-
-    // function getDep(data) {
-    //   let re = data.match(
-    //     /(?<key>import)\s+(?:(?<alias>[\w,{}\s\*]+)\s+from)?\s*(?:(["'])?(?<ref>[@\w\s\\\/.-]+)\3?)\s*;/g);
-    //   if (!re.length) {
-    //     return;
+    let str = 'asdasdasda'
+    let fileReg = /([\.{1,2}\/]|[\/*])([^\/]*)/g;
+    console.log(str.match(fileReg));
+    console.log(fileReg.exec(str));
+    let re;
+    // while ((re = fileReg.exec(str)) !== null) {
+    //   switch(re[1]) {
+    //     case '../':
+    //       t = findPre({ node: t,  name: re[2] });
+    //       break;
+    //     case './':
+    //       t = findNext({ node: t,  name: re[2] });
+    //       break;
+    //     case '/':
+    //       t = findNext({ node: t,  name: re[2] });
+    //       break;
     //   }
-    //   console.log(re);
     // }
-
-    // getDep(data);
-
-    // let results = '';
-    // let impReg = /import\s(.*?)[from]*[\s|.]*?['|"](.*?)['|"]/g;
-    // console.log(data.match(impReg));
-    // while((results = impReg.exec(data)) !== null) {
-    //   console.log(results);
-    // }
-    var test = {
-      children: [],
-      file: [{
-        id: 1,
-        name: 'test',
-        dependencies: [
-          {
-          vals: 'indexFun',
-          from: '../index.ts'
-        },
-        {
-          vals: '{ Test }',
-          from: '../index.ts'
-        },
-        {
-          vals: '{ Person as Individual }',
-          from: '../index.ts'
-        },
-        {
-          vals: '{ Test, Test2 }',
-          from: '../index.ts'
-        }
-        ,
-        {
-          vals: '* as directives',
-          from: '../index.ts'
-        }
-      ],
-        fileTpye: 'file'
-      }, {
-        id: 2,
-        name: 'index.ts',
-        dependencies: [],
-        fileTpye: 'file'
-      }],
-      name: 'testDir',
-      fileTpye: 'dir'
-    }
-
-    var node = {
-      children: [test],
-      file: [{
-        id: 0,
-        name: 'index.ts',
-        dependencies: [{
-          vals: 'testFun',
-          from: './testDir/index.ts'
-        }
-        , {
-          vals: 'testFun2',
-          from: './testDir'
-        }
-      ],
-        fileTpye: 'file'
-      }],
-      name: 'root',
-      fileTpye: 'dir'
-    }
-
-    node.file[0].parent = node;
-    test.file[0].parent = node;
-    test.parent = node;
-
-    var nodes = [];
-    var edges = [];
-
-    function getTarget(name, t) {
-      let p = t;
-      if (p.fileTpye === 'file') {
-        p = p.parent;
-      }
-      let targetDir = p.children.filter(v => v.name === name);
-      let targetFile = p.file.filter(v => v.name === name);
-      if (targetDir.length) {
-        p = targetDir[0];
-      } else if (targetFile.length) {
-        p = targetFile[0];
-      }
-      return p;
-    }
-
-    function findPre(params) {
-      let { node, name } = params;
-      let p = node;
-      if (name) {
-        p = getTarget(name, p);
-      }
-      return p;
-    }
-
-    function findNext(params) {
-      let { node, name } = params;
-      let t;
-      t = getTarget(name, node);
-
-      return t;
-    }
-
-    function findNode(str, node) {
-      let t = node;
-      let fileReg = /(\.{0,2}\/)([^\/]*)/g;
-      let re;
-      while ((re = fileReg.exec(str)) !== null) {
-        switch(re[1]) {
-          case '../':
-            t = findPre({ node: t,  name: re[2] });
-            break;
-          case './':
-            t = findNext({ node: t,  name: re[2] });
-            break;
-          case '/':
-            t = findNext({ node: t,  name: re[2] });
-            break;
-        }
-      }
-      if(t && t.fileTpye === 'dir') {
-        t = t.file.filter(v => v.name === 'index.ts')[0] || null;
-      }
-      return t.id;
-    }
-
-    function handleVals(str) {
-      let re = str;
-      if(!str) {
-        return ['*'];
-      }
-
-      if (/^\{\s+(.*)\s+\}$/g.exec(str)) {
-        re = /^\{\s+(.*)\s+\}$/g.exec(str)[1];
-      }
-
-      re = re.split(' as ')[0].split(',').map(
-          item => {
-            return item.replace(/\s+/, '');
-          });
-
-      return re;
-    }
-
-    function analysisRoot(root) {
-      for (let i = 0; i < root.file.length; i++) {
-        nodes.push({
-          name: root.file[i].name,
-          id: root.file[i].id
-        });
-
-        let dependencies = root.file[i].dependencies;
-        for (let j = 0; j < dependencies.length; j++) {
-          edges.push({
-            source: root.file[i].id,
-            target: findNode(dependencies[j].from, root.file[i]),
-            values: handleVals(dependencies[j].vals)
-          });
-        }
-
-        for (let k = 0; k < root.children.length; k++) {
-          analysisRoot(root.children[k]);
-        }
-      }
-    }
-
-    analysisRoot(node);
   </script>
 </body>
-
 </html>

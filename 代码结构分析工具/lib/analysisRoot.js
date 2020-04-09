@@ -6,8 +6,8 @@ function getTarget(name, t) {
   if (p.fileTpye === 'file') {
     p = p.parent;
   }
-  let targetDir = p.children.filter(v => v.name === name);
-  let targetFile = p.file.filter(v => v.name === name);
+  let targetDir = p.dirs.filter(v => v.name.split(".")[0] === name.split(".")[0]);
+  let targetFile = p.files.filter(v => v.name.split(".")[0] === name.split(".")[0]);
   if (targetDir.length) {
     p = targetDir[0];
   } else if (targetFile.length) {
@@ -37,7 +37,10 @@ function findNode(str, node) {
   let t = node;
   let fileReg = /(\.{0,2}\/)([^\/]*)/g;
   let re;
+  let lastRe = '';
+
   while ((re = fileReg.exec(str)) !== null) {
+    lastRe = re[2] || lastRe;
     switch(re[1]) {
       case '../':
         t = findPre({ node: t,  name: re[2] });
@@ -50,8 +53,12 @@ function findNode(str, node) {
         break;
     }
   }
-  if(t && t.fileTpye === 'dir') {
-    t = t.file.filter(v => v.name === 'index.ts')[0] || null;
+
+  if(t && t.fileTpye === 'dir' && lastRe === t.name) {
+    t = t.files.filter(v => v.name === 'index.ts')[0] || null;
+  }
+  if (t && t.id === node.id) {
+    t = null;
   }
 
   return t ? t.id : null;
@@ -76,32 +83,63 @@ function handleVals(str) {
 }
 
 function analysisRoot(root) {
-  for (let i = 0; i < root.file.length; i++) {
-    console.log(root.file[i].id, root.file[i].name);
-    nodes.push({
-      filedir: root.file[i].filedir,
-      name: root.file[i].name,
-      id: root.file[i].id
-    });
-
-    let dependencies = root.file[i].dependencies;
-    for (let j = 0; j < dependencies.length; j++) {
-      edges.push({
-        source: root.file[i].id,
-        target: findNode(dependencies[j].from, root.file[i]),
-        values: handleVals(dependencies[j].vals)
+  for (let i = 0; i < root.files.length; i++) {
+    if (!root.files[i].record) {
+      root.files[i].record = true;
+      nodes.push({
+        filedir: root.files[i].filedir,
+        name: root.files[i].name,
+        id: String(root.files[i].id)
       });
     }
 
-    for (let k = 0; k < root.children.length; k++) {
-      analysisRoot(root.children[k]);
+    let dependencies = root.files[i].dependencies;
+    for (let j = 0; j < dependencies.length; j++) {
+      let findRe = findNode(dependencies[j].from, root.files[i]);
+      if (findRe) {
+        edges.push({
+          target: String(root.files[i].id),
+          source: String(findRe),
+          values: handleVals(dependencies[j].vals)
+        });
+      }
     }
+
+    for (let k = 0; k < root.dirs.length; k++) {
+      analysisRoot(root.dirs[k]);
+    }
+  }
+
+  for (let k = 0; k < root.dirs.length; k++) {
+    analysisRoot(root.dirs[k]);
   }
 
   return { nodes, edges };
 }
 
 
+function delAttr(root) {
+  root.value = 1;
+  delete root.parent;
+
+  if (root.fileTpye === 'dir') {
+    root.children = root.files.concat(root.dirs);
+  } else {
+    root.children = root.files;
+  }
+  
+  delete root.files;
+  delete root.dirs;
+  for (let i = 0; i < root.children.length; i++) {
+    delete root.children[i].parent;
+    if (root.children[i].fileTpye === 'dir') {
+      delAttr(root.children[i]);
+    }
+  }
+}
+
+
 module.exports = {
-  analysisRoot
+  analysisRoot,
+  delAttr
 }

@@ -3,11 +3,7 @@ var path = require('path');
 var { getDependencies } = require('./getDependencies');
 // const depcruise = require('dependency-cruiser').cruise;
 
-var nodes = [];
-var edges = [];
-
 var id = 0;
-
 function getDir(filePath, Vnode) {
   var files = fs.readdirSync(filePath);
   files.forEach(function (filename) {
@@ -17,12 +13,12 @@ function getDir(filePath, Vnode) {
     var isFile = stats.isFile(); //是文件
     var isDir = stats.isDirectory(); //是文件夹
     if (isFile && filename !== ".DS_Store") {
-      Vnode.file.push({
+      Vnode.files.push({
         fileTpye: 'file',
         filedir: filedir,
         parent: Vnode,
         name: filename,
-        id: id++,
+        id: String(id++),
         dependencies: getDependencies(filedir)
       });
     }
@@ -32,10 +28,11 @@ function getDir(filePath, Vnode) {
         filedir: filedir,
         parent: Vnode,
         name: filename,
-        file: [],
-        children: []
+        files: [],
+        dirs: [],
+        id: String(id++)
       };
-      Vnode.children.push(TNode);
+      Vnode.dirs.push(TNode);
       getDir(filedir, TNode);
     }
   });
