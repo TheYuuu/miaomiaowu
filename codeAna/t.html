@@ -11,7 +11,7 @@
   treeNode
 }`;
 
-    let r = /^\{([\s\S]*)\}$/g;
+    let r = /\{\s*([0-9|a-z|A-Z]*)\s*\}/g;
     console.log(s.match(r));
     console.log(r.exec(s));
   </script>
