@@ -69,11 +69,13 @@ function handleVals(str) {
   if(!str) {
     return ['*'];
   }
+  console.log(str);
+  console.log(/^\{([\s\S]*)\}$/g.exec(str));
 
-  if (/^\{\s+(.*)\s+\}$/g.exec(str)) {
-    re = /^\{\s+(.*)\s+\}$/g.exec(str)[1];
+  if (/^\{\s+([\s\S]*)\s+\}$/g.exec(str)) {
+    re = /^\{\s+([\s\S]*)\s+\}$/g.exec(str)[1];
   }
-
+  console.log(re);
   re = re.split(' as ')[0].split(',').map(
       item => {
         return item.replace(/\s+/, '');

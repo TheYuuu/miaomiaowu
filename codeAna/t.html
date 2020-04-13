@@ -7,24 +7,13 @@
 </head>
 <body>
   <script>
-    let str = 'asdasdasda'
-    let fileReg = /([\.{1,2}\/]|[\/*])([^\/]*)/g;
-    console.log(str.match(fileReg));
-    console.log(fileReg.exec(str));
-    let re;
-    // while ((re = fileReg.exec(str)) !== null) {
-    //   switch(re[1]) {
-    //     case '../':
-    //       t = findPre({ node: t,  name: re[2] });
-    //       break;
-    //     case './':
-    //       t = findNext({ node: t,  name: re[2] });
-    //       break;
-    //     case '/':
-    //       t = findNext({ node: t,  name: re[2] });
-    //       break;
-    //   }
-    // }
+    let s = `{
+  treeNode
+}`;
+
+    let r = /^\{([\s\S]*)\}$/g;
+    console.log(s.match(r));
+    console.log(r.exec(s));
   </script>
 </body>
 </html>
