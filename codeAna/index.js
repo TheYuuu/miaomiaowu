@@ -1,4 +1,5 @@
-var path = require('path');
+const path = require('path');
+const fs = require('fs');
 const Koa = require('koa')
 const compress = require('koa-compress')
 const Router = require('koa-router')
@@ -34,6 +35,20 @@ router.get('/getNodeLink', (ctx, next) => {
     ctx.body = {
       "nodes": nodes,
       "links": edges
+    };
+  } catch (e) {
+    console.log(e)
+    next(e)
+  }
+});
+
+router.get('/getFileContent', (ctx, next) => {
+  try {
+    let query = ctx.query.filePath;
+    let data = fs.readFileSync(query).toString();
+    ctx.body = {
+      "code": data,
+      "title": query.replace(filePath, '')
     };
   } catch (e) {
     console.log(e)

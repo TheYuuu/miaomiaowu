@@ -1,12 +1,10 @@
 <template>
   <div id="codeEdit_div">
-    <el-button @click="open">默认按钮</el-button>
     <el-drawer
       :title="title"
       :visible.sync="table"
       direction="rtl"
       size="50%">
-      <!-- <textarea class="form-control" id="editor" name="code" :v-model="data"></textarea> -->
       <codemirror v-model="data" :options="cssOptions"></codemirror>
     </el-drawer>
   </div>
@@ -18,6 +16,7 @@ import {
   Prop,
   Vue
 } from 'vue-property-decorator';
+import axios from 'axios';
 
 import 'codemirror/mode/javascript/javascript.js'
 import 'codemirror/mode/css/css.js'
@@ -32,17 +31,38 @@ import 'codemirror/theme/ayu-dark.css'
   name: 'codeEdit'
 })
 export default class extends Vue {
-  table = true;
-  title = '12312';
-  data = `var o = 0;
-console.log(1231231)`;
+  table = false;
+  title = '';
+  data = '';
   cssOptions= {
-    tabSize: 4,
+    tabSize: 2,
     mode: 'javascript',
     theme: 'ayu-dark',
     lineNumbers: true,
     line: true,
+    lineWrapping: true,
+    foldGutter: true,
+    gutters:["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
+    matchBrackets: true
   }
+
+  created() {
+    const vm = this;
+
+    vm.$bus.$on("openFile", (filePath) => {
+      vm.table = true;
+      vm.title = filePath;
+      axios.get('/api/getFileContent', {
+        params: {
+          filePath: filePath
+        }
+      }).then(({ data }) => {
+        vm.title = data.title;
+        vm.data = data.code;
+      });
+    });
+  }
+
   mounted() {
 
   }
@@ -54,10 +74,11 @@ console.log(1231231)`;
 </script>
 
 <style>
-#codeEdit_div {
-  width: 100%;
-  height: 100%;
-  user-select: none;
-  border: 1px solid;
+.CodeMirror {
+  height: 100%!important;
+}
+
+.el-drawer__body {
+  overflow-y: auto;
 }
 </style>

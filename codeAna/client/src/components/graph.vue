@@ -65,6 +65,12 @@ export default class extends Vue {
         return v;
       });
       vm.updataGraph();
+
+      vm.myChart.on('click', function (params) {
+        if(params.data.filedir){
+          vm.openFile(params.data.filedir);
+        }
+      });
     });
   }
 
@@ -119,6 +125,10 @@ export default class extends Vue {
     if (option && typeof option === "object") {
       myChart.setOption(option, true);
     }
+  }
+
+  openFile(filePath) {
+    this.$bus.$emit("openFile", filePath);
   }
 }
 </script>
