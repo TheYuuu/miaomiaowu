@@ -1,0 +1,168 @@
+<!-- <div class="rule-mange-page">
+  <div class="page-title">条约规则管理</div>
+  <uix-container>
+      <uix-main class="page-search">
+      <uix-form size="small" label-position="top">
+        <uix-row :gutter="20" class="m-b">
+          <uix-col :sm="6">
+            <uix-form-item label="规则编号">
+              <uix-input v-model="params.ruleId" size="small"></uix-input>
+            </uix-form-item>
+          </uix-col>
+          <uix-col :sm="6">
+            <uix-form-item label="规则名称">
+              <uix-input v-model="params.name" size="small"></uix-input>
+            </uix-form-item>
+          </uix-col>
+          <uix-col :sm="6">
+            <uix-form-item label="生效日期">
+              <uix-date-picker
+                style="width:100%"
+                v-model="params.beginDate"
+                size="small"
+              >
+              </uix-date-picker>
+            </uix-form-item>
+          </uix-col>
+          <uix-col :sm="6" class="btm">
+            <uix-form-item>
+              <uix-date-picker
+                style="width:100%"
+                v-model="params.endDate"
+                size="small"
+              >
+              </uix-date-picker>
+            </uix-form-item>
+          </uix-col>
+        </uix-row>
+        <uix-row :gutter="20" class="m-b">
+          <uix-col :sm="6">
+            <uix-form-item label="状态">
+              <uix-select
+                v-model="params.contractRuleStatus"
+                size="small"
+                style="width:100%"
+              >
+              <uix-option
+                v-for="item in options.contractRuleStatusList"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              >
+              </uix-option>
+            </uix-select>
+            </uix-form-item>
+          </uix-col>
+          <uix-col :sm="6">
+            <uix-form-item label="规则类型">
+            <uix-select
+              v-model="params.contractRuleType"
+              size="small"
+              style="width:100%"
+            >
+              <uix-option
+                style="width:100%"
+                v-for="item in options.contractRuleTypeList"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              >
+              </uix-option>
+            </uix-select>
+            </uix-form-item>
+          </uix-col>
+        </uix-row>
+        <uix-row :gutter="20" class="m-t-8">
+          <uix-col :span="24" class="text-center">
+            <uix-form-item>
+              <uix-button @click="reset" size="small" class="w">重置</uix-button>
+              <uix-button type="primary" @click="load" size="small" class="w">查询</uix-button>
+            </uix-form-item>
+          </uix-col>
+        </uix-row>
+      </uix-form>
+    </uix-main>
+  </uix-container>
+  <uix-container>
+    <uix-main class="page-content">
+      <uix-button type="default m-l-10" size="small" @click="createRule">
+        新建规则版本
+      </uix-button>
+      <uix-table
+        :data="tableData"
+        style="width: 100%;margin-top: 20px"
+        v-loading="loading"
+      >
+        <uix-table-column prop="ruleId" label="规则编号" min-width="120">
+        </uix-table-column>
+        <uix-table-column prop="name" label="规则名称" min-width="120">
+        </uix-table-column>
+        <uix-table-column
+          prop="contractRuleTypeStr"
+          label="规则类型"
+          width="135"
+        >
+        </uix-table-column>
+        <uix-table-column prop="effectiveTime" label="生效时间" min-width="120">
+          <template slot-scope="scope">
+            <span> {{ moment(+scope.row.effectiveTime).format('YYYYMMDD') }} </span>
+          </template>
+        </uix-table-column>
+        <uix-table-column label="实际生效时间" min-width="150">
+          <template slot-scope="scope">
+            <div
+              v-for="(time, index) in scope.row.actualTimeRange"
+              :key="index + time.effectiveTime + time.expireTime"
+            >
+              <span> {{ moment(+time.effectiveTime).format('YYYYMMDD') }}-{{ moment(+time.expireTime).format('YYYYMMDD') }} </span>
+            </div>
+          </template>
+        </uix-table-column>
+        <uix-table-column prop="creator" label="创建人" min-width="120">
+        </uix-table-column>
+        <uix-table-column
+          prop="createTime"
+          label="创建时间"
+          min-width="150"
+        >
+          <template slot-scope="scope">
+            <span> {{ moment(+scope.row.createTime).format('YYYYMMDD HH:mm:ss') }} </span>
+          </template>
+        </uix-table-column>
+        <uix-table-column
+          prop="contractRuleStatusStr"
+          label="状态"
+          min-width="60"
+        >
+        </uix-table-column>
+        <uix-table-column
+          label="操作" min-width="232">
+          <template slot-scope="scope">
+            <uix-button size="mini"
+              @click="showDetail(scope.row)">查看详情
+            </uix-button>
+            <uix-button
+              size="mini"
+              v-if="scope.row.contractRuleStatus === 'ENABLE'"
+              @click="ruleOff(scope.row)">停用
+            </uix-button>
+            <uix-button size="mini"
+              v-if="scope.row.contractRuleStatus === 'DISABLE'"
+              @click="ruleOn(scope.row)">启用
+            </uix-button>
+          </template>
+        </uix-table-column>
+      </uix-table>
+      <uix-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="pagination.pageNo"
+        :page-size="pagination.pageSize"
+        :page-sizes="[10, 20, 50, 100]"
+        :total="pagination.total"
+        layout="sizes, prev, pager, next, total"
+      ></uix-pagination>
+    </uix-main>
+  </uix-container>
+  <rule-mange-dialogs ref="ruleMangeDialogs"></rule-mange-dialogs>
+</div> -->
