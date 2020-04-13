@@ -5,6 +5,7 @@ const compress = require('koa-compress')
 const Router = require('koa-router')
 const cors = require('@koa/cors')
 const serve = require('koa-static')
+const bodyParser = require('koa-bodyparser')
 
 const {
   getData
@@ -13,6 +14,7 @@ const {
 const app = new Koa()
 const router = new Router()
 
+app.use(bodyParser())
 app.use(cors())
 app.use(compress())
 
@@ -55,6 +57,32 @@ router.get('/getFileContent', (ctx, next) => {
     next(e)
   }
 });
+
+router.post('/editFile', async (ctx, next) => {
+  try {
+    let postData = ctx.request.body.data;
+    let status = 1;
+    let errInf = null;
+    await fs.writeFile(postData.filePath, postData.content,  function(err) {
+      if (err) {
+        status = 0;
+        message = '写入失败';
+        errInf = err;
+        return console.error(err);
+      }
+   });
+
+    ctx.body = {
+      'message': '写入成功',
+      'status': status,
+      'errInf': errInf
+    };
+  } catch (e) {
+    console.log(e)
+    next(e)
+  }
+});
+
 
 app.use(router.routes())
 

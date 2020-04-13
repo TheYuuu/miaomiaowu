@@ -60,12 +60,16 @@ export default class extends Vue {
 </script>
 
 <style>
-#treeMap,
-#treeSvg {
+#treeMap {
   width: 100%;
   height: 100%;
   user-select: none;
   border: 1px solid;
+}
+
+#treeSvg {
+  width: 100%;
+  height: 100%;
 }
 
 .node text {
