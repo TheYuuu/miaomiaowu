@@ -1,21 +1,5 @@
 <template>
 <div id="treeMap">
-  <div class="toolBox">
-    <el-col :span="20">
-      <div class="grid-content bg-purple">
-        <el-select v-model="modules" filterable placeholder="请选择模块" size="mini" style="margin-right:10px">
-          <el-option
-            v-for="item in moduleList"
-            :key="item"
-            :label="item"
-            :value="item">
-          </el-option>
-        </el-select>
-        <el-button size="mini">确定</el-button>
-      </div>
-    </el-col>
-  </div>
-
   <svg id="treeSvg">
     <defs>
       <pattern v-for="item in icons" :key="item.id"
@@ -44,30 +28,40 @@ import ChartController from '../assets/TreeChart';
 export default class extends Vue {
   @Prop() data;
   icons = [];
-  modules = '';
-  moduleList = [];
+
+  created() {
+    const vm = this;
+
+    vm.$bus.$on("openFile", (filePath) => {
+      vm.table = true;
+      vm.changfile = filePath;
+      axios.get('/api/getFileContent', {
+        params: {
+          filePath: filePath
+        }
+      }).then(({ data }) => {
+      });
+    });
+
+    vm.$bus.$on("updateRoot", (moduleItem) => {
+      vm.getRootInf(moduleItem);
+    });
+  }
 
   mounted() {
     let vm = this;
-    axios.get('/api/getRoot').then(d => {
-      let width = document.getElementById('treeMap').offsetWidth;
-      let height = document.getElementById('treeMap').offsetHeight;
-      let chart = new ChartController({
-        size: {
-          width,
-          height
-        },
-        dirTree: d.data.root,
-        domsvg: d3.select('#treeSvg'),
-        callback:{
-          addNode: vm.addNode(),
-          delNode: vm.delNode()
-        }
-      });
-      chart.initCollapseClusterChart2();
-    });
+    vm.getRootInf('contract')
+  }
 
-    axios.get('/api/fileTypes').then(({ data }) => {
+  getRootInf(moduleItem) {
+    let vm = this;
+    axios.get('/api/getRootInf', {
+      params: {
+        moduleItem: moduleItem
+      }
+    }).then(({ data }) => {
+      vm.updataView(data.root);
+
       vm.icons = data.fileTypes.map(item => {
         return {
           id: item + '_icon',
@@ -75,6 +69,27 @@ export default class extends Vue {
         }
       });
     });
+  }
+
+  updataView(root) {
+    let vm = this;
+
+    let width = document.getElementById('treeMap').offsetWidth;
+    let height = document.getElementById('treeMap').offsetHeight;
+    let chart = new ChartController({
+      size: {
+        width,
+        height
+      },
+      dirTree: root,
+      domsvg: d3.select('#treeSvg'),
+      callback:{
+        addNode: vm.addNode(),
+        delNode: vm.delNode()
+      }
+    });
+    d3.select('#treeSvg').selectAll('g').remove();
+    chart.initCollapseClusterChart2();
   }
 
   addNode() {
@@ -117,12 +132,4 @@ export default class extends Vue {
   stroke: red;
   stroke-width: 1px;
 }
-
-.toolBox {
-  position: absolute;
-  z-index: 10;
-  width: 100%;
-  padding: 10px;
-}
-
 </style>

@@ -8,7 +8,8 @@ const serve = require('koa-static')
 const bodyParser = require('koa-bodyparser')
 
 const {
-  getData
+  getData,
+  getmodules
 } = require('./lib/core');
 
 const app = new Koa()
@@ -18,14 +19,30 @@ app.use(bodyParser())
 app.use(cors())
 app.use(compress())
 
-var modules = 'contract'
-var filePath = path.resolve('./data/' + modules);
-var { root, nodes, edges, fileTypes } = getData(filePath);
+var modulePath = 'contract'
+var filePath = path.resolve('./data/' + modulePath);
+var root;
+var nodes;
+var edges;
+var fileTypes;
+// var { root, nodes, edges, fileTypes } = getData(filePath);
 
-router.get('/getRoot', (ctx, next) => {
+var modules = getmodules(path.resolve('./data/'));
+
+router.get('/getRootInf', (ctx, next) => {
   try {
+    let query = ctx.query.moduleItem;
+    filePath = path.resolve('./data/' + query);
+    
+    let re = getData(filePath);
+    root  = re.root;
+    fileTypes = re.fileTypes;
+    nodes = re.nodes;
+    edges = re.edges;
+
     ctx.body = {
-      root: root
+      root: root,
+      fileTypes: fileTypes
     };
   } catch (e) {
     console.log(e)
@@ -88,6 +105,17 @@ router.post('/editFile', async (ctx, next) => {
       'message': '写入成功',
       'status': status,
       'errInf': errInf
+    };
+  } catch (e) {
+    console.log(e)
+    next(e)
+  }
+});
+
+router.get('/getModules', (ctx, next) => {
+  try {
+    ctx.body = {
+      modules: modules
     };
   } catch (e) {
     console.log(e)

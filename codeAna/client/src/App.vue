@@ -1,5 +1,20 @@
 <template>
   <div id="app">
+    <div class="toolBox">
+    <el-col :span="20">
+      <div class="grid-content bg-purple">
+        <el-select v-model="moduleItem" filterable placeholder="请选择模块" size="mini" style="margin-right:10px">
+          <el-option
+            v-for="item in moduleList"
+            :key="item"
+            :label="item"
+            :value="item">
+          </el-option>
+        </el-select>
+        <el-button size="mini" @click="chooseModule">确定</el-button>
+      </div>
+    </el-col>
+  </div>
     <div id="tree_view">
       <treeMap></treeMap>
     </div>
@@ -17,12 +32,24 @@ import treeMap from './components/treeMap.vue';
 import graph from './components/graph.vue';
 import codeEdit from './components/codeEdit.vue';
 import echarts from 'echarts';
+import axios from 'axios';
 
 @Component({
   components: { treeMap, graph, codeEdit }
 })
 export default class extends Vue {
+  moduleItem = 'contract';
+  moduleList = [];
+
   mounted() {
+    const vm = this;
+    axios.get('/api/getModules').then(({ data }) => {
+      vm.moduleList = data.modules;
+    });
+  }
+
+  chooseModule() {
+    this.$bus.$emit("updateRoot", this.moduleItem);
   }
 }
 </script>
@@ -43,5 +70,12 @@ export default class extends Vue {
   float: left;
   width: 50%;
   height: 100%;
+}
+
+.toolBox {
+  position: absolute;
+  z-index: 10;
+  width: 100%;
+  padding: 10px;
 }
 </style>

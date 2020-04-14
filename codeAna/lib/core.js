@@ -1,5 +1,5 @@
-var { getDir}  = require('./readDir');
-var { analysisRoot, delAttr}  = require('./analysisRoot');
+var { getDir, getmodules }  = require('./readDir');
+var { analysisRoot, delAttr }  = require('./analysisRoot');
 
 
 function getData(filePath) {
@@ -22,6 +22,9 @@ function getData(filePath) {
   return { root, nodes, edges, fileTypes};
 }
 
+
+
 module.exports = {
-  getData
+  getData,
+  getmodules
 }

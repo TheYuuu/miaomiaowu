@@ -41,6 +41,12 @@ function getDir(filePath, Vnode) {
   });
 }
 
+function getmodules(filePath) {
+  var files = fs.readdirSync(filePath);
+  return files.filter(item => fs.statSync(path.join(filePath, item)).isDirectory());
+}
+
 module.exports = {
-  getDir
+  getDir,
+  getmodules
 }
