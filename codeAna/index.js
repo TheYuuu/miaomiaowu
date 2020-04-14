@@ -18,8 +18,9 @@ app.use(bodyParser())
 app.use(cors())
 app.use(compress())
 
-var filePath = path.resolve('./data');
-let { root, nodes, edges, fileTypes } = getData(filePath);
+var modules = 'contract'
+var filePath = path.resolve('./data/' + modules);
+var { root, nodes, edges, fileTypes } = getData(filePath);
 
 router.get('/getRoot', (ctx, next) => {
   try {

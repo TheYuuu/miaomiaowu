@@ -3,12 +3,20 @@
     <el-drawer
       :visible.sync="table"
       direction="ltr"
+      :withHeader="false"
+      :stretch="true"
       size="50%">
-        <span slot="title" class="drawer-footer">
-          {{ title }}
-          <el-button type="success" icon="el-icon-edit" circle size="mini" @click="editFileBtn" :loading="loading"></el-button>
-        </span>
-      <codemirror v-model="data" :options="cssOptions"></codemirror>
+        <el-tabs v-model="editableTabsValue" type="card" closable @tab-remove="removeTab">
+          <el-tab-pane
+            v-for="(item) in editableTabs"
+            :key="item.name"
+            :label="item.title"
+            :name="item.name"
+          >
+            <el-button class="edit_btn" type="success" icon="el-icon-edit" circle size="mini" @click="editFileBtn(item)" :loading="loading"></el-button>
+            <codemirror v-model="item.code" :options="cssOptions"></codemirror>
+          </el-tab-pane>
+      </el-tabs>
     </el-drawer>
   </div>
 </template>
@@ -35,8 +43,7 @@ import 'codemirror/theme/ayu-dark.css'
 })
 export default class extends Vue {
   table = false;
-  title = '';
-  data = '';
+
   loading = false;
   cssOptions= {
     tabSize: 2,
@@ -48,7 +55,10 @@ export default class extends Vue {
     foldGutter: true,
     gutters:["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
     matchBrackets: true
-  }
+  };
+
+  editableTabsValue =  '';
+  editableTabs = [];
 
   created() {
     const vm = this;
@@ -61,8 +71,12 @@ export default class extends Vue {
           filePath: filePath
         }
       }).then(({ data }) => {
-        vm.title = data.title;
-        vm.data = data.code;
+        vm.addTab({
+          filePath: filePath,
+          title: data.title,
+          name: data.title,
+          code: data.code
+        });
       });
     });
   }
@@ -71,25 +85,25 @@ export default class extends Vue {
 
   }
 
-  editFileBtn() {
+  editFileBtn(item) {
     const vm = this;
     this.$confirm('是否写入文件?', '提示', {
       confirmButtonText: '确定',
       cancelButtonText: '取消',
       type: 'success'
     }).then(() => {
-      vm.editFile();
+      vm.editFile(item);
     }).catch(() => {
     });
   }
 
-  editFile() {
+  editFile(item) {
     const vm = this;
     vm.loading = true;
     axios.post('/api/editFile', {
       data: {
-        filePath: vm.changfile,
-        content: vm.data
+        filePath: item.filePath,
+        content: item.code
       }
     }).then(({ data: { message, status } }) => {
       vm.$message({
@@ -101,10 +115,46 @@ export default class extends Vue {
       vm.loading = false;
     });
   }
+
+  addTab(target) {
+    const vm = this;
+    let index = vm.editableTabs.findIndex((e,i) => e.name === target.name);
+    if (index !== -1) return; 
+    vm.editableTabs.push(target);
+    vm.editableTabsValue = target.name;
+  }
+
+  removeTab(targetName) {
+    let tabs = this.editableTabs;
+    let activeName = this.editableTabsValue;
+    if (activeName === targetName) {
+      tabs.forEach((tab, index) => {
+        if (tab.name === targetName) {
+          let nextTab = tabs[index + 1] || tabs[index - 1];
+          if (nextTab) {
+            activeName = nextTab.name;
+          }
+        }
+      });
+    }
+    
+    this.editableTabsValue = activeName;
+    this.editableTabs = tabs.filter(tab => tab.name !== targetName);
+  }
 }
 </script>
 
 <style>
+.el-tab-pane {
+  position: relative;
+}
+
+.edit_btn {
+  position: absolute;
+  right: 15px;
+  z-index: 10;
+}
+
 .CodeMirror {
   height: 100%!important;
 }

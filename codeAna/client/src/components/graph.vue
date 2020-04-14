@@ -78,7 +78,7 @@ export default class extends Vue {
       option,
       myChart
     } = this;
-    console.log(selectNodes);
+
     var app = {};
 
     option = {

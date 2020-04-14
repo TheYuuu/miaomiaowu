@@ -203,8 +203,6 @@ export default class ChartController {
       // .attr("fill", d => d.children ? "#555" : "#999")
       .attr("fill", d => `url(#${d.data.type}_icon)`)
       .attr("r", 6)
-      .attr('stroke', '#00a1ff94')
-      .attr('stroke-width', '0px')
 
     nodeEnter.append('text')
       .text(d => d.data.name)
@@ -213,12 +211,13 @@ export default class ChartController {
         return d.children ? -4 : 8;
       })
       .attr("text-anchor", d => d.children ? "end" : "start")
-      .clone(true).lower()
-      .attr("stroke", "white");
+      .clone(true).lower();
 
     var nodeUpdate = nodeEnter.merge(node);
 
-    nodeUpdate.transition()
+    nodeUpdate
+      .attr('cursor', 'pointer')
+      .transition()
       .duration(duration)
       .attr("transform", function (d) {
         d.y += d.children ? 100 : 0;
@@ -226,11 +225,8 @@ export default class ChartController {
       });
 
     nodeUpdate.select('circle.node')
-      // .attr("fill", d => d.children ? "#555" : "#999")
       .attr("fill", d => `url(#${d.data.type}_icon)`)
-      .attr("r", 6)
-      .attr('stroke', '#00a1ff94')
-      .attr('cursor', 'pointer');
+      .attr("r", 6);
 
     nodeUpdate.selectAll('text')
       .transition()
@@ -296,7 +292,7 @@ export default class ChartController {
     function diagonal(s, d) {
       return "M" + s.y + "," + s.x +
         "H" + d.y + "V" + d.x +
-        (d.children ? "" : "h" + 50);
+        (d.children ? "" : "h" + 0);
     }
   }
 
@@ -311,17 +307,17 @@ export default class ChartController {
   click(d, that) {
     const vm = this;
     const dom = d3.select(that)
-      .select('circle');
+      .selectAll('text');
 
     if (!d.selected) {
       d.selected = true;
 
-      dom.attr('stroke-width', '1.5px')
+      dom.attr('text-decoration', 'underline');
       vm.callback.addNode(d.data.id);
     } else {
       d.selected = false;
 
-      dom.attr('stroke-width', '0px')
+      dom.attr('text-decoration', 'none');
       vm.callback.delNode(d.data.id);
     }
 

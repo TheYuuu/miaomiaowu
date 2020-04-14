@@ -1,5 +1,21 @@
 <template>
 <div id="treeMap">
+  <div class="toolBox">
+    <el-col :span="20">
+      <div class="grid-content bg-purple">
+        <el-select v-model="modules" filterable placeholder="请选择模块" size="mini" style="margin-right:10px">
+          <el-option
+            v-for="item in moduleList"
+            :key="item"
+            :label="item"
+            :value="item">
+          </el-option>
+        </el-select>
+        <el-button size="mini">确定</el-button>
+      </div>
+    </el-col>
+  </div>
+
   <svg id="treeSvg">
     <defs>
       <pattern v-for="item in icons" :key="item.id"
@@ -28,6 +44,8 @@ import ChartController from '../assets/TreeChart';
 export default class extends Vue {
   @Prop() data;
   icons = [];
+  modules = '';
+  moduleList = [];
 
   mounted() {
     let vm = this;
@@ -76,16 +94,19 @@ export default class extends Vue {
 </script>
 
 <style>
-#treeMap {
+#treeMap, #treeSvg {
   width: 100%;
   height: 100%;
-  user-select: none;
-  border: 1px solid;
 }
 
 #treeSvg {
-  width: 100%;
-  height: 100%;
+  transform: translate3d(0, 0, 0);
+}
+
+#treeMap {
+  position: relative;
+  user-select: none;
+  border: 1px solid;
 }
 
 .node text {
@@ -96,4 +117,12 @@ export default class extends Vue {
   stroke: red;
   stroke-width: 1px;
 }
+
+.toolBox {
+  position: absolute;
+  z-index: 10;
+  width: 100%;
+  padding: 10px;
+}
+
 </style>
