@@ -1,5 +1,6 @@
 var nodes = [];
 var edges = [];
+var fileTypes = [];
 
 function getTarget(name, t) {
   let p = t;
@@ -86,7 +87,10 @@ function analysisRoot(root) {
   for (let i = 0; i < root.files.length; i++) {
     if (!root.files[i].record) {
       root.files[i].record = true;
+      let fileType = root.files[i].name.split(".")[1] ? root.files[i].name.split(".")[1] : 'dir';
+      fileTypes.push(fileType);
       nodes.push({
+        fileTpye: fileType,
         filedir: root.files[i].filedir,
         name: root.files[i].name,
         id: String(root.files[i].id)
@@ -114,7 +118,7 @@ function analysisRoot(root) {
     analysisRoot(root.dirs[k]);
   }
 
-  return { nodes, edges };
+  return { nodes, edges, fileTypes};
 }
 
 

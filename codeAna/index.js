@@ -19,12 +19,23 @@ app.use(cors())
 app.use(compress())
 
 var filePath = path.resolve('./data');
-let { root, nodes, edges } = getData(filePath);
+let { root, nodes, edges, fileTypes } = getData(filePath);
 
 router.get('/getRoot', (ctx, next) => {
   try {
     ctx.body = {
       root: root
+    };
+  } catch (e) {
+    console.log(e)
+    next(e)
+  }
+});
+
+router.get('/fileTypes', (ctx, next) => {
+  try {
+    ctx.body = {
+      fileTypes: fileTypes
     };
   } catch (e) {
     console.log(e)

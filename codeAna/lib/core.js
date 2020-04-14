@@ -12,9 +12,12 @@ function getData(filePath) {
 
   getDir(filePath, root);
   root = root.dirs[0];
-  let { nodes, edges } = analysisRoot(root);
+  let { nodes, edges, fileTypes } = analysisRoot(root);
   delAttr(root);
-  return { root, nodes, edges};
+  
+  fileTypes = Array.from(new Set(fileTypes));
+  fileTypes.push('dir');
+  return { root, nodes, edges, fileTypes};
 }
 
 module.exports = {

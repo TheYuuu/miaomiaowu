@@ -1,6 +1,13 @@
 <template>
 <div id="treeMap">
-  <svg id="treeSvg"></svg>
+  <svg id="treeSvg">
+    <defs>
+      <pattern v-for="item in icons" :key="item.id"
+        :id="item.id" width="100%" height="100%" patternContentUnits="objectBoundingBox">
+        <image width="1" height="1" :xlink:href="item.url"/>
+      </pattern>
+    </defs>
+  </svg>
 </div>
 </template>
 
@@ -20,6 +27,7 @@ import ChartController from '../assets/TreeChart';
 })
 export default class extends Vue {
   @Prop() data;
+  icons = [];
 
   mounted() {
     let vm = this;
@@ -39,8 +47,16 @@ export default class extends Vue {
         }
       });
       chart.initCollapseClusterChart2();
-      // chart.initCollapseClusterChart();
-    })
+    });
+
+    axios.get('/api/fileTypes').then(({ data }) => {
+      vm.icons = data.fileTypes.map(item => {
+        return {
+          id: item + '_icon',
+          url: require(`../assets/icons/${item}.svg`)
+        }
+      });
+    });
   }
 
   addNode() {

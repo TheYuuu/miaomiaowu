@@ -25,13 +25,10 @@ export default class extends Vue {
   created() {
     const vm = this;
     vm.$bus.$on("addNode", (nodeId) => {
-      let index = vm.selectNodes.find((e,i) => {
-        return +e.id === +nodeId
-      });
-      if (index) {
+      let index = vm.selectNodes.findIndex((e,i) => +e.id === +nodeId);
+      if (index !== -1) {
         return;
       }
-
       vm.selectNodes = vm.selectNodes.concat(
         vm.oriNodes.filter(item => item.id === String(nodeId))
       );
@@ -39,10 +36,8 @@ export default class extends Vue {
     });
 
     vm.$bus.$on("delNode", (nodeId) => {
-      let index = vm.selectNodes.find((e,i) => {
-        return +e.id === +nodeId
-      });
-      if (index) {
+      let index = vm.selectNodes.findIndex((e,i) => +e.id === +nodeId);
+      if (index !== -1) {
         vm.selectNodes.splice(index, 1);
       }
       vm.updataGraph();
@@ -83,7 +78,7 @@ export default class extends Vue {
       option,
       myChart
     } = this;
-
+    console.log(selectNodes);
     var app = {};
 
     option = {

@@ -146,7 +146,7 @@ export default class ChartController {
       duration = 750,
       root;
 
-    var treemap = d3.tree().size([height, width]);
+    var treemap = d3.tree().size([height * 1.5, width]);
     root = d3.hierarchy(dirTree, function (d) {
       return d.children;
     });
@@ -200,17 +200,17 @@ export default class ChartController {
 
     nodeEnter.append('circle')
       .attr('class', 'node')
-      .attr("fill", d => d.children ? "#555" : "#999")
-      .attr("r", 4)
-      .attr('stroke', 'red')
+      // .attr("fill", d => d.children ? "#555" : "#999")
+      .attr("fill", d => `url(#${d.data.type}_icon)`)
+      .attr("r", 6)
+      .attr('stroke', '#00a1ff94')
       .attr('stroke-width', '0px')
 
     nodeEnter.append('text')
       .text(d => d.data.name)
       .attr("dy", d => d.children ? '1em' : '0.31em')
       .attr("x", function (d) {
-        console.log();
-        return d.children || d._children ? -4 : 4;
+        return d.children ? -4 : 8;
       })
       .attr("text-anchor", d => d.children ? "end" : "start")
       .clone(true).lower()
@@ -226,10 +226,18 @@ export default class ChartController {
       });
 
     nodeUpdate.select('circle.node')
-      .attr("fill", d => d.children ? "#555" : "#999")
-      .attr("r", 4)
-      .attr('stroke', 'red')
+      // .attr("fill", d => d.children ? "#555" : "#999")
+      .attr("fill", d => `url(#${d.data.type}_icon)`)
+      .attr("r", 6)
+      .attr('stroke', '#00a1ff94')
       .attr('cursor', 'pointer');
+
+    nodeUpdate.selectAll('text')
+      .transition()
+      .duration(duration)
+      .attr("dy", d => d.children ? '1em' : '0.31em')
+      .attr("x", d => d.children ? -4 : 8)
+      .attr("text-anchor", d => d.children ? "end" : "start")
 
     var nodeExit = node.exit().transition()
       .duration(duration)
@@ -308,7 +316,7 @@ export default class ChartController {
     if (!d.selected) {
       d.selected = true;
 
-      dom.attr('stroke-width', '2px')
+      dom.attr('stroke-width', '1.5px')
       vm.callback.addNode(d.data.id);
     } else {
       d.selected = false;
@@ -344,7 +352,7 @@ export default class ChartController {
         [0, 0],
         [width, height]
       ])
-      .scaleExtent([1, 8])
+      .scaleExtent([-1, 8])
       .on("zoom", zoomed));
 
     function zoomed() {
