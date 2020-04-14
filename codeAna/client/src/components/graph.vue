@@ -25,30 +25,29 @@ export default class extends Vue {
   created() {
     const vm = this;
     vm.$bus.$on("addNode", (nodeId) => {
-      let index = vm.selectNodes.findIndex((e,i) => +e.id === +nodeId);
-      if (index !== -1) {
-        return;
-      }
-      vm.selectNodes = vm.selectNodes.concat(
-        vm.oriNodes.filter(item => item.id === String(nodeId))
-      );
-      vm.updataGraph();
+      vm.getNodeLink({
+        type: 'add',
+        nodeId: nodeId
+      });
     });
 
     vm.$bus.$on("delNode", (nodeId) => {
-      let index = vm.selectNodes.findIndex((e,i) => +e.id === +nodeId);
-      if (index !== -1) {
-        vm.selectNodes.splice(index, 1);
-      }
-      vm.updataGraph();
+      vm.getNodeLink({
+        type: 'del',
+        nodeId: nodeId
+      });
     });
   }
 
   mounted() {
+
+  }
+
+  getNodeLink(params) {
     let vm = this;
     vm.myChart = echarts.init(document.getElementById("graph_div"));
-
-    axios.get('/api/getNodeLink').then(d => {
+    console.log(params);
+    axios.get('/api/getNodeLink', { params }).then(d => {
       vm.oriNodes = d.data.nodes;
       vm.links = d.data.links.map(v => {
         v.label = {

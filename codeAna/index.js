@@ -9,7 +9,8 @@ const bodyParser = require('koa-bodyparser')
 
 const {
   getData,
-  getmodules
+  getmodules,
+  handleNodeLink
 } = require('./lib/core');
 
 const app = new Koa()
@@ -22,9 +23,11 @@ app.use(compress())
 var modulePath = 'contract'
 var filePath = path.resolve('./data/' + modulePath);
 var root;
-var nodes;
-var edges;
 var fileTypes;
+
+var nodes = [];
+var edges = [];
+var selectNodes = [];
 // var { root, nodes, edges, fileTypes } = getData(filePath);
 
 var modules = getmodules(path.resolve('./data/'));
@@ -50,22 +53,21 @@ router.get('/getRootInf', (ctx, next) => {
   }
 });
 
-router.get('/fileTypes', (ctx, next) => {
-  try {
-    ctx.body = {
-      fileTypes: fileTypes
-    };
-  } catch (e) {
-    console.log(e)
-    next(e)
-  }
-});
-
 router.get('/getNodeLink', (ctx, next) => {
   try {
+    let query = ctx.query;
+    let re = handleNodeLink({
+      type: query.type,
+      nodeId: query.nodeId,
+      selectNodes: selectNodes,
+      nodes: nodes,
+      OriLinks: edges
+    });
+
+    selectNodes = re.selectNodes;
     ctx.body = {
-      "nodes": nodes,
-      "links": edges
+      "nodes": selectNodes,
+      "links": re.links
     };
   } catch (e) {
     console.log(e)
