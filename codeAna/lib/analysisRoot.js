@@ -87,7 +87,7 @@ function analysisRoot(root) {
   for (let i = 0; i < root.files.length; i++) {
     if (!root.files[i].record) {
       root.files[i].record = true;
-      let fileType = root.files[i].name.split(".")[1] ? root.files[i].name.split(".")[1] : 'dir';
+      let fileType = root.files[i].name.split(".") ? root.files[i].name.split(".").pop() : 'dir';
       fileTypes.push(fileType);
       nodes.push({
         fileTpye: fileType,

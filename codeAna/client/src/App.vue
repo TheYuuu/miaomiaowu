@@ -1,27 +1,27 @@
 <template>
   <div id="app">
     <div class="toolBox">
-    <el-col :span="20">
-      <div class="grid-content bg-purple">
-        <el-select v-model="moduleItem" filterable placeholder="请选择模块" size="mini" style="margin-right:10px">
-          <el-option
-            v-for="item in moduleList"
-            :key="item"
-            :label="item"
-            :value="item">
-          </el-option>
-        </el-select>
-        <el-button size="mini" @click="chooseModule">确定</el-button>
-      </div>
-    </el-col>
-  </div>
+      <el-col :span="20">
+        <div class="grid-content bg-purple">
+          <el-select v-model="moduleItem" filterable placeholder="请选择模块" size="mini" style="margin-right:10px">
+            <el-option
+              v-for="item in moduleList"
+              :key="item"
+              :label="item"
+              :value="item">
+            </el-option>
+          </el-select>
+          <el-button size="mini" @click="chooseModule">确定</el-button>
+        </div>
+      </el-col>
+    </div>
     <div id="tree_view">
-      <treeMap></treeMap>
+      <treeMap ref="treeMap"></treeMap>
     </div>
     <div id="graph_view">
-      <graph></graph>
+      <graph ref="graph"></graph>
     </div>
-    <codeEdit></codeEdit>
+    <codeEdit ref="codeEdit"></codeEdit>
   </div>
 </template>
 
@@ -49,7 +49,9 @@ export default class extends Vue {
   }
 
   chooseModule() {
-    this.$bus.$emit("updateRoot", this.moduleItem);
+    this.$refs.treeMap.getRootInf(this.moduleItem);
+    this.$refs.graph.clearNode();
+    this.$refs.codeEdit.clearTab();
   }
 }
 </script>

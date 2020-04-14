@@ -42,6 +42,7 @@ router.get('/getRootInf', (ctx, next) => {
     fileTypes = re.fileTypes;
     nodes = re.nodes;
     edges = re.edges;
+    selectNodes = [];
 
     ctx.body = {
       root: root,

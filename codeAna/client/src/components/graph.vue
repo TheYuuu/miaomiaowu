@@ -37,6 +37,10 @@ export default class extends Vue {
         nodeId: nodeId
       });
     });
+
+    vm.$bus.$on("clearNode", (moduleItem) => {
+      vm.clearNode();
+    });
   }
 
   mounted() {
@@ -46,10 +50,9 @@ export default class extends Vue {
   getNodeLink(params) {
     let vm = this;
     vm.myChart = echarts.init(document.getElementById("graph_div"));
-    console.log(params);
-    axios.get('/api/getNodeLink', { params }).then(d => {
-      vm.oriNodes = d.data.nodes;
-      vm.links = d.data.links.map(v => {
+    axios.get('/api/getNodeLink', { params }).then(({ data }) => {
+      vm.selectNodes = data.nodes;
+      vm.links = data.links.map(v => {
         v.label = {
           show: true,
           formatter: (Object) => {
@@ -62,7 +65,7 @@ export default class extends Vue {
 
       vm.myChart.on('click', function (params) {
         if(params.data.filedir){
-          vm.openFile(params.data.filedir);
+          vm.openFile(params.data);
         }
       });
     });
@@ -71,7 +74,6 @@ export default class extends Vue {
   updataGraph() {
     let {
       selectNodes,
-      oriNodes,
       links,
       dom,
       option,
@@ -121,8 +123,14 @@ export default class extends Vue {
     }
   }
 
-  openFile(filePath) {
-    this.$bus.$emit("openFile", filePath);
+  openFile(data) {
+    this.$bus.$emit("openFile", data);
+  }
+
+  clearNode() {
+    this.selectNodes = [];
+    this.links = [];
+    this.updataGraph();
   }
 }
 </script>

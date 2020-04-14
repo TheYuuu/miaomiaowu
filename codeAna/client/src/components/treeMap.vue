@@ -32,16 +32,16 @@ export default class extends Vue {
   created() {
     const vm = this;
 
-    vm.$bus.$on("openFile", (filePath) => {
-      vm.table = true;
-      vm.changfile = filePath;
-      axios.get('/api/getFileContent', {
-        params: {
-          filePath: filePath
-        }
-      }).then(({ data }) => {
-      });
-    });
+    // vm.$bus.$on("openFile", (filePath) => {
+    //   vm.table = true;
+    //   vm.changfile = filePath;
+    //   axios.get('/api/getFileContent', {
+    //     params: {
+    //       filePath: filePath
+    //     }
+    //   }).then(({ data }) => {
+    //   });
+    // });
 
     vm.$bus.$on("updateRoot", (moduleItem) => {
       vm.getRootInf(moduleItem);

@@ -14,7 +14,7 @@
             :name="item.name"
           >
             <el-button class="edit_btn" type="success" icon="el-icon-edit" circle size="mini" @click="editFileBtn(item)" :loading="loading"></el-button>
-            <codemirror v-model="item.code" :options="cssOptions"></codemirror>
+            <codemirror v-model="item.code" :options="item.cssOptions"></codemirror>
           </el-tab-pane>
       </el-tabs>
     </el-drawer>
@@ -29,14 +29,17 @@ import {
 } from 'vue-property-decorator';
 import axios from 'axios';
 
-import 'codemirror/mode/javascript/javascript.js'
+
 import 'codemirror/mode/css/css.js'
 import 'codemirror/mode/xml/xml.js'
 import 'codemirror/mode/htmlmixed/htmlmixed.js'
+import 'codemirror/mode/javascript/javascript.js'
+import 'codemirror/mode/jsx/jsx.js'
+import 'codemirror/mode/markdown/markdown.js'
+import 'codemirror/mode/sass/sass.js'
+import 'codemirror/mode/vue/vue.js'
 
-// 引入主题样式文件
 import 'codemirror/theme/ayu-dark.css'
-
 
 @Component({
   name: 'codeEdit'
@@ -45,34 +48,59 @@ export default class extends Vue {
   table = false;
 
   loading = false;
-  cssOptions= {
+  cssOptions = {
     tabSize: 2,
-    mode: 'javascript',
+    mode: '',
     theme: 'ayu-dark',
+    styleActiveLine: true,
+    lineWrapping: true,
     lineNumbers: true,
     line: true,
-    lineWrapping: true,
     foldGutter: true,
-    gutters:["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
-    matchBrackets: true
+    styleSelectedText: true,
+    // keyMap: "sublime",
+    matchBrackets: true,
+    showCursorWhenSelecting: true,
+    extraKeys: { "Ctrl": "autocomplete" },
+    hintOptions:{
+      completeSingle: false
+    }
   };
 
   editableTabsValue =  '';
   editableTabs = [];
 
+  languageTypeMap = {
+    'ts': 'text/typescript',
+    'js': 'text/typescript',
+    'jsx': 'text/typescript-jsx',
+    'css': 'css',
+    'scss': 'css',
+    'sass': 'text/x-sass',
+    'vue': 'text/x-vue',
+    'html': 'htmlmixed',
+    'json': 'application/json',
+    'md': 'text/x-markdown'
+  }
+
   created() {
     const vm = this;
 
-    vm.$bus.$on("openFile", (filePath) => {
+    vm.$bus.$on("openFile", (obj) => {
       vm.table = true;
-      vm.changfile = filePath;
       axios.get('/api/getFileContent', {
         params: {
-          filePath: filePath
+          filePath: obj.filedir
         }
       }).then(({ data }) => {
+        console.log(obj);
+        let cssOptions = Object.assign({}, vm.cssOptions);
+        cssOptions.mode = vm.getLanguageType(obj.fileTpye);
+        // cssOptions.mode = { "filename": obj.name}
+        console.log(cssOptions.mode);
         vm.addTab({
-          filePath: filePath,
+          cssOptions: cssOptions,
+          filePath: obj.filedir,
           title: data.title,
           name: data.title,
           code: data.code
@@ -82,7 +110,10 @@ export default class extends Vue {
   }
 
   mounted() {
+  }
 
+  getLanguageType(str) {
+    return this.languageTypeMap[str];
   }
 
   editFileBtn(item) {
@@ -141,6 +172,11 @@ export default class extends Vue {
     this.editableTabsValue = activeName;
     this.editableTabs = tabs.filter(tab => tab.name !== targetName);
   }
+
+  clearTab() {
+    this.editableTabsValue =  '';
+    this.editableTabs = [];
+  }
 }
 </script>
 
@@ -157,6 +193,7 @@ export default class extends Vue {
 
 .CodeMirror {
   height: 100%!important;
+  overflow: hidden;
 }
 
 .el-drawer__body {
@@ -178,5 +215,9 @@ background: #0a0e14!important;
 .el-drawer__body::-webkit-scrollbar-thumb{
   background-color: #53b47f62;
   border-radius: 4px;
+}
+
+.CodeMirror-vscrollbar {
+  display: none!important;
 }
 </style>
