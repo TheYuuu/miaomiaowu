@@ -117,7 +117,10 @@ export default class extends Vue {
           curveness: 0
         }
       }]
-    };;
+    };
+    if (!myChart) {
+      myChart = echarts.init(document.getElementById("graph_div"));
+    }
     if (option && typeof option === "object") {
       myChart.setOption(option, true);
     }

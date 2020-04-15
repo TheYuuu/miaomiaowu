@@ -55,6 +55,7 @@ export default class extends Vue {
     styleActiveLine: true,
     lineWrapping: true,
     lineNumbers: true,
+    fixedGutter: false,
     line: true,
     foldGutter: true,
     styleSelectedText: true,
@@ -182,8 +183,30 @@ export default class extends Vue {
 </script>
 
 <style>
+.CodeMirror-line  {
+  white-space: nowrap!important;
+}
+.vue-codemirror {
+  width: 100%;
+}
+
+.el-tabs__header {
+  margin: 0px!important;
+}
+
+.el-tabs, .el-tab-pane {
+  height: 100%;
+  width: 100%;
+}
+
+.el-tabs__content {
+  width: 100%;
+  height: calc(100vh - 40px);
+}
+
 .el-tab-pane {
   position: relative;
+  overflow: auto;
 }
 
 .edit_btn {
@@ -198,14 +221,14 @@ export default class extends Vue {
 }
 
 .el-drawer__body {
-  overflow-y: auto;
+  height: 100%;
 }
 
 .el-drawer { 
 background: #0a0e14!important;
 }
 
-.el-drawer__body::-webkit-scrollbar{
+.el-tab-pane::-webkit-scrollbar{
   width: 7px;
   height: 7px;
   border-radius: 4px;
@@ -213,12 +236,12 @@ background: #0a0e14!important;
 }
 
 /*滚动条中可以拖动的那部分*/
-.el-drawer__body::-webkit-scrollbar-thumb{
+.el-tab-pane::-webkit-scrollbar-thumb{
   background-color: #53b47f62;
   border-radius: 4px;
 }
 
-.CodeMirror-vscrollbar {
+.CodeMirror-vscrollbar, .CodeMirror-scrollbar-filler, .CodeMirror-hscrollbar {
   display: none!important;
 }
 </style>
