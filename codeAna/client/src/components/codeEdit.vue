@@ -93,11 +93,9 @@ export default class extends Vue {
           filePath: obj.filedir
         }
       }).then(({ data }) => {
-        console.log(obj);
         let cssOptions = Object.assign({}, vm.cssOptions);
         cssOptions.mode = vm.getLanguageType(obj.fileTpye);
         // cssOptions.mode = { "filename": obj.name}
-        console.log(cssOptions.mode);
         vm.addTab({
           cssOptions: cssOptions,
           filePath: obj.filedir,
@@ -150,7 +148,10 @@ export default class extends Vue {
   addTab(target) {
     const vm = this;
     let index = vm.editableTabs.findIndex((e,i) => e.name === target.name);
-    if (index !== -1) return; 
+    if (index !== -1) {
+      vm.editableTabsValue = vm.editableTabs[index].name;
+      return;
+    }; 
     vm.editableTabs.push(target);
     vm.editableTabsValue = target.name;
   }

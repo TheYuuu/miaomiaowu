@@ -12,7 +12,7 @@ function getDir(filePath, Vnode) {
 
     var isFile = stats.isFile(); //是文件
     var isDir = stats.isDirectory(); //是文件夹
-    let type = filename.split(".") ? filename.split(".").pop() : 'dir';
+    let type = filename.split(".")[1] ? filename.split(".").pop() : 'dir';
     if (isFile && filename !== ".DS_Store") {
       Vnode.files.push({
         type: type,

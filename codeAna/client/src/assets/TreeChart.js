@@ -146,7 +146,7 @@ export default class ChartController {
       duration = 750,
       root;
 
-    var treemap = d3.tree().size([height * 1.5, width]);
+    var treemap = d3.tree().size([height * 1.2, width]);
     root = d3.hierarchy(dirTree, function (d) {
       return d.children;
     });
@@ -170,7 +170,6 @@ export default class ChartController {
       duration,
       i,
       root,
-      content_g,
       node_g,
       link_g
     } = this
