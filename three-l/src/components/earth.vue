@@ -1,23 +1,21 @@
 <template>
   <div id="WebGL-output">
-    <earth />
   </div>
 </template>
 
 <script>
 import { Component, Vue } from 'vue-property-decorator';
-import earth from '../components/earth.vue';
+import { Drawer } from './drawer.js';
 
 @Component({
-  name: 'Home',
- components: {
-   earth
- }
+  name: 'earth'
 })
 export default class extends Vue {
+  mounted() {
+    let drawer = new Drawer('WebGL-output');
+  }
 }
 </script>
 
 <style lang="scss">
-
 </style>
