@@ -16,4 +16,8 @@
   margin: 0px;
   box-sizing: border-box;
 }
+
+body {
+  overflow: hidden;
+}
 </style>
