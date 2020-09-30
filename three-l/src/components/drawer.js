@@ -305,12 +305,12 @@ export class Drawer {
       lineArr.children.forEach((dotItem, dotIndex) => {
         let _vIndex = 0;
 
-        const step = dotIndex % vm.options.markingNum;
+        const step = vIndex - dotIndex % vm.options.markingNum;
 
         if (firstBool) {
-          _vIndex = vIndex - step >= 0 ? vIndex - step : 0;
+          _vIndex = step >= 0 ? step : 0;
         } else {
-          _vIndex = vIndex - step >= 0 ? vIndex - step : vm.options.metapNum + vIndex - dotIndex;
+          _vIndex = step >= 0 ? step : vm.options.metapNum + vIndex - dotIndex;
         }
 
         let v = vm.animateDots[lineIndex][_vIndex];
