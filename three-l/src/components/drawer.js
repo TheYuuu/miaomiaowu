@@ -6,9 +6,16 @@ import {
   SceneUtils
 } from 'three/examples/jsm/utils/SceneUtils.js';
 
-import { MeshLine, MeshLineMaterial } from 'threejs-meshline'
+import {
+  MeshLine,
+  MeshLineMaterial
+} from 'threejs-meshline'
 
-import { getEarthPositionByCoordinate, getVectorLineByTwoVectors, getLenVcetor } from './util';
+import {
+  getEarthPositionByCoordinate,
+  getVectorLineByTwoVectors,
+  getLenVcetor
+} from './util';
 
 export class Drawer {
 
@@ -101,99 +108,98 @@ export class Drawer {
 
   addTrack() {
     const vm = this;
-    const markingPos = [
-      {
-      "textValue": "中国首都-北京",
+    const markingPos = [{
+        "textValue": "中国首都-北京",
         "fontColor": "#c6aa0e",
         "fontSize": 14,
-        "pos": [116.4551,40.1439]
-    },
-    {
-      "textValue": "俄罗斯首都-莫斯科",
+        "pos": [116.4551, 40.1439]
+      },
+      {
+        "textValue": "俄罗斯首都-莫斯科",
         "fontColor": "#86a519",
         "fontSize": 14,
-        "pos": [37.35,55.45]
-    },
-    {
-      "textValue": "美国首都-华盛顿",
+        "pos": [37.35, 55.45]
+      },
+      {
+        "textValue": "美国首都-华盛顿",
         "fontColor": "#05a914",
         "fontSize": 14,
-        "pos": [-77.02182,38.53707]
-    },
-    {
-      "textValue": "澳大利亚首都-堪培拉",
+        "pos": [-77.02182, 38.53707]
+      },
+      {
+        "textValue": "澳大利亚首都-堪培拉",
         "fontColor": "#05a914",
         "fontSize": 14,
-        "pos": [149.07,-35.17]
-    },
-    {
-      "textValue": "巴西首都-巴西利亚",
+        "pos": [149.07, -35.17]
+      },
+      {
+        "textValue": "巴西首都-巴西利亚",
         "fontColor": "#af0da9",
         "fontSize": 14,
-        "pos": [-47.56,-15.47]
-    },
-    {
-      "textValue": "南非首都-开普敦",
+        "pos": [-47.56, -15.47]
+      },
+      {
+        "textValue": "南非首都-开普敦",
         "fontColor": "#047f4f",
         "fontSize": 14,
-        "pos": [18,-34]
-    },
-    {
-      "textValue": "英国首都-伦敦",
+        "pos": [18, -34]
+      },
+      {
+        "textValue": "英国首都-伦敦",
         "fontColor": "#ffffff",
         "fontSize": 14,
         "pos": [0.5, 51.3]
-    },
-    {
-      "textValue": "日本首都-东京",
+      },
+      {
+        "textValue": "日本首都-东京",
         "fontColor": "#ffffff",
         "fontSize": 14,
         "pos": [139.6932, 35.6898]
-    },
-    {
-      "textValue": "韩国首都-首尔",
+      },
+      {
+        "textValue": "韩国首都-首尔",
         "fontColor": "#ffffff",
         "fontSize": 14,
         "pos": [126.58, 37.38]
-    },
-    {
-      "textValue": "印度首都-新德里",
+      },
+      {
+        "textValue": "印度首都-新德里",
         "fontColor": "#ffffff",
         "fontSize": 14,
         "pos": [77.13, 28.37]
-    },
-    {
-      "textValue": "泰国首都-曼谷",
+      },
+      {
+        "textValue": "泰国首都-曼谷",
         "fontColor": "#ffffff",
         "fontSize": 14,
         "pos": [100.31, 13.45]
-    },
-    {
-      "textValue": "法国首都-巴黎",
+      },
+      {
+        "textValue": "法国首都-巴黎",
         "fontColor": "#ffffff",
         "fontSize": 14,
         "pos": [2.174203, 48.522552]
-    },
-    {
-      "textValue": "埃及首都-开罗",
+      },
+      {
+        "textValue": "埃及首都-开罗",
         "fontColor": "#ffffff",
         "fontSize": 14,
         "pos": [31, 30]
-    },
-    {
-      "textValue": "新西兰首都-惠灵顿",
+      },
+      {
+        "textValue": "新西兰首都-惠灵顿",
         "fontColor": "#ffffff",
         "fontSize": 14,
         "pos": [176.463425, -41.171228]
-    },
-    {
-      "textValue": "加拿大首都-渥太华",
+      },
+      {
+        "textValue": "加拿大首都-渥太华",
         "fontColor": "#ffffff",
         "fontSize": 14,
         "pos": [-75.43, 45.25]
-    }
-  ];
-    
+      }
+    ];
+
     // 添加城市点
     const marking = new THREE.Group();
     marking.add(...this.createDots(markingPos));
@@ -209,26 +215,29 @@ export class Drawer {
     })
 
     // 线上滑动的小球
-    const aGroup = new THREE.Group();
+    const moveDots = new THREE.Group();
     for (let i = 0; i < animateDots.length; i++) {
-      for (var j = 0; j < 50; j++) {
-        var aGeo = new THREE.SphereGeometry(this.options.dotWidth / 2, 10, 10);
-        var aMaterial = new THREE.MeshBasicMaterial({
+      const aGroup = new THREE.Group();
+      for (let j = 0; j < vm.options.markingNum; j++) {
+        // 创建滑动小球
+        const aGeo = new THREE.SphereGeometry(this.options.dotWidth / 2, 10, 10);
+        const aMaterial = new THREE.MeshBasicMaterial({
           color: this.options.slideBallColor,
           transparent: true,
           opacity: 1 - j * 0.02
         })
-        var aMesh = new THREE.Mesh(aGeo, aMaterial);
+        const aMesh = new THREE.Mesh(aGeo, aMaterial);
         aGroup.add(aMesh);
       }
+      moveDots.add(aGroup);
     }
 
-    this.aGroup = aGroup;
     this.animateDots = animateDots;
-
+    this.moveDots = moveDots;
+    console.log(animateDots, moveDots)
     this.scene.add(marking);
     this.scene.add(groupLines);
-    this.scene.add(aGroup);
+    this.scene.add(moveDots);
 
     this.animationLine(0, true);
   }
@@ -250,7 +259,7 @@ export class Drawer {
   createLine(v0, v3) {
     // 计算两点之间弧度返回的角度 可以理解为曲线的曲度
     var angle = (v0.angleTo(v3) * 180) / Math.PI;
-    
+
     var aLen = angle * 0.5 * (1 - angle / (Math.PI * 90));
     var hLen = angle * angle * 1.2 * (1 - angle / (Math.PI * 90));
     var p0 = new THREE.Vector3(0, 0, 0);
@@ -258,10 +267,10 @@ export class Drawer {
     var rayLine = new THREE.Ray(p0, getVectorLineByTwoVectors(v0.clone(), v3.clone()));
 
     // 顶点坐标
-    var vtop = new THREE.Vector3(0,0,0);
+    var vtop = new THREE.Vector3(0, 0, 0);
 
     // 法线从中心延伸出去的长度
-    var mideLine = hLen / rayLine.at(10, new THREE.Vector3(0,0,0)).distanceTo(p0);
+    var mideLine = hLen / rayLine.at(10, new THREE.Vector3(0, 0, 0)).distanceTo(p0);
     rayLine.at(mideLine, vtop);
 
     // 两点与顶点之间的二分之一弧线点
@@ -292,26 +301,31 @@ export class Drawer {
 
   animationLine(vIndex, firstBool) {
     const vm = this;
-    vm.aGroup.children.forEach(function (elem, index) {
-      var _index = parseInt(index / 50);
-      var index2 = index - 50 * _index;
-      var _vIndex = 0;
-      if (firstBool) {
-        _vIndex = vIndex - index2 % 50 >= 0 ? vIndex - index2 % 50 : 0;
-      } else {
-        _vIndex = vIndex - index2 % 50 >= 0 ? vIndex - index2 % 50 : 150 + vIndex - index2;
-      }
-      var v = vm.animateDots[_index][_vIndex];
+    vm.moveDots.children.forEach((lineArr, lineIndex) => {
+      lineArr.children.forEach((dotItem, dotIndex) => {
+        let _vIndex = 0;
 
-      elem.position.set(v.x, v.y, v.z);
-    })
+        const step = dotIndex % vm.options.markingNum;
+
+        if (firstBool) {
+          _vIndex = vIndex - step >= 0 ? vIndex - step : 0;
+        } else {
+          _vIndex = vIndex - step >= 0 ? vIndex - step : vm.options.metapNum + vIndex - dotIndex;
+        }
+
+        let v = vm.animateDots[lineIndex][_vIndex];
+        dotItem.position.set(v.x, v.y, v.z);
+      })
+    });
+
     vIndex++;
-    if (vIndex > 150) {
+    if (vIndex > vm.options.metapNum) {
       vIndex = 0;
     }
-    if (vIndex == 150 && firstBool) {
+    if (vIndex == vm.options.metapNum && firstBool) {
       firstBool = false;
     }
+
     requestAnimationFrame(vm.animationLine.bind(vm, vIndex, firstBool));
   }
 
@@ -331,7 +345,7 @@ export class Drawer {
     var delta = this.clock.getDelta();
     this.orbitControls.update(delta);
 
-    this.scene.rotation.y += 0.005;
+    // this.scene.rotation.y += 0.005;
     // this.sphere.rotation.y += 0.002;
 
     requestAnimationFrame(this.render.bind(this));
