@@ -234,7 +234,7 @@ export class Drawer {
 
     this.animateDots = animateDots;
     this.moveDots = moveDots;
-    console.log(animateDots, moveDots)
+
     this.scene.add(marking);
     this.scene.add(groupLines);
     this.scene.add(moveDots);
@@ -345,7 +345,7 @@ export class Drawer {
     var delta = this.clock.getDelta();
     this.orbitControls.update(delta);
 
-    // this.scene.rotation.y += 0.005;
+    this.scene.rotation.y += 0.005;
     // this.sphere.rotation.y += 0.002;
 
     requestAnimationFrame(this.render.bind(this));
