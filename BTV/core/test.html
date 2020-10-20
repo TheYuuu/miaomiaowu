@@ -1,0 +1,6 @@
+<div>
+  <el-tabs v-model="activeName" type="card">
+    <el-tab-pane label="用户管理" name="first"
+      v-for="(item, index) in list" :key="JSON.stringify(item) + 'nacCon'">用户管理</el-tab-pane>
+  </el-tabs>
+</div>
