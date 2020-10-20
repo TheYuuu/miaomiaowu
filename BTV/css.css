@@ -58,6 +58,25 @@ body {
   height: 100%;
 }
 
-.el-tabs__header {
-  display: none;
+.el-carousel, .el-carousel__container, .el-carousel__item {
+  height: 100%!important;
+}
+
+.video_con {
+  height: 100%;
+  text-align: center;
+  background-color: antiquewhite;
+}
+
+.navTabs-item {
+
+}
+
+.navTabs-enter-active, .navTabs-leave-active {
+  transition: all 1s;
+}
+.navTabs-enter, .navTabs-leave-to
+/* .list-leave-active for below version 2.1.8 */ {
+  opacity: 0;
+  transform: translateY(30px);
 }

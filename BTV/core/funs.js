@@ -23,7 +23,8 @@ function init() {
         <el-container class="h-full">
           <el-header>
             <div v-for="(item, index) in padArr" :key="JSON.stringify(item)" class="flex_con pad_con">
-              <el-card v-for="(mm, index) in item" :key="mm.name" class="box-card chooseAble" tabindex="0">
+              <el-card v-for="(mm, index) in item" :key="mm.name" class="box-card chooseAble" tabindex="0"
+              @keyup.enter.native="changePad(mm)">
               {{ mm.name }}
               </el-card>
             </div>
@@ -129,6 +130,9 @@ function init() {
       },
       changeTab(str) {
         this.$refs.navCon.changeTab(str);
+      },
+      changePad(item) {
+        console.log(item)
       }
     }
   })

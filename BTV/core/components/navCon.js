@@ -1,12 +1,12 @@
 Vue.component('navCon', {
   template: `
-  <div>
-  <el-tabs v-model="activeName" type="card">
-    <el-tab-pane :label="item.name" :name="item.rid"
+  <div class="h-full">
+  <el-carousel indicator-position="none" ref="carousel" style="height:100%" :autoplay="false" arrow="nerver">
+    <el-carousel-item :name="item.rid"
       v-for="(item, index) in list" :key="JSON.stringify(item) + 'nacCon'">
-      {{ item.name }}
-    </el-tab-pane>
-  </el-tabs>
+      <div class="video_con">{{ item.name }}</div>
+    </el-carousel-item>
+  </el-carousel>
 </div>
   `,
   props: ['list'],
@@ -17,7 +17,7 @@ Vue.component('navCon', {
   },
   methods: {
     changeTab(activeName) {
-      this.activeName = activeName;
+      this.$refs.carousel.setActiveItem(activeName);
     }
   },
   mounted() {
