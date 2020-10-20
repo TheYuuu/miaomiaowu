@@ -1,0 +1,34 @@
+{
+  "name": "bilibili-tv",
+  "version": "0.0.10",
+  "manifest_version": 2,
+  "description": "B站TV插件",
+  "permissions": [
+    "privacy",
+    "tabs"
+  ],
+  "browser_action": {
+    "default_icon": "icon.png",
+    "default_popup": "./pop/pop.html"
+  },
+  "devtools_page": "devtools.html",
+  "content_scripts": [
+    {
+      "js": [
+        "./lib/axios.min.js",
+        "./lib/vue-router.js",
+        "./lib/vue.js",
+        "./lib/jquery.min.js",
+        "./core/funs.js",
+        "content_scripts.js"
+      ],
+      "css": [
+        "css.css"
+      ],
+      "matches": [
+        "https://ones.sankuai.com/**"
+      ],
+      "run_at": "document_end"
+    }
+  ]
+}
