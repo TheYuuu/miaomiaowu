@@ -1,5 +1,15 @@
 function clear() {
-  $('body').empty();
+  // $('style').remove();
+  // $('link').remove();
+  // $('script').remove();
+
+  for(var i = 1; i < 1000; i++) {
+    clearInterval(i);
+  }
+
+  $('body').remove();
+  $('html').append(document.createElement("body"));
+
   let app = document.createElement("div");
   app.setAttribute('id', 'app')
   $('body').append(app);

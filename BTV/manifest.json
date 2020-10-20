@@ -26,7 +26,7 @@
         "css.css"
       ],
       "matches": [
-        "https://ones.sankuai.com/**"
+        "https://www.bilibili.com/**"
       ],
       "run_at": "document_end"
     }
