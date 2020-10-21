@@ -18,8 +18,8 @@ import {
 } from 'vue-property-decorator';
 
 import {
-  controlStore
-} from '../store/control';
+  elControlStore
+} from '../store/elControl';
 
 import block from './block';
 @Component({
@@ -31,7 +31,7 @@ import block from './block';
 export default class extends Vue {
   @Prop() list;
 
-  @controlStore.Action('getWatchBlockArrByRid')
+  @elControlStore.Action('getWatchBlockArrByRid')
   getWatchBlockArrByRid;
 
   mounted() {

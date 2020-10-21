@@ -31,8 +31,8 @@ import videoDrawer from './components/videoDrawer';
 import navCon from './components/navCon';
 
 import {
-  controlStore
-} from './store/control';
+  elControlStore
+} from './store/elControl';
 
 @Component({
   name: 'App',
@@ -42,10 +42,15 @@ import {
   }
 })
 export default class extends Vue {
-  @controlStore.State('padArr') padArr;
-  @controlStore.State('navArr') navArr;
-  @controlStore.Getter('allArr') allArr;
+  @elControlStore.State('padArr') padArr;
+  
+  @elControlStore.State('navArr') navArr;
+  
+  @elControlStore.Getter('allArr') getAllArr;
 
+  get allArr() {
+    return this.getAllArr;
+  }
 
   mounted() {
     this.inputs = document.getElementsByClassName("chooseAble");
@@ -91,7 +96,7 @@ export default class extends Vue {
   }
 
   changePad(item) {
-    console.log(item)
+    console.log(123, item)
   }
 }
 </script>

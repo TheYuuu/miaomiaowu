@@ -1,10 +1,10 @@
 import { Module, VuexModule, Mutation, Action } from 'vuex-module-decorators';
 import { namespace } from 'vuex-class';
 import store from './index';
-export const storeName = 'control';
+export const storeName = 'elControl';
 
 @Module({ dynamic: true, store, namespaced: true, name: storeName })
-export class control extends VuexModule {
+export class elControl extends VuexModule {
   padArr = [
     [{
       name: '历史记录'
@@ -22,10 +22,11 @@ export class control extends VuexModule {
         name: '舞蹈',
         rid: '129'
       }
-      // , {
-      //   name: '游戏',
-      //   rid: '4'
-      // }, {
+      , {
+        name: '游戏',
+        rid: '4'
+      }
+      // {
       //   name: '知识',
       //   rid: '36'
       // }, {
@@ -70,8 +71,7 @@ export class control extends VuexModule {
     }
 
     this.setWatchBlockArr(arr);
-    console.log(this.watchBlockArr);
   }
 }
 
-export const controlStore = namespace(storeName);
+export const elControlStore = namespace(storeName);

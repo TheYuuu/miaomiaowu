@@ -1,10 +1,10 @@
 <template>
 <div>
-  <choose-able-matrix :matrix="randomArr">
-    <template v-slot:default="slotProps">
-      <videCard :inf="slotProps.item" />
-    </template>
-  </choose-able-matrix>
+  <div v-for="col in randomArr" :key="JSON.stringify(col)" class="flex_con pad_con">
+    <div v-for="item in col" :key="item.name" tabindex="0" class="box-card chooseAble" @keyup.enter="openVideoInf(item)">
+      <videCard :inf="item" />
+    </div>
+  </div>
 </div>
 </template>
 
@@ -15,23 +15,37 @@ import {
 } from 'vue-property-decorator';
 
 import {
-  controlStore
-} from '../store/control';
+  elControlStore
+} from '../store/elControl';
+
+import {
+  videoControlStore
+} from '../store/videoControl';
 
 import videCard from './videCard';
-import chooseAbleMatrix from './chooseAbleMatrix';
 @Component({
   name: 'block',
   components: {
-    videCard,
-    chooseAbleMatrix
+    videCard
   }
 })
 export default class extends Vue {
-  @controlStore.Getter('getWatchBlockArr') randomArr;
+  @elControlStore.Getter('getWatchBlockArr') randomArr;
+
+  @videoControlStore.Action('openVideo') openVideo;
+
+  @videoControlStore.Action('changeVideoInf') changeVideoInf;
 
   mounted() {
-    console.log(this.randomArr);
+    console.log(this.changeVideoInf);
+  }
+
+  openVideoInf(item) {
+    console.log(item)
+    this.changeVideoInf(item);
+    setTimeout(() => {
+      this.openVideo();
+    }, 300)
   }
 }
 </script>
