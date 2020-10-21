@@ -39,6 +39,7 @@ function init() {
             <nav-con :list="navArr[0]" ref="navCon"></nav-con>
           </el-main>
         </el-container>
+        <video-drawer />
       </div>
     `,
     data() {
@@ -58,25 +59,27 @@ function init() {
           [{
             name: '舞蹈',
             rid: '129'
-          }, {
-            name: '游戏',
-            rid: '4'
-          }, {
-            name: '知识',
-            rid: '36'
-          }, {
-            name: '数码',
-            rid: '188'
-          }, {
-            name: '生活',
-            rid: '160'
-          }, {
-            name: '鬼畜',
-            rid: '119'
-          }, {
-            name: '时尚',
-            rid: '5'
-          }]
+          }
+          // , {
+          //   name: '游戏',
+          //   rid: '4'
+          // }, {
+          //   name: '知识',
+          //   rid: '36'
+          // }, {
+          //   name: '数码',
+          //   rid: '188'
+          // }, {
+          //   name: '生活',
+          //   rid: '160'
+          // }, {
+          //   name: '鬼畜',
+          //   rid: '119'
+          // }, {
+          //   name: '时尚',
+          //   rid: '5'
+          // }
+        ]
         ]
       }
     },

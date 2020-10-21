@@ -1,11 +1,11 @@
-window.onload = function() {
+window.onload = function () {
   // 简单适配
   var documentEl = document.documentElement;
   resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize';
   recalc = function () {
     var clientWidth = documentEl.clientWidth;
     if (!clientWidth) return;
-    documentEl.style.fontSize = 20 * (clientWidth / screen.width) + 'px';
+    documentEl.style.fontSize = 20 * (clientWidth / 1920) + 'px';
   };
 
   if (!document.addEventListener) return;
@@ -17,7 +17,7 @@ window.onload = function() {
   init();
 }
 
-    // chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    //   clear();
-    //   init();
-    // });
+// chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+//   clear();
+//   init();
+// });
