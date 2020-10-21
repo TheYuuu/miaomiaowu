@@ -1,30 +1,247 @@
 <template>
-  <div id="app">
-    <div id="nav">
-    </div>
-    <router-view/>
-  </div>
+<div v-on:keydown="keyDown($event)" class="h-full">
+  <el-container class="h-full">
+    <el-header>
+      <div v-for="(item) in padArr" :key="JSON.stringify(item)" class="flex_con pad_con">
+        <el-card v-for="(mm) in item" :key="mm.name" class="box-card chooseAble" tabindex="0" @keyup.enter.native="changePad(mm)">
+          {{ mm.name }}
+        </el-card>
+      </div>
+      <div v-for="(item) in navArr" :key="JSON.stringify(item)" class="flex_con nan_con">
+        <el-card v-for="(mm) in item" :key="mm.name" class="box-card chooseAble" tabindex="0" @focus.native="changeTab(mm.rid)">
+          {{ mm.name }}
+        </el-card>
+      </div>
+    </el-header>
+    <el-main>
+      <nav-con :list="navArr[0]" ref="navCon"></nav-con>
+    </el-main>
+  </el-container>
+  <video-drawer />
+</div>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import {
+  Component,
+  Vue
+} from 'vue-property-decorator';
 
-#nav {
-  padding: 30px;
+import videoDrawer from './components/videoDrawer';
+import navCon from './components/navCon';
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
+@Component({
+  name: 'App',
+  components: {
+    videoDrawer,
+    navCon
+  }
+})
+export default class extends Vue {
+  padArr = [
+    [{
+      name: '历史记录'
+    }, {
+      name: '关注动态'
+    }, {
+      name: '我的收藏'
+    }, {
+      name: '个人信息'
+    }],
+  ];
+  navArr = [
+    [{
+        name: '舞蹈',
+        rid: '129'
+      }
+      // , {
+      //   name: '游戏',
+      //   rid: '4'
+      // }, {
+      //   name: '知识',
+      //   rid: '36'
+      // }, {
+      //   name: '数码',
+      //   rid: '188'
+      // }, {
+      //   name: '生活',
+      //   rid: '160'
+      // }, {
+      //   name: '鬼畜',
+      //   rid: '119'
+      // }, {
+      //   name: '时尚',
+      //   rid: '5'
+      // }
+    ]
+  ];
 
-    &.router-link-exact-active {
-      color: #42b983;
+  get arr() {
+    return this.padArr.concat(this.navArr);
+  };
+
+  mounted() {
+    this.inputs = document.getElementsByClassName("chooseAble");
+    this.inputs[0].focus();
+  }
+
+  keyDown(event) {
+    this.inputs = document.getElementsByClassName("chooseAble");
+    let focus = document.activeElement;
+
+    event = window.event || event;
+    let key = event.keyCode;
+    for (var i = 0; i < this.inputs.length; i++) {
+      if (this.inputs[i] === focus) break;
+    }
+
+    let c = i;
+    let index = 0;
+    while (c >= this.arr[index].length) {
+      c = c - this.arr[index++].length;
+    }
+
+    let len = this.arr[index].length;
+    switch (key) {
+      case 37:
+        if (i > 0) this.inputs[i - 1].focus();
+        break;
+      case 38:
+        if (i - len >= 0) this.inputs[i - len].focus();
+        else this.inputs[0].focus();
+        break;
+      case 39:
+        if (i < this.inputs.length - 1) this.inputs[i + 1].focus();
+        break;
+      case 40:
+        if (i + len < this.inputs.length) this.inputs[i + len].focus();
+        break;
     }
   }
+
+  changeTab(str) {
+    this.$refs.navCon.changeTab(str);
+  }
+
+  changePad(item) {
+    console.log(item)
+  }
+}
+</script>
+
+<style lang="scss">
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+.chooseAble {
+  display: inline-block;
+  height: 100%;
+  flex: 1;
+  border: 1px solid;
+  margin: 5px;
+  transition: all 0.3s;
+}
+
+.chooseAble:focus {
+  transform: scale(1.1);
+}
+
+.flex_con {
+  display: flex;
+  margin: 5px 0px;
+  width: 100%;
+}
+
+.flex_con>div:first-child {
+  margin-left: 0;
+}
+
+.flex_con>div:last-child {
+  margin-right: 0;
+}
+
+.pad_con {
+  height: calc(70% - 20px);
+  font-size: 2.2rem;
+}
+
+.nan_con {
+  height: 30%;
+  font-size: 1.4rem;
+}
+
+.el-card>.el-card__body {
+  padding: 0 !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.el-header {
+  text-align: center;
+  height: 165px !important;
+  text-align: center;
+}
+
+.h-full {
+  height: 100%;
+}
+
+.el-carousel,
+.el-carousel__container,
+.el-carousel__item {
+  height: 100% !important;
+}
+
+.video_con {
+  height: 100%;
+  text-align: center;
+  outline: 1px solid antiquewhite;
+}
+
+.navTabs-item {}
+
+.navTabs-enter-active,
+.navTabs-leave-active {
+  transition: all 1s;
+}
+
+.navTabs-enter,
+.navTabs-leave-to
+
+/* .list-leave-active for below version 2.1.8 */
+  {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.videCard {
+  height: 150px;
+}
+
+.videCard>img {
+  width: 60%;
+}
+
+.bvideo {
+  width: 100%;
+  height: 90%;
+  padding: 10px;
+}
+
+.video_contrl {
+  width: 100%;
+  height: 10%;
+  padding: 10px;
 }
 </style>

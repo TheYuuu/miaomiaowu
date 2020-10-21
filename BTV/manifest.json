@@ -15,17 +15,9 @@
   "content_scripts": [
     {
       "js": [
-        "./lib/axios.min.js",
-        "./lib/vue-router.js",
-        "./lib/vue.js",
-        "./lib/el-index.js",
-        "./lib/jquery.min.js",
-        "./core/funs.js",
         "content_scripts.js"
       ],
       "css": [
-        "css.css",
-        "./lib/el-index.css"
       ],
       "matches": [
         "https://www.bilibili.com/**"

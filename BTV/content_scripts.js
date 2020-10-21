@@ -13,8 +13,16 @@ window.onload = function () {
   document.addEventListener('DOMContentLoaded', recalc, false);
   recalc();
 
-  clear();
-  init();
+  for (var i = 1; i < 1000; i++) {
+    clearInterval(i);
+  }
+
+  $('body').remove();
+  $('html').append(document.createElement("body"));
+
+  let app = document.createElement("div");
+  app.setAttribute('id', 'app')
+  $('body').append(app);
 }
 
 // chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
