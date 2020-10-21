@@ -48,7 +48,6 @@ export default class extends Vue {
 
 
   mounted() {
-    console.log(this.allArr);
     this.inputs = document.getElementsByClassName("chooseAble");
     this.inputs[0].focus();
   }

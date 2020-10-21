@@ -11,9 +11,12 @@
 <script>
 import {
   Component,
-  Vue,
-  Prop
+  Vue
 } from 'vue-property-decorator';
+
+import {
+  controlStore
+} from '../store/control';
 
 import videCard from './videCard';
 import chooseAbleMatrix from './chooseAbleMatrix';
@@ -25,27 +28,10 @@ import chooseAbleMatrix from './chooseAbleMatrix';
   }
 })
 export default class extends Vue {
-  @Prop() inf;
-
-  randomArr = [];
+  @controlStore.Getter('getWatchBlockArr') randomArr;
 
   mounted() {
-    const vm = this;
-    const data = require('../assets/data/random.json').data;
-      let index = 0;
-
-      while(index < data.archives.length) {
-        vm.randomArr.push(data.archives.slice(index, index += 4));
-      }
-    // const vm = this;
-    // axios.get('./data/random.json').then(({data: {data}}) => {
-    //   let index = 0;
-
-    //   while(index < data.archives.length) {
-    //     vm.randomArr.push(data.archives.slice(index, index += 4));
-    //   }
-    //   console.log(vm.randomArr)
-    // });
+    console.log(this.randomArr);
   }
 }
 </script>

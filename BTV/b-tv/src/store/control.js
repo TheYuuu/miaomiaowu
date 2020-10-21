@@ -44,8 +44,33 @@ export class control extends VuexModule {
     ]
   ];
 
+  watchBlockArr = [];
+
   get allArr() {
-    return this.padArr.concat(this.navArr);
+    return this.padArr.concat(this.navArr).concat(this.watchBlockArr);
+  }
+
+  get getWatchBlockArr() {
+    return this.watchBlockArr;
+  }
+
+  @Mutation
+  setWatchBlockArr(data) {
+    this.watchBlockArr = data;
+  }
+
+  @Action
+  async getWatchBlockArrByRid(rid) {
+    let data = require('../assets/data/random.json').data;
+
+    let index = 0;
+    let arr = [];
+    while(index < data.archives.length) {
+      arr.push(data.archives.slice(index, index += 4));
+    }
+
+    this.setWatchBlockArr(arr);
+    console.log(this.watchBlockArr);
   }
 }
 
