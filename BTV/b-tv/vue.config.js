@@ -3,18 +3,16 @@ module.exports = {
   lintOnSave: false,
   filenameHashing: false,
   productionSourceMap: false,
-  indexPath: 'backend.html',
-//   outputDir: '../dist',
-//   assetsDir: '/',
+  indexPath: 'index.html',
+  outputDir: '../client',
   configureWebpack: config => {
-      output: {
-          chunkFilename: 'chunk[id].js',
-          config.devtool = 'source-map'
-      }
+    output: {
+      chunkFilename: 'chunk[id].js'
+    }
   },
   chainWebpack: config => {
-      if (process.env.NODE_ENV === 'development') {
-          config.output.filename('[name].js').end()
-      }
+    if (process.env.NODE_ENV === 'development') {
+      config.output.filename('[name].js').end()
+    }
   }
 }

@@ -30,6 +30,10 @@ import {
 import videoDrawer from './components/videoDrawer';
 import navCon from './components/navCon';
 
+import {
+  controlStore
+} from './store/control';
+
 @Component({
   name: 'App',
   components: {
@@ -38,49 +42,13 @@ import navCon from './components/navCon';
   }
 })
 export default class extends Vue {
-  padArr = [
-    [{
-      name: '历史记录'
-    }, {
-      name: '关注动态'
-    }, {
-      name: '我的收藏'
-    }, {
-      name: '个人信息'
-    }],
-  ];
-  navArr = [
-    [{
-        name: '舞蹈',
-        rid: '129'
-      }
-      // , {
-      //   name: '游戏',
-      //   rid: '4'
-      // }, {
-      //   name: '知识',
-      //   rid: '36'
-      // }, {
-      //   name: '数码',
-      //   rid: '188'
-      // }, {
-      //   name: '生活',
-      //   rid: '160'
-      // }, {
-      //   name: '鬼畜',
-      //   rid: '119'
-      // }, {
-      //   name: '时尚',
-      //   rid: '5'
-      // }
-    ]
-  ];
+  @controlStore.State('padArr') padArr;
+  @controlStore.State('navArr') navArr;
+  @controlStore.Getter('allArr') allArr;
 
-  get arr() {
-    return this.padArr.concat(this.navArr);
-  };
 
   mounted() {
+    console.log(this.allArr);
     this.inputs = document.getElementsByClassName("chooseAble");
     this.inputs[0].focus();
   }
@@ -97,11 +65,11 @@ export default class extends Vue {
 
     let c = i;
     let index = 0;
-    while (c >= this.arr[index].length) {
-      c = c - this.arr[index++].length;
+    while (c >= this.allArr[index].length) {
+      c = c - this.allArr[index++].length;
     }
 
-    let len = this.arr[index].length;
+    let len = this.allArr[index].length;
     switch (key) {
       case 37:
         if (i > 0) this.inputs[i - 1].focus();
