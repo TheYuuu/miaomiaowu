@@ -8,7 +8,7 @@ import config from '../assets/config.json';
 @Module({ dynamic: true, store, namespaced: true, name: storeName })
 export class elControl extends VuexModule {
   padArr = config.padArr;
-  navArr = config.navArr;
+  navArr = config.navArr.slice(0, 2);
 
   cat1Rid = '';
   cat2Rid = '';

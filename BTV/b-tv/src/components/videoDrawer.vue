@@ -5,10 +5,7 @@
       <el-button type="primary" tabindex="0" class="chooseAble">全 屏</el-button>
       <el-button type="primary" tabindex="0" class="chooseAble">返 回</el-button>
     </div>
-    <iframe class="bvideo"
-      :src="'https://www.bilibili.com/video/' + videInf.bvid"
-      scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"
-      auto></iframe>
+    <iframe class="bvideo" :src="'//player.bilibili.com/player.html?bvid=' + videInf.bvid + '&high_quality=1&autoPlay=true'" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
   </el-drawer>
 </div>
 </template>
