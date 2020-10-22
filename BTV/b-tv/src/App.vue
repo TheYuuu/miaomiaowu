@@ -57,7 +57,6 @@ export default class extends Vue {
   mounted() {
     this.changeTab(this.navArr[0]);
 
-
     this.$nextTick(() => {
       this.getChooseAble();
       this.inputs[0].focus();
@@ -177,17 +176,8 @@ body {
   font-size: 2.2rem;
 }
 
-.sub_pad_con {
-  font-size: 2.2rem;
-}
-
 .nan_con {
   height: 30%;
-  font-size: 1.4rem;
-}
-
-.subNan_con {
-  height: 30px;
   font-size: 1.4rem;
 }
 
@@ -207,56 +197,6 @@ body {
 
 .h-full {
   height: 100%;
-}
-
-.block_carousel {
-  .el-carousel,
-  .el-carousel__container,
-  .el-carousel__item {
-    height: 100% !important;
-  }
-}
-
-.video_con {
-  height: 100%;
-  text-align: center;
-  outline: 1px solid antiquewhite;
-}
-
-.navTabs-item {}
-
-.navTabs-enter-active,
-.navTabs-leave-active {
-  transition: all 1s;
-}
-
-.navTabs-enter,
-.navTabs-leave-to
-
-/* .list-leave-active for below version 2.1.8 */
-  {
-  opacity: 0;
-  transform: translateY(30px);
-}
-
-.videCard {
-  height: 150px;
-}
-
-.videCard>img {
-  width: 60%;
-}
-
-.bvideo {
-  width: 100%;
-  height: 90%;
-  padding: 10px;
-}
-
-.video_contrl {
-  width: 100%;
-  height: 10%;
-  padding: 10px;
 }
 
 .w-full {

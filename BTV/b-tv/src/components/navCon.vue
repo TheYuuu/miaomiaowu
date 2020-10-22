@@ -52,4 +52,18 @@ export default class extends Vue {
 
 <style lang="scss">
 
+.video_con {
+  height: 100%;
+  text-align: center;
+  outline: 1px solid antiquewhite;
+}
+
+.block_carousel {
+  .el-carousel,
+  .el-carousel__container,
+  .el-carousel__item {
+    height: 100% !important;
+  }
+}
+
 </style>

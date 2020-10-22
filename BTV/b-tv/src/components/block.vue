@@ -72,5 +72,12 @@ export default class extends Vue {
 </script>
 
 <style lang="scss">
+.sub_pad_con {
+  font-size: 2.2rem;
+}
 
+.subNan_con {
+  height: 30px;
+  font-size: 1.4rem;
+}
 </style>

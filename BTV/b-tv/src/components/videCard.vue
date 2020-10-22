@@ -23,5 +23,11 @@ export default class extends Vue {
 </script>
 
 <style lang="scss">
+.videCard {
+  height: 150px;
+}
 
+.videCard>img {
+  width: 60%;
+}
 </style>

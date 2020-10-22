@@ -42,5 +42,15 @@ export default class extends Vue {
 </script>
 
 <style lang="scss">
+.bvideo {
+  width: 100%;
+  height: 90%;
+  padding: 10px;
+}
 
+.video_contrl {
+  width: 100%;
+  height: 10%;
+  padding: 10px;
+}
 </style>
