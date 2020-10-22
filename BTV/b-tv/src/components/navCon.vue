@@ -31,16 +31,21 @@ import block from './block';
 export default class extends Vue {
   @Prop() list;
 
-  @elControlStore.Action('getWatchBlockArrByRid')
-  getWatchBlockArrByRid;
+  @elControlStore.Action('getWatchBlockArrByRid') getWatchBlockArrByRid;
+
+  @elControlStore.Getter('getCat1Rid') getCat1Rid;
+
+  get cat2Rid() {
+    return this.getCat1Rid;
+  }
 
   mounted() {
     this.changeTab(this.list[0].rid);
   }
 
-  changeTab(activeName) {
-    this.$refs.carousel.setActiveItem(activeName);
-    this.getWatchBlockArrByRid(activeName);
+  changeTab() {
+    this.$refs.carousel.setActiveItem(this.cat2Rid);
+    this.getWatchBlockArrByRid(this.cat2Rid);
   }
 }
 </script>

@@ -2,19 +2,19 @@
 <div v-on:keydown="keyDown($event)" class="h-full">
   <el-container class="h-full">
     <el-header>
-      <div v-for="(item) in padArr" :key="JSON.stringify(item)" class="flex_con pad_con">
+      <div v-for="(item) in [padArr]" :key="JSON.stringify(item)" class="flex_con pad_con">
         <el-card v-for="(mm) in item" :key="mm.name" class="box-card chooseAble" tabindex="0" @keyup.enter.native="changePad(mm)">
           {{ mm.name }}
         </el-card>
       </div>
-      <div v-for="(item) in navArr" :key="JSON.stringify(item)" class="flex_con nan_con">
-        <el-card v-for="(mm) in item" :key="mm.name" class="box-card chooseAble" tabindex="0" @focus.native="changeTab(mm.rid)">
+      <div v-for="(item) in [navArr]" :key="JSON.stringify(item)" class="flex_con nan_con">
+        <el-card v-for="(mm) in item" :key="mm.name" class="box-card chooseAble" tabindex="0" @focus.native="changeTab(mm)">
           {{ mm.name }}
         </el-card>
       </div>
     </el-header>
     <el-main>
-      <nav-con :list="navArr[0]" ref="navCon"></nav-con>
+      <nav-con :list="navArr" ref="navCon"></nav-con>
     </el-main>
   </el-container>
   <video-drawer />
@@ -43,10 +43,12 @@ import {
 })
 export default class extends Vue {
   @elControlStore.State('padArr') padArr;
-  
   @elControlStore.State('navArr') navArr;
-  
   @elControlStore.Getter('allArr') getAllArr;
+
+  @elControlStore.Action('setCat1RidAction') setCat1RidAction;
+  @elControlStore.Action('setCat2RidAction') setCat2RidAction;
+  @elControlStore.Action('setCat2ArrAction') setCat2ArrAction;
 
   get allArr() {
     return this.getAllArr;
@@ -69,11 +71,17 @@ export default class extends Vue {
 
     let c = i;
     let index = 0;
+
     while (c >= this.allArr[index].length) {
       c = c - this.allArr[index++].length;
+
+      if (!this.allArr[index])  {
+        break;
+      }
     }
 
     let len = this.allArr[index].length;
+
     switch (key) {
       case 37:
         if (i > 0) this.inputs[i - 1].focus();
@@ -91,8 +99,16 @@ export default class extends Vue {
     }
   }
 
-  changeTab(str) {
-    this.$refs.navCon.changeTab(str);
+  changeTab(item) {
+    this.setCat1RidAction(item.rid);
+
+    const sub = item.sub || [];
+    if (sub[0]) {
+      this.setCat2RidAction((sub[0].rid));
+    }
+
+    this.setCat2ArrAction(item.sub || []);
+    this.$refs.navCon.changeTab();
   }
 
   changePad(item) {
@@ -215,5 +231,9 @@ body {
   width: 100%;
   height: 10%;
   padding: 10px;
+}
+
+.tit {
+  display: none;
 }
 </style>

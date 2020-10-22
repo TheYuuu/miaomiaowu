@@ -6,7 +6,7 @@
       <el-button type="primary" tabindex="0" class="chooseAble">返 回</el-button>
     </div>
     <iframe class="bvideo"
-      :src="'//player.bilibili.com/player.html?aid=' + videInf.aid + '&bvid=' + videInf.bvid + '&cid=' + videInf.cid + '&autoplay=true'"
+      :src="'https://www.bilibili.com/video/' + videInf.bvid"
       scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"
       auto></iframe>
   </el-drawer>
