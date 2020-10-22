@@ -1,11 +1,13 @@
 <template>
-<div class="videCard">
-  <el-row class="img_con">
-    <img :src="inf.pic">
-  </el-row>
-  <el-row>
-    <h3 class="title">{{ inf.title }}</h3>
-    <p class="play-inf">
+<!-- <div class="videCard"> -->
+  <el-card>
+    <el-row class="img_con">
+      <img :src="inf.pic">
+    </el-row>
+    <el-row>
+      <h3 class="title">{{ inf.title }}</h3>
+    </el-row>
+    <el-row class="play-inf">
       <el-col :span="12">
         <span>
           <i class="el-icon-video-play"></i>
@@ -18,10 +20,10 @@
           {{ inf.video_review }}
         </span>
       </el-col>
-    </p>
-  </el-row>
-  <span class="description">123</span>
-</div>
+    </el-row>
+    <p class="description">{{ inf.description }}</p>
+  </el-card>
+<!-- </div> -->
 </template>
 
 <script>
@@ -49,6 +51,7 @@ export default class extends Vue {
   height: 0;
   padding-bottom: 100%;
   position: relative;
+  background: white;
 }
 
 .img_con>img {
@@ -62,13 +65,14 @@ export default class extends Vue {
 
 .play-inf {
   font-size: 0.9rem;
+  padding: 5px;
 }
 
-.description{
-  height: 20px;
-  overflow:hidden;
-  text-overflow:ellipsis; 
-  white-space:nowrap;
+.description {
+  height: 60px;
+  padding: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
   font-size: 0.5rem;
 }
 </style>

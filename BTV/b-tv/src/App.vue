@@ -154,7 +154,6 @@ body {
   display: inline-block;
   height: 100%;
   flex: 1;
-  border: 1px solid;
   margin: 5px;
   transition: all 0.3s;
 }
@@ -187,7 +186,8 @@ body {
   font-size: 1.4rem;
 }
 
-.el-card>.el-card__body {
+
+.box-card>.el-card__body {
   padding: 0 !important;
   display: flex;
   justify-content: center;
