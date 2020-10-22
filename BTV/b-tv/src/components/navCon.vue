@@ -35,7 +35,7 @@ export default class extends Vue {
 
   @elControlStore.Getter('getCat1Rid') getCat1Rid;
 
-  get cat2Rid() {
+  get cat1Rid() {
     return this.getCat1Rid;
   }
 
@@ -44,8 +44,8 @@ export default class extends Vue {
   }
 
   changeTab() {
-    this.$refs.carousel.setActiveItem(this.cat2Rid);
-    this.getWatchBlockArrByRid(this.cat2Rid);
+    this.$refs.carousel.setActiveItem(this.cat1Rid);
+    this.getWatchBlockArrByRid();
   }
 }
 </script>

@@ -50,6 +50,8 @@ export default class extends Vue {
   @elControlStore.Action('setCat2RidAction') setCat2RidAction;
   @elControlStore.Action('setCat2ArrAction') setCat2ArrAction;
 
+  @elControlStore.Action('getWatchBlockArrByRid') getWatchBlockArrByRid;
+
   get allArr() {
     return this.getAllArr;
   }

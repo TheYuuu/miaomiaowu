@@ -42,7 +42,11 @@ import videCard from './videCard';
 export default class extends Vue {
   @elControlStore.Getter('getWatchBlockArr') randomArr;
 
+  @elControlStore.Action('setCat2RidAction') setCat2RidAction;
+
   @elControlStore.Getter('getCat2Arr') getCat2Arr;
+
+  @elControlStore.Action('getWatchBlockArrByRid') getWatchBlockArrByRid;
 
   @videoControlStore.Action('openVideo') openVideo;
 
@@ -59,6 +63,8 @@ export default class extends Vue {
   changeSubTab(item) {
     console.log(item)
     this.$refs.subCarousel.setActiveItem(item.rid);
+    this.setCat2RidAction((item.rid));
+    this.getWatchBlockArrByRid();
   }
 
   openVideoInf(item) {

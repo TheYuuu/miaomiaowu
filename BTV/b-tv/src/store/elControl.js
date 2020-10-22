@@ -3,6 +3,10 @@ import { namespace } from 'vuex-class';
 import store from './index';
 export const storeName = 'elControl';
 
+import  api  from '../api/api';
+
+import axios from 'axios';
+
 import config from '../assets/config.json';
 
 @Module({ dynamic: true, store, namespaced: true, name: storeName })
@@ -60,14 +64,22 @@ export class elControl extends VuexModule {
     this.cat2Arr = data;
   }
 
-  @Action
-  async getWatchBlockArrByRid(rid) {
-    let data = require('../assets/data/random.json').data;
+  @Action({rawError: true})
+  async getWatchBlockArrByRid() {
+    if (!this.cat2Rid) {
+      return;
+    }
+
+    const data = await api.getHotList({
+      cate_id: this.cat2Rid
+    });
+
+    const arrs = data.result;
 
     let index = 0;
     let arr = [];
-    while(index < data.archives.length) {
-      arr.push(data.archives.slice(index, index += 4));
+    while(index < arrs.length) {
+      arr.push(arrs.slice(index, index += 4));
     }
 
     this.setWatchBlockArr(arr);
@@ -85,7 +97,6 @@ export class elControl extends VuexModule {
 
   @Action
   async setCat2ArrAction(data) {
-    console.log(data)
     this.setCat2Arr(data);
   }
 }
