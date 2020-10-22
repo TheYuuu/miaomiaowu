@@ -20,7 +20,7 @@ export class elControl extends VuexModule {
   get allArr() {
     return [this.padArr]
       .concat([this.navArr])
-      // .concat(this.cat2Arr && [this.cat2Arr])
+      .concat(this.cat2Arr && [this.cat2Arr])
       .concat(this.watchBlockArr);
   }
 

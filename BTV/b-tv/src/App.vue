@@ -12,11 +12,6 @@
           {{ mm.name }}
         </el-card>
       </div>
-      <!-- <div v-for="(item) in [navArr]" :key="JSON.stringify(item)" class="flex_con nan_con">
-        <el-card v-for="(mm) in item" :key="mm.name" class="box-card chooseAble" tabindex="0" @focus.native="changeTab(mm)">
-          {{ mm.name }}
-        </el-card>
-      </div> -->
     </el-header>
     <el-main>
       <nav-con :list="navArr" ref="navCon"></nav-con>
@@ -60,6 +55,9 @@ export default class extends Vue {
   }
 
   mounted() {
+    this.changeTab(this.navArr[0]);
+
+
     this.$nextTick(() => {
       this.getChooseAble();
       this.inputs[0].focus();
@@ -179,8 +177,17 @@ body {
   font-size: 2.2rem;
 }
 
+.sub_pad_con {
+  font-size: 2.2rem;
+}
+
 .nan_con {
   height: 30%;
+  font-size: 1.4rem;
+}
+
+.subNan_con {
+  height: 30px;
   font-size: 1.4rem;
 }
 
@@ -202,10 +209,12 @@ body {
   height: 100%;
 }
 
-.el-carousel,
-.el-carousel__container,
-.el-carousel__item {
-  height: 100% !important;
+.block_carousel {
+  .el-carousel,
+  .el-carousel__container,
+  .el-carousel__item {
+    height: 100% !important;
+  }
 }
 
 .video_con {
@@ -250,7 +259,7 @@ body {
   padding: 10px;
 }
 
-.tit {
-  display: none;
+.w-full {
+  width: 100%;
 }
 </style>
