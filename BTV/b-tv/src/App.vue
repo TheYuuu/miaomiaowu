@@ -67,10 +67,14 @@ export default class extends Vue {
 
   getChooseAble() {
     const headInputs = Array.from(document.querySelectorAll('.el-header .chooseAble'));
-    const cardInputs = Array.from(Array.from(document.querySelectorAll('.el-carousel__item'))
-      .filter(item => item.style.transform === 'translateX(0px) scale(1)')[0].querySelectorAll('.chooseAble'));
 
-    this.inputs = headInputs.concat(cardInputs);
+    const navHeadInputs = Array.from(Array.from(document.querySelectorAll('.block_carousel .el-carousel__item'))
+      .filter(item => item.style.transform === 'translateX(0px) scale(1)')[0].querySelectorAll('.chooseAble_sub'));
+  
+    const cardInputs = Array.from(Array.from(document.querySelectorAll('.video_carousel .el-carousel__item'))
+      .filter(item => item.style.transform === 'translateX(0px) scale(1)')[0].querySelectorAll('.chooseAble'));
+    
+    this.inputs = headInputs.concat(navHeadInputs).concat(cardInputs);
   }
 
   keyDown(event) {

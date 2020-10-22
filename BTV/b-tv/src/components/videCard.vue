@@ -1,7 +1,26 @@
 <template>
 <div class="videCard">
-  <img :src="inf.pic">
-  <div>{{inf.title}}</div>
+  <el-row class="img_con">
+    <img :src="inf.pic">
+  </el-row>
+  <el-row>
+    <h3 class="title">{{ inf.title }}</h3>
+    <p class="play-inf">
+      <el-col :span="12">
+        <span>
+          <i class="el-icon-video-play"></i>
+          {{ inf.play }}
+        </span>
+      </el-col>
+      <el-col :span="12">
+        <span>
+          <i class="el-icon-chat-dot-round"></i>
+          {{ inf.video_review }}
+        </span>
+      </el-col>
+    </p>
+  </el-row>
+  <span class="description">123</span>
 </div>
 </template>
 
@@ -32,11 +51,24 @@ export default class extends Vue {
   position: relative;
 }
 
-.videCard>img {
-  height: 80%;
-  width: 80%;
-  position: absolute;
-  top: 0;
-  left: 0;
+.img_con>img {
+  height: 70%;
+  width: 100%;
+}
+
+.title {
+  font-size: 1rem;
+}
+
+.play-inf {
+  font-size: 0.9rem;
+}
+
+.description{
+  height: 20px;
+  overflow:hidden;
+  text-overflow:ellipsis; 
+  white-space:nowrap;
+  font-size: 0.5rem;
 }
 </style>

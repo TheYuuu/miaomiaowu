@@ -1,12 +1,12 @@
 <template>
 <div class="h-full">
   <div v-for="(item) in [cat2Arr]" :key="JSON.stringify(item)" class="flex_con subNan_con">
-    <el-card v-for="(mm) in item" :key="mm.name" class="box-card chooseAble" tabindex="0" @focus.native="changeSubTab(mm)">
+    <el-card v-for="(mm) in item" :key="mm.name" class="box-card chooseAble chooseAble_sub" tabindex="0" @focus.native="changeSubTab(mm)">
       {{ mm.name }}
     </el-card>
   </div>
 
-  <el-carousel indicator-position="none" ref="subCarousel" style="height:100%" :autoplay="false" arrow="never">
+  <el-carousel indicator-position="none" ref="subCarousel" style="height:100%" :autoplay="false" arrow="never" class="video_carousel">
     <el-carousel-item :name="item.rid" v-for="(item) in cat2Arr" :key="JSON.stringify(item) + 'nacCon'">
       <div v-for="col in randomArr" :key="JSON.stringify(col)" class="flex_con sub_pad_con">
         <div v-for="item in col" :key="item.name" tabindex="0" class="box-card chooseAble" @keyup.enter="openVideoInf(item)">
@@ -80,6 +80,7 @@ export default class extends Vue {
 <style lang="scss">
 .sub_pad_con {
   font-size: 2.2rem;
+  padding: 10px 20px;
 }
 
 .subNan_con {
