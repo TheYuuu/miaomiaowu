@@ -12,6 +12,11 @@
           {{ mm.name }}
         </el-card>
       </div>
+      <!-- <div v-for="(item) in [navArr]" :key="JSON.stringify(item)" class="flex_con nan_con">
+        <el-card v-for="(mm) in item" :key="mm.name" class="box-card chooseAble" tabindex="0" @focus.native="changeTab(mm)">
+          {{ mm.name }}
+        </el-card>
+      </div> -->
     </el-header>
     <el-main>
       <nav-con :list="navArr" ref="navCon"></nav-con>
@@ -55,48 +60,60 @@ export default class extends Vue {
   }
 
   mounted() {
-    this.inputs = document.getElementsByClassName("chooseAble");
-    this.inputs[0].focus();
+    this.$nextTick(() => {
+      this.getChooseAble();
+      this.inputs[0].focus();
+    });
+  }
+
+  getChooseAble() {
+    const headInputs = Array.from(document.querySelectorAll('.el-header .chooseAble'));
+    const cardInputs = Array.from(Array.from(document.querySelectorAll('.el-carousel__item'))
+      .filter(item => item.style.transform === 'translateX(0px) scale(1)')[0].querySelectorAll('.chooseAble'));
+
+    this.inputs = headInputs.concat(cardInputs);
   }
 
   keyDown(event) {
-    this.inputs = document.getElementsByClassName("chooseAble");
-    let focus = document.activeElement;
+    this.$nextTick(() => {
+      this.getChooseAble();
+      let focus = document.activeElement;
 
-    event = window.event || event;
-    let key = event.keyCode;
-    for (var i = 0; i < this.inputs.length; i++) {
-      if (this.inputs[i] === focus) break;
-    }
-
-    let c = i;
-    let index = 0;
-
-    while (c >= this.allArr[index].length) {
-      c = c - this.allArr[index++].length;
-
-      if (!this.allArr[index])  {
-        break;
+      event = window.event || event;
+      let key = event.keyCode;
+      for (var i = 0; i < this.inputs.length; i++) {
+        if (this.inputs[i] === focus) break;
       }
-    }
 
-    let len = this.allArr[index].length;
+      let c = i;
+      let index = 0;
 
-    switch (key) {
-      case 37:
-        if (i > 0) this.inputs[i - 1].focus();
-        break;
-      case 38:
-        if (i - len >= 0) this.inputs[i - len].focus();
-        else this.inputs[0].focus();
-        break;
-      case 39:
-        if (i < this.inputs.length - 1) this.inputs[i + 1].focus();
-        break;
-      case 40:
-        if (i + len < this.inputs.length) this.inputs[i + len].focus();
-        break;
-    }
+      while (c >= this.allArr[index].length) {
+        c = c - this.allArr[index++].length;
+
+        if (!this.allArr[index]) {
+          break;
+        }
+      }
+
+      let len = this.allArr[index].length;
+
+      switch (key) {
+        case 37:
+          if (i > 0) this.inputs[i - 1].focus();
+          break;
+        case 38:
+          if (i - len >= 0) this.inputs[i - len].focus();
+          else this.inputs[0].focus();
+          break;
+        case 39:
+          if (i < this.inputs.length - 1) this.inputs[i + 1].focus();
+          break;
+        case 40:
+          if (i + len < this.inputs.length) this.inputs[i + len].focus();
+          break;
+      }
+    });
   }
 
   changeTab(item) {

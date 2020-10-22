@@ -85,6 +85,7 @@ export class elControl extends VuexModule {
 
   @Action
   async setCat2ArrAction(data) {
+    console.log(data)
     this.setCat2Arr(data);
   }
 }
