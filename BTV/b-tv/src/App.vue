@@ -40,6 +40,7 @@ export default class extends Vue {
   get allArr() {
     return this.getAllArr;
   }
+
   mounted() {
     this.$nextTick(() => {
       this.getChooseAble();

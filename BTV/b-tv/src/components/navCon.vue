@@ -11,7 +11,7 @@
     </el-card>
   </div>
   <div v-for="(item) in [cat2Arr]" :key="JSON.stringify(item)" class="flex_con subNan_con">
-    <el-card v-for="(mm) in item" :key="mm.name" class="box-card chooseAble chooseAble_sub" tabindex="0" @focus.native="changeSubTab($event, mm)">
+    <el-card v-for="(mm) in item" :key="mm.name" class="box-card chooseAble chooseAble_sub" tabindex="0" @focus.native="changeSubTab(mm)">
       {{ mm.name }}
     </el-card>
   </div>
@@ -65,11 +65,12 @@ export default class extends Vue {
   }
 
   changeSubTab(item) {
-    // console.log(evt)
+    this.setCat2RidAction((item.rid));
+    this.getWatchBlockArrByRid();
   }
 
   changePad(item) {
-    console.log(123, item)
+
   }
 }
 </script>
