@@ -1,11 +1,10 @@
 <template>
-<!-- <div class="videCard"> -->
 <el-card>
   <el-row class="img_con">
     <img :src="inf.pic">
   </el-row>
   <el-row>
-    <h3 class="title">{{ inf.title }}</h3>
+    <h3 class="title text-left">{{ inf.title }}</h3>
   </el-row>
   <el-row class="play-inf">
     <el-col :span="12">
@@ -23,7 +22,6 @@
   </el-row>
   <p class="description">{{ inf.description }}</p>
 </el-card>
-<!-- </div> -->
 </template>
 
 <script>
@@ -54,22 +52,33 @@ export default class extends Vue {
   background: white;
 }
 
+.img_con {
+  width: 100%;
+  height: 0;
+  padding-top: 60%;
+}
+
 .img_con>img {
-  height: 10vw;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .title {
-  font-size: 0.9rem;
+  font-size: 0.7rem;
   overflow: hidden;
   text-overflow: ellipsis;
   -webkit-line-clamp: 1;
   height: 40px;
   line-height: 20px;
+  margin: 5px;
 }
 
 .play-inf {
   font-size: 0.5rem;
-  padding: 5px 20px;
+  margin: 5px;
 }
 
 .description {
@@ -77,7 +86,8 @@ export default class extends Vue {
   padding: 5px;
   text-align: left;
   overflow: hidden;
+  word-break: break-all;
   font-size: 0.5rem;
-  text-indent: 0.5rem;
+  text-indent: 1rem;
 }
 </style>
