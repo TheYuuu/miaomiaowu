@@ -160,6 +160,7 @@ body {
 
 .chooseAble:focus {
   transform: scale(1.1);
+  outline: none;
 }
 
 .flex_con {
@@ -207,5 +208,13 @@ body {
 
 .w-full {
   width: 100%;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
 }
 </style>

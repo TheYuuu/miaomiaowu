@@ -1,28 +1,28 @@
 <template>
 <!-- <div class="videCard"> -->
-  <el-card>
-    <el-row class="img_con">
-      <img :src="inf.pic">
-    </el-row>
-    <el-row>
-      <h3 class="title">{{ inf.title }}</h3>
-    </el-row>
-    <el-row class="play-inf">
-      <el-col :span="12">
-        <span>
-          <i class="el-icon-video-play"></i>
-          {{ inf.play }}
-        </span>
-      </el-col>
-      <el-col :span="12">
-        <span>
-          <i class="el-icon-chat-dot-round"></i>
-          {{ inf.video_review }}
-        </span>
-      </el-col>
-    </el-row>
-    <p class="description">{{ inf.description }}</p>
-  </el-card>
+<el-card>
+  <el-row class="img_con">
+    <img :src="inf.pic">
+  </el-row>
+  <el-row>
+    <h3 class="title">{{ inf.title }}</h3>
+  </el-row>
+  <el-row class="play-inf">
+    <el-col :span="12">
+      <span>
+        <i class="el-icon-video-play"></i>
+        {{ inf.play }}
+      </span>
+    </el-col>
+    <el-col :span="12">
+      <span>
+        <i class="el-icon-chat-dot-round"></i>
+        {{ inf.video_review }}
+      </span>
+    </el-col>
+  </el-row>
+  <p class="description">{{ inf.description }}</p>
+</el-card>
 <!-- </div> -->
 </template>
 
@@ -55,24 +55,29 @@ export default class extends Vue {
 }
 
 .img_con>img {
-  height: 70%;
-  width: 100%;
+  height: 10vw;
 }
 
 .title {
-  font-size: 1rem;
+  font-size: 0.9rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 1;
+  height: 40px;
+  line-height: 20px;
 }
 
 .play-inf {
-  font-size: 0.9rem;
-  padding: 5px;
+  font-size: 0.5rem;
+  padding: 5px 20px;
 }
 
 .description {
-  height: 60px;
+  height: 3.5rem;
   padding: 5px;
+  text-align: left;
   overflow: hidden;
-  text-overflow: ellipsis;
   font-size: 0.5rem;
+  text-indent: 0.5rem;
 }
 </style>
