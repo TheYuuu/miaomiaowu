@@ -63,36 +63,41 @@ export default class extends Vue {
 
       event = window.event || event;
       let key = event.keyCode;
-      for (var i = 0; i < this.inputs.length; i++) {
-        if (this.inputs[i] === focus) break;
-      }
 
-      let c = i;
       let index = 0;
 
-      while (c >= this.allArr[index].length) {
-        c = c - this.allArr[index++].length;
-
-        if (!this.allArr[index]) {
-          break;
+      search:
+        for (var i = 0; i < this.allArr.length; i++) {
+          for (var j = 0; j < this.allArr[i].length; j++) {
+            if (this.inputs[index] === focus) break search;
+            else index++;
+          }
         }
-      }
-
-      let len = this.allArr[index].length;
+      const len = this.allArr[i].length;
 
       switch (key) {
         case 37:
-          if (i > 0) this.inputs[i - 1].focus();
+          if (index > 0) this.inputs[index - 1].focus();
           break;
         case 38:
-          if (i - len >= 0) this.inputs[i - len].focus();
-          else this.inputs[0].focus();
+          if (i === 0) break;
+
+          const lastLen = this.allArr[i - 1].length;
+          let m = Math.round((j + 1) / len * this.allArr[i - 1].length);
+
+          let cha = lastLen - m;
+          this.inputs[index - j - 1 - cha].focus();
+
           break;
         case 39:
-          if (i < this.inputs.length - 1) this.inputs[i + 1].focus();
+          if (index < this.inputs.length - 1) this.inputs[index + 1].focus();
           break;
         case 40:
-          if (i + len < this.inputs.length) this.inputs[i + len].focus();
+          if (i === this.allArr.length - 1) break;
+
+          let n = Math.round((j + 1) / len * this.allArr[i + 1].length);
+          let duo = len - j - 1;
+          this.inputs[index + n + duo].focus();
           break;
       }
     });
