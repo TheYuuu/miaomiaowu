@@ -12,9 +12,15 @@
           {{ mm.name }}
         </el-card>
       </div>
+      <div v-for="(item) in [cat2Arr]" :key="JSON.stringify(item)" class="flex_con subNan_con">
+        <el-card v-for="(mm) in item" :key="mm.name" class="box-card chooseAble chooseAble_sub" tabindex="0" @focus.native="changeSubTab($event, mm)">
+          {{ mm.name }}
+        </el-card>
+      </div>
     </el-header>
     <el-main>
-      <nav-con :list="navArr" ref="navCon"></nav-con>
+      <!-- <nav-con :list="navArr" ref="navCon"></nav-con> -->
+      <block />
     </el-main>
   </el-container>
   <video-drawer />
@@ -28,7 +34,7 @@ import {
 } from 'vue-property-decorator';
 
 import videoDrawer from './components/videoDrawer';
-import navCon from './components/navCon';
+import block from './components/block';
 
 import {
   elControlStore
@@ -38,7 +44,7 @@ import {
   name: 'App',
   components: {
     videoDrawer,
-    navCon
+    block
   }
 })
 export default class extends Vue {
@@ -50,10 +56,16 @@ export default class extends Vue {
   @elControlStore.Action('setCat2RidAction') setCat2RidAction;
   @elControlStore.Action('setCat2ArrAction') setCat2ArrAction;
 
+  @elControlStore.Getter('getCat2Arr') getCat2Arr;
+
   @elControlStore.Action('getWatchBlockArrByRid') getWatchBlockArrByRid;
 
   get allArr() {
     return this.getAllArr;
+  }
+
+  get cat2Arr() {
+    return this.getCat2Arr;
   }
 
   mounted() {
@@ -68,13 +80,9 @@ export default class extends Vue {
   getChooseAble() {
     const headInputs = Array.from(document.querySelectorAll('.el-header .chooseAble'));
 
-    const navHeadInputs = Array.from(Array.from(document.querySelectorAll('.block_carousel .el-carousel__item'))
-      .filter(item => item.style.transform === 'translateX(0px) scale(1)')[0].querySelectorAll('.chooseAble_sub'));
-  
-    const cardInputs = Array.from(Array.from(document.querySelectorAll('.video_carousel .el-carousel__item'))
-      .filter(item => item.style.transform === 'translateX(0px) scale(1)')[0].querySelectorAll('.chooseAble'));
-    
-    this.inputs = headInputs.concat(navHeadInputs).concat(cardInputs);
+    const cardInputs = Array.from(document.querySelectorAll('.video_carousel .chooseAble'));
+
+    this.inputs = headInputs.concat(cardInputs);
   }
 
   keyDown(event) {
@@ -128,7 +136,11 @@ export default class extends Vue {
     }
 
     this.setCat2ArrAction(item.sub || []);
-    this.$refs.navCon.changeTab();
+    this.getWatchBlockArrByRid();
+  }
+
+  changeSubTab(item) {
+    // console.log(evt)
   }
 
   changePad(item) {
@@ -178,7 +190,7 @@ body {
 }
 
 .pad_con {
-  height: calc(70% - 20px);
+  height: calc(55% - 20px);
   font-size: 2.2rem;
 }
 
@@ -186,7 +198,6 @@ body {
   height: 30%;
   font-size: 1.4rem;
 }
-
 
 .box-card>.el-card__body {
   padding: 0 !important;
@@ -216,5 +227,10 @@ body {
 
 .text-right {
   text-align: right;
+}
+
+.subNan_con {
+  height: 15%;
+  font-size: 1rem;
 }
 </style>
