@@ -274,7 +274,6 @@ export class Drawer {
     // 2为 圆点到v0v3垂线距离的倍数
     rayLine.at(2, vtop);
 
-
     // 延V0/V1到Vtop的控制点距离
     let aLen = angle * 0.5 * (1 - angle / (Math.PI * 90));
     const v1 = getLenVcetor(v0.clone(), vtop, aLen);
