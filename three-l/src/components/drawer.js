@@ -248,7 +248,7 @@ export class Drawer {
       const ball = new THREE.Mesh(new THREE.SphereGeometry(this.options.dotWidth, 30, 30), new THREE.MeshBasicMaterial({
         color: '#6d1e1e'
       }));
-      // 获取标记点坐标
+      // 获取标记点坐标 经度相对当前坐标系加90°偏移
       const ballPos = getEarthPositionByCoordinate(item.pos[0] + 90, item.pos[1], this.options.earthBallSize);
 
       ball.position.set(ballPos.x, ballPos.y, ballPos.z);
@@ -257,37 +257,40 @@ export class Drawer {
   }
 
   createLine(v0, v3) {
-    // 计算两点之间弧度返回的角度 可以理解为曲线的曲度
-    var angle = (v0.angleTo(v3) * 180) / Math.PI;
+    // 计算 从圆心到两点向量的弧度 再转换为角度
+    const angle = v0.angleTo(v3) * (180 / Math.PI);
 
-    var aLen = angle * 0.5 * (1 - angle / (Math.PI * 90));
-    var hLen = angle * angle * 1.2 * (1 - angle / (Math.PI * 90));
-    var p0 = new THREE.Vector3(0, 0, 0);
     // 从中心指向两点之间的 法线向量
-    var rayLine = new THREE.Ray(p0, getVectorLineByTwoVectors(v0.clone(), v3.clone()));
+    const p0 = new THREE.Vector3(0, 0, 0);
+    const rayLine = new THREE.Ray(p0, getVectorLineByTwoVectors(v0.clone(), v3.clone()));
 
     // 顶点坐标
-    var vtop = new THREE.Vector3(0, 0, 0);
+    const vtop = new THREE.Vector3(0, 0, 0);
 
     // 法线从中心延伸出去的长度
-    var mideLine = hLen / rayLine.at(10, new THREE.Vector3(0, 0, 0)).distanceTo(p0);
-    rayLine.at(mideLine, vtop);
+    // let hLen = angle * angle * 1.2 * (1 - angle / (Math.PI * 90));
+    // let mideLine = hLen / rayLine.at(10, new THREE.Vector3(0, 0, 0)).distanceTo(p0);
 
-    // 两点与顶点之间的二分之一弧线点
-    var v1 = getLenVcetor(v0.clone(), vtop, aLen);
-    var v2 = getLenVcetor(v3.clone(), vtop, aLen);
+    // 2为 圆点到v0v3垂线距离的倍数
+    rayLine.at(2, vtop);
+
+
+    // 延V0/V1到Vtop的控制点距离
+    let aLen = angle * 0.5 * (1 - angle / (Math.PI * 90));
+    const v1 = getLenVcetor(v0.clone(), vtop, aLen);
+    const v2 = getLenVcetor(v3.clone(), vtop, aLen);
 
     // 绘制贝塞尔曲线
-    var curve = new THREE.CubicBezierCurve3(v0, v1, v2, v3);
+    const curve = new THREE.CubicBezierCurve3(v0, v1, v2, v3);
 
     // 曲线描边的点集合
-    var geometry = new THREE.Geometry();
+    const geometry = new THREE.Geometry();
     geometry.vertices = curve.getPoints(150);
 
     // 用生成的点集合创建meshline
-    var line = new MeshLine();
+    const line = new MeshLine();
     line.setGeometry(geometry);
-    var material = new MeshLineMaterial({
+    const material = new MeshLineMaterial({
       color: this.options.metapLineColor,
       lineWidth: 0.1,
       transparent: true,
@@ -337,12 +340,12 @@ export class Drawer {
   }
 
   showAxes() {
-    var axes = new THREE.AxesHelper(300);
+    let axes = new THREE.AxesHelper(300);
     this.scene.add(axes);
   }
 
   render() {
-    var delta = this.clock.getDelta();
+    let delta = this.clock.getDelta();
     this.orbitControls.update(delta);
 
     this.scene.rotation.y += 0.005;
