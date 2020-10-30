@@ -259,23 +259,25 @@ export class Drawer {
   createLine(v0, v3) {
     // 计算 从圆心到两点向量的弧度 再转换为角度
     const angle = v0.angleTo(v3) * (180 / Math.PI);
+    const p0 = new THREE.Vector3(0, 0, 0);
 
     // 从中心指向两点之间的 法线向量
-    const p0 = new THREE.Vector3(0, 0, 0);
     const rayLine = new THREE.Ray(p0, getVectorLineByTwoVectors(v0.clone(), v3.clone()));
+
+    // 法线从中心延伸出去的长度
+    // const hLen = angle * angle * 1.2 * (1 - angle / (Math.PI * 90));
+    // 圆点垂线十倍距离
+    // const top = rayLine.at(10, p0.clone()).distanceTo(p0);
+    // const mideLine = hLen / top;
 
     // 顶点坐标
     const vtop = new THREE.Vector3(0, 0, 0);
-
-    // 法线从中心延伸出去的长度
-    // let hLen = angle * angle * 1.2 * (1 - angle / (Math.PI * 90));
-    // let mideLine = hLen / rayLine.at(10, new THREE.Vector3(0, 0, 0)).distanceTo(p0);
-
-    // 2为 圆点到v0v3垂线距离的倍数
-    rayLine.at(2, vtop);
+    rayLine.at(10, vtop);
 
     // 延V0/V1到Vtop的控制点距离
-    let aLen = angle * 0.5 * (1 - angle / (Math.PI * 90));
+    // let aLen = angle * 0.5 * (1 - angle / (Math.PI * 90));
+    let aLen = this.options.earthBallSize * Math.abs(Math.sin(angle / 2 * Math.PI / 180)) * 1.2;
+
     const v1 = getLenVcetor(v0.clone(), vtop, aLen);
     const v2 = getLenVcetor(v3.clone(), vtop, aLen);
 
@@ -347,7 +349,7 @@ export class Drawer {
     let delta = this.clock.getDelta();
     this.orbitControls.update(delta);
 
-    this.scene.rotation.y += 0.005;
+    this.scene.rotation.y += 0.002;
     // this.sphere.rotation.y += 0.002;
 
     requestAnimationFrame(this.render.bind(this));
