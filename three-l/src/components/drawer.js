@@ -276,7 +276,7 @@ export class Drawer {
 
     // 延V0/V1到Vtop的控制点距离
     // let aLen = angle * 0.5 * (1 - angle / (Math.PI * 90));
-    let aLen = this.options.earthBallSize * Math.abs(Math.sin(angle / 2 * Math.PI / 180)) * 1.2;
+    let aLen = this.options.earthBallSize * Math.sin(angle / 2 * Math.PI / 180) * 1.2;
 
     const v1 = getLenVcetor(v0.clone(), vtop, aLen);
     const v2 = getLenVcetor(v3.clone(), vtop, aLen);
