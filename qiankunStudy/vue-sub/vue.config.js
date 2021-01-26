@@ -5,36 +5,13 @@ function resolve(dir) {
   return path.join(__dirname, dir);
 }
 
-const publicPath = process.env.NODE_ENV === 'development' ? '' : `//localhost:5500/child/vue-sub-dir`;
+const publicPath = process.env.NODE_ENV === 'development' ? '' : `//localhost:5500/child/vue-sub-dir/`;
 
 module.exports = {
   outputDir: '../dist/child/' + name + '-dir/',
   publicPath,
   assetsDir: 'static',
   filenameHashing: true,
-  chainWebpack: (config) => {
-    const fontRule = config.module.rule('fonts');
-    fontRule.uses.clear();
-    fontRule
-      .use('file-loader')
-      .loader('file-loader')
-      .options({
-        name: 'fonts/[name].[hash:8].[ext]',
-        publicPath
-      })
-      .end()
-
-    const imgRule = config.module.rule('images');
-    imgRule.uses.clear();
-    imgRule
-      .use('file-loader')
-      .loader('file-loader')
-      .options({
-        name: 'img/[name].[hash:8].[ext]',
-        publicPath
-      })
-      .end()
-  },
   configureWebpack: {
     resolve: {
       alias: {
