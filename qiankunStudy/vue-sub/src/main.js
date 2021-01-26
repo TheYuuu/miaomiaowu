@@ -11,18 +11,20 @@ Vue.config.productionTip = false
 
 let instance = null
 
-function render (props = {}) {
-  const { container, routerBase } = props
+function render(props = {}) {
+  const { container } = props;
+
   const router = new VueRouter({
-    base: window.__POWERED_BY_QIANKUN__ ? routerBase : process.env.BASE_URL,
+    base: window.__POWERED_BY_QIANKUN__ ? '/child/vue-sub' : '/child/vue-sub-dir',
     mode: 'history',
-    routes
-  })
+    routes,
+  });
+
   instance = new Vue({
     router,
     store,
-    render: (h) => h(App)
-  }).$mount(container ? container.querySelector('#app') : '#app')
+    render: h => h(App),
+  }).$mount(container ? container.querySelector('#app') : '#app');
 }
 
 if (!window.__POWERED_BY_QIANKUN__) {
