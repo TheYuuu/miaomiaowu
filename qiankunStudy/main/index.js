@@ -16,6 +16,14 @@ registerMicroApps(
       container: '#subapp-viewport',
       loader,
       activeRule: '/child/vue-sub',
+    },
+    {
+      name: 'vue-sub2',
+      entry: process.env.NODE_ENV === 'development'
+        ? '//localhost:7778/' : '//localhost:5500/child/vue-sub2-dir',
+      container: '#subapp-viewport',
+      loader,
+      activeRule: '/child/vue-sub2',
     }
   ],
   {
