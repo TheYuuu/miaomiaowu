@@ -1,9 +1,9 @@
 const path = require('path')
 
 module.exports = {
-  entry: path.resolve(__dirname, './src/index.ts'),
-  output: { // 输出配置
-    path: path.join(__dirname, './packages'),
+  entry: path.resolve(__dirname, '../src/index.ts'),
+  output: {
+    path: path.join(__dirname, '../packages'),
     filename: 'bundle.js'
   },
   plugins: [],
@@ -17,5 +17,8 @@ module.exports = {
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
   },
-  mode: 'development' // 打包的模式, production | development
+  mode: 'development', // production | development
+  optimization: {
+    minimize: true,
+  }
 }

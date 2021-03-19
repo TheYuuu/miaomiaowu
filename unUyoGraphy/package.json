@@ -4,6 +4,7 @@
   "description": "unusual graphy",
   "main": "index.js",
   "scripts": {
+    "build": "webpack --config build-scripts/webpack.config.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "white_A",
