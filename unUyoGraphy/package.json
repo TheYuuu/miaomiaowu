@@ -1,0 +1,19 @@
+{
+  "name": "un-u-yo",
+  "version": "1.0.0",
+  "description": "unusual graphy",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "white_A",
+  "license": "ISC",
+  "dependencies": {
+    "webpack": "^5.25.0"
+  },
+  "devDependencies": {
+    "ts-loader": "^8.0.18",
+    "typescript": "^4.2.3",
+    "webpack-cli": "^4.5.0"
+  }
+}
