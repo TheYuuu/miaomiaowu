@@ -1,4 +1,6 @@
-const path = require('path')
+const path = require('path');
+const ProgressBarPlugin = require('progress-bar-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
   entry: path.resolve(__dirname, '../src/index.ts'),
@@ -19,6 +21,17 @@ module.exports = {
   },
   mode: 'development', // production | development
   optimization: {
-    minimize: true,
-  }
+    minimizer: [
+      new TerserPlugin({
+        terserOptions: {
+          output: {
+            comments: false
+          }
+        }
+      })
+    ]
+  },
+  plugins: [
+    new ProgressBarPlugin()
+  ]
 }

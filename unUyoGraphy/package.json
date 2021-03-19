@@ -10,6 +10,8 @@
   "author": "white_A",
   "license": "ISC",
   "dependencies": {
+    "progress-bar-webpack-plugin": "^2.1.0",
+    "terser-webpack-plugin": "^5.1.1",
     "webpack": "^5.25.0"
   },
   "devDependencies": {
