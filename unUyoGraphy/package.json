@@ -5,11 +5,13 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack --config build-scripts/webpack.config.js",
+    "dev": "webpack --config build-scripts/webpack.demo.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "white_A",
   "license": "ISC",
   "dependencies": {
+    "html-webpack-plugin": "^5.3.1",
     "progress-bar-webpack-plugin": "^2.1.0",
     "terser-webpack-plugin": "^5.1.1",
     "webpack": "^5.25.0"
