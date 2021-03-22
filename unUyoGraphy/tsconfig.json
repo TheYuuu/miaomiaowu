@@ -12,7 +12,9 @@
     "noImplicitThis": false,
     "sourceMap": true,
     "baseUrl": ".",
-    "types": [],
+    "types": [
+      "./types"
+    ],
     "paths": {
       "@/*": [
         "src/*"
