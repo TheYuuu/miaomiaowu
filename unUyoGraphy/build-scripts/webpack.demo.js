@@ -69,7 +69,7 @@ module.exports = {
   plugins: [
     new ProgressBarPlugin(),
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, '../example/index.html'),
+      template: path.resolve(__dirname, '../example/index.tpl'),
       filename: 'index.html',
       title: 'unUyo Graphy'
     }),
