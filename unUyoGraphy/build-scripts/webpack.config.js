@@ -18,12 +18,6 @@ module.exports = {
         exclude: /node_modules/
       },
       {
-        test: /\.vue$/,
-        use: [
-          'vue-loader'
-        ]
-      },
-      {
         test: /\.css$/,
           use: [
             'style-loader',
@@ -38,7 +32,7 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['.tsx', '.ts', '.js'],
+    extensions: [".ts", ".tsx", ".js", ".json"]
   },
   mode: 'development', // production | development
   optimization: {

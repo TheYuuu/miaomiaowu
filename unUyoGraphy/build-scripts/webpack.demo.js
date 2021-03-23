@@ -3,12 +3,10 @@ const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const { VueLoaderPlugin } = require('vue-loader/dist/index');
-
 const isProd = process.env.NODE_ENV === 'production';
 
 module.exports = {
-  entry: path.resolve(__dirname, '../example/enrty.ts'),
+  entry: path.resolve(__dirname, '../example/index.tsx'),
   output: {
     path: path.resolve(process.cwd(), './publish'),
     publicPath: process.env.PUBLIC_URL || '',
@@ -30,12 +28,6 @@ module.exports = {
         exclude: /node_modules/
       },
       {
-        test: /\.vue$/,
-        use: [
-          'vue-loader'
-        ]
-      },
-      {
         test: /\.css$/,
           use: [
             'style-loader',
@@ -43,14 +35,14 @@ module.exports = {
           ]
       },
       {
-        test: /\.js$/,
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         loader: 'babel-loader'
       }
     ]
   },
   resolve: {
-    extensions: ['.tsx', '.ts', '.js'],
+    extensions: [".ts", ".tsx", ".js", ".json"]
   },
   mode: 'development', // production | development
   optimization: {
@@ -70,7 +62,6 @@ module.exports = {
       template: path.resolve(__dirname, '../example/index.html'),
       filename: 'index.html',
       title: 'unUyo Graphy'
-    }),
-    new VueLoaderPlugin()
+    })
   ]
 }
