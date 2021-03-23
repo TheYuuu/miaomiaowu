@@ -1,26 +1,21 @@
 const path = require('path');
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
-const isProd = process.env.NODE_ENV === 'production';
+const charts = require('../charts.build.json');
 
 module.exports = {
-  mode: process.env.NODE_ENV,
-  entry: path.resolve(__dirname, '../example/index.tsx'),
-  output: {
-    path: path.resolve(process.cwd(), './publish'),
-    publicPath: process.env.PUBLIC_URL || '',
-    filename: '[name].[hash:7].js',
-    chunkFilename: isProd ? '[name].[hash:7].js' : '[name].js'
+  mode: 'production',
+  entry: {
+    ...charts
   },
-  devServer: {
-    host: '0.0.0.0',
-    port: 8085,
-    publicPath: '/',
-    hot: true,
-    open: true
+  output: {
+    path: path.resolve(process.cwd(), './lib'),
+    publicPath: '/dist/',
+    filename: '[name].js',
+    chunkFilename: '[id].js',
+    libraryTarget: 'commonjs2'
   },
   module: {
     rules: [
@@ -37,7 +32,7 @@ module.exports = {
           ]
       },
       {
-        test: /\.(js|jsx)$/,
+        test: /\.js$/,
         exclude: /node_modules/,
         loader: 'babel-loader'
       },
@@ -52,7 +47,8 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: [".ts", ".tsx", ".js", ".json"]
+    extensions: [".ts", ".tsx", ".js", ".json"],
+    modules: ['node_modules']
   },
   mode: 'development', // production | development
   optimization: {
@@ -68,11 +64,6 @@ module.exports = {
   },
   plugins: [
     new ProgressBarPlugin(),
-    new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, '../example/index.html'),
-      filename: 'index.html',
-      title: 'unUyo Graphy'
-    }),
     new ForkTsCheckerWebpackPlugin()
   ]
 }

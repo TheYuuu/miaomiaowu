@@ -1,5 +1,7 @@
-import charts from './charts/index';
+import testA from '../packages/testA';
+import testB from '../packages/testB';
 
 export default {
-  charts
+  testA,
+  testB
 };
